@@ -21,7 +21,7 @@ __copyright__ = """
 import abstract as _ab
 import cupy as cp
 import cudf
-import deprecated
+from deprecated import deprecated
 
 class gdscuGPPMiner(_ab._partialPeriodicPatterns):
     """

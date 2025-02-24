@@ -117,16 +117,16 @@ if __name__ == "__main__":
         'memoryRSS': [426545152, 309182464, 241397760, 233537536, 267165696],
         'memoryUSS': [426545152, 309182464, 241397760, 233537536, 267165696]
     }
-    dataFrame = pd.DataFrame(data)
+    dataFrame_ = pd.DataFrame(data)
 
-    obj = PlotLineGraphs4DataFrame(dataFrame)
+    obj = PlotLineGraphs4DataFrame(dataFrame_)
 
-    obj.plot(result=dataFrame, xaxis='minSup', yaxis='patterns', label='algorithm')
-    obj.plot(result=dataFrame, xaxis='minSup', yaxis='runtime', label='algorithm')
-    obj.plot(result=dataFrame, xaxis='minSup', yaxis='memoryRSS', label='algorithm')
-    obj.plot(result=dataFrame, xaxis='minSup', yaxis='memoryUSS', label='algorithm')
+    obj.plot(result=dataFrame_, xaxis='minSup', yaxis='patterns', label='algorithm')
+    obj.plot(result=dataFrame_, xaxis='minSup', yaxis='runtime', label='algorithm')
+    obj.plot(result=dataFrame_, xaxis='minSup', yaxis='memoryRSS', label='algorithm')
+    obj.plot(result=dataFrame_, xaxis='minSup', yaxis='memoryUSS', label='algorithm')
 
-    obj.save(result=dataFrame, xaxis='minSup', yaxis='patterns', label='algorithm', oFile='patterns.png')
-    obj.save(result=dataFrame, xaxis='minSup', yaxis='runtime', label='algorithm', oFile='runtime.png')
-    obj.save(result=dataFrame, xaxis='minSup', yaxis='memoryRSS', label='algorithm', oFile='memoryRSS.png')
-    obj.save(result=dataFrame, xaxis='minSup', yaxis='memoryUSS', label='algorithm', oFile='memoryUSS.png')
+    obj.save(result=dataFrame_, xaxis='minSup', yaxis='patterns', label='algorithm', oFile='patterns.png')
+    obj.save(result=dataFrame_, xaxis='minSup', yaxis='runtime', label='algorithm', oFile='runtime.png')
+    obj.save(result=dataFrame_, xaxis='minSup', yaxis='memoryRSS', label='algorithm', oFile='memoryRSS.png')
+    obj.save(result=dataFrame_, xaxis='minSup', yaxis='memoryUSS', label='algorithm', oFile='memoryUSS.png')

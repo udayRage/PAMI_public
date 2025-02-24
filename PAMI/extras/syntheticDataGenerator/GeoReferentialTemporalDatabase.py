@@ -1,5 +1,5 @@
-import random as _rd
-import sys as _sys
+#import random as _rd
+#import sys as _sys
 import time
 import os
 import psutil
@@ -76,11 +76,13 @@ class GeoReferentialTemporalDatabase:
                 point = self.getPoint(x1, y1, x2, y2)
             self.itemPoint[i] = point
 
-    def getPoint(self, x1, y1, x2, y2):
+    @staticmethod
+    def getPoint(x1, y1, x2, y2):
 
-        return (np.random.randint(x1, x2),np.random.randint(y1, y2))
+        return np.random.randint(x1, x2),np.random.randint(y1, y2)
 
-    def performCoinFlip(self, probability: float) -> bool:
+    @staticmethod
+    def performCoinFlip(probability: float) -> bool:
         """
         Perform a coin flip with the given probability.
 
@@ -90,7 +92,8 @@ class GeoReferentialTemporalDatabase:
         result = np.random.choice([0, 1], p=[1 - probability, probability])
         return result
 
-    def tuning(self, array, sumRes) -> np.ndarray:
+    @staticmethod
+    def tuning(array, sumRes) -> np.ndarray:
         """
         Tune the array so that the sum of the values is equal to sumRes
 
@@ -172,7 +175,7 @@ class GeoReferentialTemporalDatabase:
         :return: None
         """
         self._startTime = time.time()
-        db = set()
+        #db = set()
 
         values = self.generateArray(self.databaseSize, self.avgItemsPerTransaction, self.numItems)
         

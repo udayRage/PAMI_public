@@ -326,7 +326,7 @@ class FFIMiner(_ab._fuzzyFrequentPattenrs):
     _sep = "\t"
 
     def __init__(self, iFile: str, fuzFile: str, minSup: float, sep: str="\t") -> None:
-        super().__init__(iFile, fuzFile, minSup, sep)
+        super().__init__(iFile, fuzFile, minSup)
         self._startTime = 0
         self._endTime = 0
         self._itemsCnt = 0
@@ -559,7 +559,7 @@ class FFIMiner(_ab._fuzzyFrequentPattenrs):
             for i in range(0, len(items)):
                 pair = _Pair()
                 pair.item = items[i]
-                regions = self._Regions(float(quantities[i]), 3)
+                regions = self._Regions(float(quantities[i]))
                 item = pair.item
                 if self._mapItemSum[item] >= self._minSup:
                     if self._mapItemRegions[pair.item] == "L":
@@ -760,11 +760,11 @@ class FFIMiner(_ab._fuzzyFrequentPattenrs):
 
 if __name__ == "__main__":
     _ap = str()
-    if len(_ab._sys.argv) == 4 or len(_ab._sys.argv) == 5:
+    if len(_ab._sys.argv) == 5 or len(_ab._sys.argv) == 6:
+        if len(_ab._sys.argv) == 6:
+            _ap = FFIMiner(_ab._sys.argv[1], _ab._sys.argv[3], _ab._sys.argv[4],_ab._sys.argv[5])
         if len(_ab._sys.argv) == 5:
-            _ap = FFIMiner(_ab._sys.argv[1], _ab._sys.argv[3], _ab._sys.argv[4])
-        if len(_ab._sys.argv) == 4:
-            _ap = FFIMiner(_ab._sys.argv[1], _ab._sys.argv[3])
+            _ap = FFIMiner(_ab._sys.argv[1], _ab._sys.argv[3],float(_ab._sys.argv[4]))
         _ap.mine()
         _ap.mine()
         print("Total number of Fuzzy-Frequent Patterns:", len(_ap.getPatterns()))

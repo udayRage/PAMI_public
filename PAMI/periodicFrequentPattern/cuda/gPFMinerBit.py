@@ -328,7 +328,7 @@ class gPFMinerBit:
         index2id = []
         bitValues = []
         for key, value in fileData.items():
-            if (len(value) >= self.minSup and self.__getMaxPeriod(value) <= self.maxPeriod):
+            if len(value) >= self.minSup and self.__getMaxPeriod(value) <= self.maxPeriod:
                 index2id.append(key)
                 bits = [0] * self.bitsToGen * self.numberOfBits
                 for item in value:

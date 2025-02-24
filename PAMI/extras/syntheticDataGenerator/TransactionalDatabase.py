@@ -124,7 +124,8 @@ class TransactionalDatabase:
         self._memoryRSS = float()
 
 
-    def _generateArray(self,databaseSize,avgItemsPerTransaction):
+    @staticmethod
+    def _generateArray(databaseSize, avgItemsPerTransaction):
 
         #generating random numbers with size of dataBaseSize
         transactionSize = np.random.rand(databaseSize)
@@ -170,7 +171,7 @@ class TransactionalDatabase:
                 f.write(str(self.sep).join(map(str, line)) + '\n')
 
 
-    def getTransactions(self,sep='\t'):
+    def getTransactions(self):
         transactions = []
         for line in self.db:
             transactions.append(line)

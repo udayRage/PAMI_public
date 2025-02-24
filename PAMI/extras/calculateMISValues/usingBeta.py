@@ -32,12 +32,15 @@ Copyright (C)  2021 Rage Uday Kiran
      You should have received a copy of the GNU General Public License
      along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
-import sys as _sys
+
+import sys
+#import sys as _sys
+from typing import Union
 import pandas as _pd
 import validators as _validators
 from urllib.request import urlopen as _urlopen
 
-class usingBeta():
+class usingBeta:
     """
 
     :Description: This code is used to calculate multiple minimum support of items in the the given database. Output can be stored in file or as as dataframe.
@@ -69,7 +72,7 @@ class usingBeta():
     _LS: int = int()
     _finalPatterns: dict = {}
 
-    def __init__(self, iFile: str, beta: int, LS: int, sep: str="\t"):
+    def __init__(self, iFile: Union[str, _pd.DataFrame], beta: int, LS: int, sep: str="\t"):
         self._iFile = iFile
         self._beta = beta
         self._LS = LS
@@ -84,9 +87,9 @@ class usingBeta():
         self._Database = []
         self._mapSupport = {}
         if isinstance(self._iFile, _pd.DataFrame):
-            if self._iFile.empty:
+            if not self._iFile:
                 print("its empty..")
-            i = self._iFile.columns.values.tolist()
+            i = self._iFile.columns.tolist()
             if 'Transactions' in i:
                 self._Database = self._iFile['Transactions'].tolist()
 
@@ -110,7 +113,7 @@ class usingBeta():
                 except IOError:
                     print("File Not Found")
 
-    def _creatingFrequentItems(self) -> tuple:
+    def _creatingFrequentItems(self):
         """
         This function creates frequent items from _database.
         :return: frequentTidData that stores frequent items and their tid list.
@@ -168,6 +171,6 @@ class usingBeta():
 
 
 if __name__ == '__main__':
-  cd = usingBeta(sys.argv[1], sys.argv[3], sys.argv[4], sys.argv[5])
+  cd = usingBeta(sys.argv[1], int(sys.argv[3]), int(sys.argv[4]), sys.argv[5])
   cd.calculateMIS()
   cd.save(sys.argv[2])

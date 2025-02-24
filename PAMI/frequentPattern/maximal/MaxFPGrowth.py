@@ -57,7 +57,7 @@ from deprecated import deprecated
 
 
 _minSup = str()
-global maximalTree
+#global maximalTree
 
 
 class _Node(object):

@@ -300,7 +300,7 @@ class _Tree:
             count += 1
         return pat, timeStamps, updatedDictionary
 
-    def generatePatterns(self, prefix: list) -> None:
+    def generatePatterns(self, prefix: list):
         """
         Generates the patterns
 

@@ -69,7 +69,7 @@ class DF2DB:
             obj.convert2Temporal("outputFileName",condition,threshold) # To create temporal database
 
             obj.convert2Utility("outputFileName",condition,threshold) # To create utility database
-    """,
+    """
 
 
     def __init__(self, inputDF, DFtype='dense') -> None:
@@ -86,6 +86,10 @@ class DF2DB:
         create transactional database and return oFileName
         :param oFile: file name or path to store database
         :type oFile: str
+        :param condition: condition
+        :type condition: str
+        :param thresholdValue: threshold value
+        :type thresholdValue: int or float
         :return: oFile name
         :rtype: str
         """
@@ -97,6 +101,10 @@ class DF2DB:
         create temporal database and return oFile name
         :param oFile: file name or path to store database
         :type oFile: str
+        :param condition: condition
+        :type condition: str
+        :param thresholdValue: threshold value
+        :type thresholdValue: int or float
         :return: oFile name
         :rtype: str
         """

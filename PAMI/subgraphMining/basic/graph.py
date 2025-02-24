@@ -52,13 +52,13 @@ class Graph:
     emptyVertexList = []
     emptyIntegerArray = []
 
-    def __init__(self, id, vMap=None, dfsCode=None):
+    def __init__(self, iD, vMap=None, dfsCode=None):
         """
         The `__init__` function initializes a graph object with optional parameters for vertex mapping and
         DFS code.
         """
         self.vMap = {}
-        self.id = id
+        self.id = iD
         if vMap is not None:
             self.vMap = vMap
         elif dfsCode is not None:

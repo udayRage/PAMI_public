@@ -31,7 +31,7 @@ Copyright (C)  2021 Rage Uday Kiran
 """
 import pandas as pd
 
-class generateLatexGraphFile():
+class generateLatexGraphFile:
     """
     :Description: GenerateLatexGraphFile is used to convert the given data into LatexGraphFile.
 
@@ -71,10 +71,10 @@ def generateLatexCode(result: pd.DataFrame) -> None:
         for num in range(0, len(legendary)):
             latexwriter.write("\n\\addplot+  [" + color[num] + "]\n\tcoordinates {\n")
             for num2 in range(0, len(xaxis)):
-                if (legendary[num] == algo[num2]):
+                if legendary[num] == algo[num2]:
                     latexwriter.write("(" + str(xaxis[num2]) + "," + str(yaxis[num2]) + ")\n")
             latexwriter.write("\t};   \\addlegendentry{" + legendary[num] + "}\n")
-            if (num + 1 == len(legendary)):
+            if num + 1 == len(legendary):
                 latexwriter.write("\\end{axis}")
     print("Latex files generated successfully")
     #data1 = pd.DataFrame(data)

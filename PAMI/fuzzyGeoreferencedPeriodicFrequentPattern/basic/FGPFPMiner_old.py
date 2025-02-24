@@ -263,7 +263,8 @@ class FGPFPMiner(_ab._fuzzySpatialFrequentPatterns):
     _fuzzyValuesDB = []
 
     def __init__(self, iFile, nFile, FuzFile, minSup, maxPer, sep):
-        super().__init__(iFile, nFile, FuzFile, minSup, maxPer, sep)
+        super().__init__(iFile, nFile, FuzFile, minSup, maxPer)
+        self.oFile = None
         self._mapItemNeighbours = {}
         self._startTime = 0
         self._endTime = 0
@@ -557,8 +558,8 @@ class FGPFPMiner(_ab._fuzzySpatialFrequentPatterns):
                 qaunt[pair.item] = pair.quantity
                 remainUtil = 0
                 temp = list(set(self._mapItemNeighbours[pair.item]).intersection(set(qaunt.keys())))
-                for j in temp:
-                    remainUtil += float(qaunt[j])
+                for k in temp:
+                    remainUtil += float(qaunt[k])
                 del temp
                 remainingUtility = remainUtil
                 FFListObject = mapItemsToFFLIST[pair.item]
@@ -819,14 +820,14 @@ class FGPFPMiner(_ab._fuzzySpatialFrequentPatterns):
             for num in range(0, len(legendary)):
                 latexwriter.write("\n\\addplot+  [" + color[num] + "]\n\tcoordinates {\n")
                 for num2 in range(0, len(xaxis)):
-                    if (legendary[num] == algo[num2]):
+                    if legendary[num] == algo[num2]:
                         latexwriter.write("(" + str(xaxis[num2]) + "," + str(yaxis[num2]) + ")\n")
                 latexwriter.write("\t};   \\addlegendentry{" + legendary[num] + "}\n")
-                if (num + 1 == len(legendary)):
+                if num + 1 == len(legendary):
                     latexwriter.write("\\end{axis}")
         print("Latex file generated successfully")
 
-    def generateGraphs(result):
+    def generateGraphs(self, result):
 
         fig = px.line(result, x='minsup', y='patterns', color='algorithm', title='Patterns)', markers=True)
         fig.show()
@@ -840,12 +841,12 @@ class FGPFPMiner(_ab._fuzzySpatialFrequentPatterns):
 
 if __name__ == "__main__":
     _ap = str()
-    if len(_ab._sys.argv) == 5 or len(_ab._sys.argv) == 7:
-        if len(_ab._sys.argv) == 6:
+    if len(_ab._sys.argv) == 6 or len(_ab._sys.argv) == 7:
+        if len(_ab._sys.argv) == 7:
             _ap = FGPFPMiner(_ab._sys.argv[1], _ab._sys.argv[2], _ab._sys.argv[3], _ab._sys.argv[4], _ab._sys.argv[5],
                              _ab._sys.argv[6])
-        if len(_ab._sys.argv) == 5:
-            _ap = FGPFPMiner(_ab._sys.argv[1], _ab._sys.argv[2], _ab._sys.argv[3], _ab._sys.argv[4], _ab._sys.argv[5])
+        if len(_ab._sys.argv) == 6:
+            _ap = FGPFPMiner(_ab._sys.argv[1], _ab._sys.argv[2], _ab._sys.argv[3], _ab._sys.argv[4], _ab._sys.argv[5],_ab._sys.argv[6])
         _ap.mine()
         _ap.mine()
         print("Total number of Spatial Fuzzy Periodic Frequent  Patterns:", len(_ap.getPatterns()))

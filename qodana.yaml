@@ -31,3 +31,22 @@ exclude:
   - name: PyProtectedMemberInspection
   - name: PyPep8NamingInspection
   - name: PySetFunctionToLiteralInspection
+  - name: All
+    paths:
+      - finalSphinxDocs
+      - docs
+      - notebooks
+      - images
+      - PAMI\fuzzyFrequentPattern\basic\FFIMiner_old.py
+      - conf.py
+  - name: PyTypeCheckerInspection
+  - name: PyRedundantParenthesesInspection
+    paths:
+      - PAMI\extras\generateDatabase\generateSpatioTemporalDatabase.py
+      - PAMI\extras\generateDatabase\generateSpatioTransactionalDatabase.py
+  - name: PyListCreationInspection
+    paths:
+      - PAMI\partialPeriodicFrequentPattern\basic\_PPF_DFS.py
+      - PAMI\partialPeriodicFrequentPattern\basic\GPFgrowth.py
+      - PAMI\partialPeriodicFrequentPattern\cuda\cuGPPMiner.py
+  - name: PyMethodMayBeStaticInspection

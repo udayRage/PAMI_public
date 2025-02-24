@@ -216,6 +216,7 @@ class SPADEPlus(_ab._sequentialPatterns):
         Storing the complete transactions of the database/input file in a database variable
         """
         self._Database = []
+        temp2 = None
 
         if isinstance(self._iFile, _ab._pd.DataFrame):
             temp = []
@@ -226,15 +227,13 @@ class SPADEPlus(_ab._sequentialPatterns):
                 temp = self._iFile['Transactions'].tolist()
             if "tid" in i:
                 temp2=self._iFile[''].tolist()
-            addList=[]
-            addList.append(temp[0])
+            addList= [temp[0]]
             for k in range(len(temp)-1):
                 if temp2[k]==temp[k+1]:
                     addList.append(temp[k+1])
                 else:
                     self._Database.append(addList)
-                    addList=[]
-                    addList.append(temp[k+1])
+                    addList= [temp[k + 1]]
             self._Database.append(addList)
         if isinstance(self._iFile, str):
             if _ab._validators.url(self._iFile):
@@ -438,7 +437,7 @@ class SPADEPlus(_ab._sequentialPatterns):
                 if latestWord != latestWord2:
                     
                     if len(self._xLenDatabase[rowLen][bs][latestWord].keys()) <= len(self._xLenDatabase[rowLen][bs][latestWord2].keys()):
-                        next={}
+                        next1={}
                         next2={}
                         nextSame={}
 
@@ -448,7 +447,7 @@ class SPADEPlus(_ab._sequentialPatterns):
                                     if rowLen<self._maxLen:
                                         x = self.checkGap(self._xLenDatabase[rowLen][bs][latestWord][seq],self._xLenDatabase[rowLen][bs][latestWord2][seq])
                                         if len(x) != 0:
-                                            next[seq] = x
+                                            next1[seq] = x
                                         x = self.checkGap(self._xLenDatabase[rowLen][bs][latestWord2][seq],self._xLenDatabase[rowLen][bs][latestWord][seq])
                                         if len(x) != 0:
                                             next2[seq] = x
@@ -456,13 +455,13 @@ class SPADEPlus(_ab._sequentialPatterns):
                                         self._xLenDatabase[rowLen][bs][latestWord2][seq])))
                                     if len(x) != 0:
                                         nextSame[seq] = x
-                        if len(next)>=self._minSup:
+                        if len(next1)>=self._minSup:
                             nextRow,nextbs= self.makeNextRow(bs,latestWord,latestWord2)
                             if str(nextRow) not in self._finalPatterns.keys():
-                                self._finalPatterns[str(nextRow)] = len(next)
+                                self._finalPatterns[str(nextRow)] = len(next1)
                                 if nextbs not in self._xLenDatabase[rowLen + 1]:
                                     self._xLenDatabase[rowLen + 1][nextbs]={}
-                                self._xLenDatabase[rowLen+1][nextbs][latestWord2]={i:next[i] for i in next }
+                                self._xLenDatabase[rowLen+1][nextbs][latestWord2]={i:next1[i] for i in next1}
                                 self.makexLenDatabase(rowLen+1,nextbs,latestWord2)
                         if len(next2)>=self._minSup:
                             nextRow,nextbs = self.makeNextRow(bs, latestWord2, latestWord)
@@ -482,7 +481,7 @@ class SPADEPlus(_ab._sequentialPatterns):
                                 self.makexLenDatabaseSame(rowLen+1, nextbs, nextlste)
 
                     else:
-                        next = {}
+                        next1 = {}
                         next2 = {}
                         nextSame = {}
 
@@ -492,7 +491,7 @@ class SPADEPlus(_ab._sequentialPatterns):
                                     if rowLen<self._maxLen:
                                         x = self.checkGap(self._xLenDatabase[rowLen][bs][latestWord][seq],self._xLenDatabase[rowLen][bs][latestWord2][seq])
                                         if len(x)!=0:
-                                            next[seq]=x
+                                            next1[seq]=x
                                         x= self.checkGap(self._xLenDatabase[rowLen][bs][latestWord2][seq],self._xLenDatabase[rowLen][bs][latestWord][seq])
                                         if len(x)!=0:
                                             next2[seq]=x
@@ -500,13 +499,13 @@ class SPADEPlus(_ab._sequentialPatterns):
                                             self._xLenDatabase[rowLen][bs][latestWord2][seq])))
                                     if len(x)!=0:
                                         nextSame[seq]=x
-                        if len(next) >= self._minSup:
+                        if len(next1) >= self._minSup:
                             nextRow,nextbs = self.makeNextRow(bs, latestWord, latestWord2)
                             if str(nextRow) not in self._finalPatterns.keys():
                                 if nextbs not in self._xLenDatabase[rowLen + 1]:
                                     self._xLenDatabase[rowLen+1][nextbs]={}
-                                self._finalPatterns[str(nextRow)] = len(next)
-                                self._xLenDatabase[rowLen + 1][nextbs][latestWord2] ={i:next[i] for i in next }
+                                self._finalPatterns[str(nextRow)] = len(next1)
+                                self._xLenDatabase[rowLen + 1][nextbs][latestWord2] ={i:next1[i] for i in next1}
                                 self.makexLenDatabase(rowLen+1, nextbs, latestWord2)
                         if len(next2) >= self._minSup:
                             nextRow,nextbs = self.makeNextRow(bs, latestWord2, latestWord)
@@ -526,18 +525,18 @@ class SPADEPlus(_ab._sequentialPatterns):
                                 self.makexLenDatabaseSame(rowLen+1, nextbs, nextlate)
 
                 else:
-                    next= {}
+                    next1= {}
                     if rowLen<self._maxLen:
                         for seq in self._xLenDatabase[rowLen][bs][latestWord2].keys():
                             if len(self._xLenDatabase[rowLen][bs][latestWord][seq])>=2:
-                                next[seq]= self.checkGap(self._xLenDatabase[rowLen][bs][latestWord][seq],self._xLenDatabase[rowLen][bs][latestWord][seq])
-                        if len(next) >= self._minSup:
+                                next1[seq]= self.checkGap(self._xLenDatabase[rowLen][bs][latestWord][seq], self._xLenDatabase[rowLen][bs][latestWord][seq])
+                        if len(next1) >= self._minSup:
                             nextRow, nextbs= self.makeNextRow(bs,latestWord,latestWord2)
                             if str(nextRow) not in self._finalPatterns.keys():
                                 if nextbs not in self._xLenDatabase[rowLen+1]:
                                     self._xLenDatabase[rowLen+1][nextbs]={}
-                                self._finalPatterns[str(nextRow)] = len(next)
-                                self._xLenDatabase[rowLen+1][nextbs][latestWord2] ={i:next[i] for i in next }
+                                self._finalPatterns[str(nextRow)] = len(next1)
+                                self._xLenDatabase[rowLen+1][nextbs][latestWord2] ={i:next1[i] for i in next1}
                                 self.makexLenDatabase(rowLen+1, nextbs, latestWord2)
             if bs in self._xLenDatabaseSame[rowLen]:
                 for latestWord2 in self._xLenDatabaseSame[rowLen][bs]:
@@ -545,39 +544,39 @@ class SPADEPlus(_ab._sequentialPatterns):
 
                         if len(self._xLenDatabase[rowLen][bs][latestWord].keys()) <= len(
                                 self._xLenDatabaseSame[rowLen][bs][latestWord2].keys()):
-                            next = {}
+                            next1 = {}
 
                             for seq in self._xLenDatabase[rowLen][bs][latestWord].keys():
                                 if seq in self._xLenDatabaseSame[rowLen][bs][latestWord2].keys():
-                                    if self._xLenDatabaseSame[rowLen][bs][latestWord2][seq] != []:
+                                    if self._xLenDatabaseSame[rowLen][bs][latestWord2][seq]:
                                         x=self.checkGap(self._xLenDatabaseSame[rowLen][bs][latestWord2][seq],self._xLenDatabase[rowLen][bs][latestWord][seq])
                                         if len(x) != 0:
-                                            next[seq] = x
-                            if len(next) >= self._minSup:
+                                            next1[seq] = x
+                            if len(next1) >= self._minSup:
 
                                 nextRow ,nextbs= self.makeNextRowSame(bs, latestWord2, latestWord)
                                 if str(nextRow) not in self._finalPatterns.keys():
                                     if nextbs not in self._xLenDatabase[rowLen + 1]:
                                         self._xLenDatabase[rowLen + 1][nextbs] = {}
-                                    self._finalPatterns[str(nextRow)] = len(next)
-                                    self._xLenDatabase[rowLen + 1][nextbs][latestWord] = {i:next[i] for i in next }
+                                    self._finalPatterns[str(nextRow)] = len(next1)
+                                    self._xLenDatabase[rowLen + 1][nextbs][latestWord] = {i:next1[i] for i in next1}
                                     self.makexLenDatabase(rowLen + 1, nextbs, latestWord)
 
                         else:
-                            next = {}
+                            next1 = {}
                             for seq in self._xLenDatabaseSame[rowLen][bs][latestWord2].keys():
                                 if seq in self._xLenDatabase[rowLen][bs][latestWord].keys():
-                                    if self._xLenDatabaseSame[rowLen][bs][latestWord2][seq] != [] :
+                                    if self._xLenDatabaseSame[rowLen][bs][latestWord2][seq]:
                                         x= self.checkGap(self._xLenDatabaseSame[rowLen][bs][latestWord2][seq],self._xLenDatabase[rowLen][bs][latestWord][seq])
                                         if len(x) != 0:
-                                            next[seq] = x
-                            if len(next) >= self._minSup:
+                                            next1[seq] = x
+                            if len(next1) >= self._minSup:
                                 nextRow,nextbs = self.makeNextRowSame(bs, latestWord2, latestWord)
                                 if str(nextRow) not in self._finalPatterns.keys():
                                     if nextbs not in self._xLenDatabase[rowLen + 1]:
                                         self._xLenDatabase[rowLen + 1][nextbs] = {}
-                                    self._finalPatterns[str(nextRow)] = len(next)
-                                    self._xLenDatabase[rowLen+1][nextbs][latestWord] = {i:next[i] for i in next }
+                                    self._finalPatterns[str(nextRow)] = len(next1)
+                                    self._xLenDatabase[rowLen+1][nextbs][latestWord] = {i:next1[i] for i in next1}
                                     self.makexLenDatabase(rowLen + 1, nextbs,latestWord)
 
     def makexLenDatabaseSame(self, rowLen, bs, latestWord):
@@ -596,81 +595,81 @@ class SPADEPlus(_ab._sequentialPatterns):
             for latestWord2 in self._xLenDatabase[rowLen][bs]:
                 if rowLen<self._maxLen:
                     if len(self._xLenDatabaseSame[rowLen][bs][latestWord].keys()) <= len(self._xLenDatabase[rowLen][bs][latestWord2].keys()):
-                        next = {}
+                        next1 = {}
     
                         for seq in self._xLenDatabaseSame[rowLen][bs][latestWord].keys():
                             if seq in self._xLenDatabase[rowLen][bs][latestWord2].keys():
-                                if self._xLenDatabaseSame[rowLen][bs][latestWord][seq] != []:
+                                if self._xLenDatabaseSame[rowLen][bs][latestWord][seq]:
                                     x= self.checkGap(self._xLenDatabaseSame[rowLen][bs][latestWord][seq],self._xLenDatabase[rowLen][bs][latestWord2][seq])
                                     if len(x) != 0:
-                                        next[seq] = x
-                        if len(next) >= self._minSup:
+                                        next1[seq] = x
+                        if len(next1) >= self._minSup:
                             nextRow ,nextbs= self.makeNextRowSame(bs, latestWord, latestWord2)
                             if str(nextRow) not in self._finalPatterns.keys():
                                 if nextbs not in self._xLenDatabase[rowLen + 1]:
                                     self._xLenDatabase[rowLen + 1][nextbs] = {}
-                                self._finalPatterns[str(nextRow)] = len(next)
-                                self._xLenDatabase[rowLen + 1][nextbs][latestWord2]= {i:next[i] for i in next}
+                                self._finalPatterns[str(nextRow)] = len(next1)
+                                self._xLenDatabase[rowLen + 1][nextbs][latestWord2]= {i:next1[i] for i in next1}
                                 self.makexLenDatabase(rowLen + 1, nextbs, latestWord2)
     
                     else:
-                        next = {}
+                        next1 = {}
     
                         for seq in self._xLenDatabase[rowLen][bs][latestWord2].keys():
                             if seq in self._xLenDatabaseSame[rowLen][bs][latestWord].keys():
-                                if self._xLenDatabaseSame[rowLen][bs][latestWord][seq] != []:
+                                if self._xLenDatabaseSame[rowLen][bs][latestWord][seq]:
                                     x= self.checkGap(self._xLenDatabaseSame[rowLen][bs][latestWord][seq],self._xLenDatabase[rowLen][bs][latestWord2][seq])
                                     if len(x) != 0:
-                                        next[seq] = x
-                        if len(next) >= self._minSup:
+                                        next1[seq] = x
+                        if len(next1) >= self._minSup:
                             nextRow,nextbs = self.makeNextRowSame(bs, latestWord, latestWord2)
                             if str(nextRow) not in self._finalPatterns.keys():
                                 if nextbs not in self._xLenDatabase[rowLen + 1]:
                                     self._xLenDatabase[rowLen + 1][nextbs] = {}
-                                self._finalPatterns[str(nextRow)] = len(next)
-                                self._xLenDatabase[rowLen + 1][nextbs][latestWord2] = {i:next[i] for i in next}
+                                self._finalPatterns[str(nextRow)] = len(next1)
+                                self._xLenDatabase[rowLen + 1][nextbs][latestWord2] = {i:next1[i] for i in next1}
                                 self.makexLenDatabase(rowLen + 1,nextbs, latestWord2)
         if bs in self._xLenDatabaseSame[rowLen]:
             for latestWord2 in self._xLenDatabaseSame[rowLen][bs]:
                 if latestWord2!=latestWord:
                     if len(self._xLenDatabaseSame[rowLen][bs][latestWord].keys()) <= len(
                             self._xLenDatabaseSame[rowLen][bs][latestWord2].keys()):
-                        next = {}
+                        next1 = {}
 
                         for seq in self._xLenDatabaseSame[rowLen][bs][latestWord].keys():
                             if seq in self._xLenDatabaseSame[rowLen][bs][latestWord2].keys():
                                 x= list(sorted(set(self._xLenDatabaseSame[rowLen][bs][latestWord][seq]) & set(
                                         self._xLenDatabaseSame[rowLen][bs][latestWord2][seq])))
                                 if len(x) != 0:
-                                    next[seq] = x
-                        if len(next) >= self._minSup:
+                                    next1[seq] = x
+                        if len(next1) >= self._minSup:
 
                                 nextRow, nextbs,nextLate= self.makeNextRowSame2(bs, latestWord, latestWord2)
                                 if str(nextRow) not in self._finalPatterns.keys():
                                     if nextbs not in self._xLenDatabaseSame[rowLen+1]:
                                         self._xLenDatabaseSame[rowLen + 1][nextbs] = {}
 
-                                    self._finalPatterns[str(nextRow)] = len(next)
-                                    self._xLenDatabaseSame[rowLen + 1][nextbs][nextLate] = {i:next[i] for i in next}
+                                    self._finalPatterns[str(nextRow)] = len(next1)
+                                    self._xLenDatabaseSame[rowLen + 1][nextbs][nextLate] = {i:next1[i] for i in next1}
                                     self.makexLenDatabaseSame(rowLen + 1, nextbs, nextLate)
                     else:
-                        next = {}
+                        next1 = {}
 
                         for seq in self._xLenDatabaseSame[rowLen][bs][latestWord2].keys():
                             if seq in self._xLenDatabaseSame[rowLen][bs][latestWord].keys():
                                 x= list(sorted(set(self._xLenDatabaseSame[rowLen][bs][latestWord][seq]) & set(
                                         self._xLenDatabaseSame[rowLen][bs][latestWord2][seq])))
                                 if len(x) != 0:
-                                    next[seq] = x
-                        if len(next) >= self._minSup:
+                                    next1[seq] = x
+                        if len(next1) >= self._minSup:
 
                                 nextRow, nextbs,nextLate= self.makeNextRowSame2(bs, latestWord, latestWord2)
                                 if str(nextRow) not in self._finalPatterns.keys():
                                     if nextbs not in self._xLenDatabaseSame[rowLen+1]:
                                         self._xLenDatabaseSame[rowLen + 1][nextbs] = {}
 
-                                    self._finalPatterns[str(nextRow)] = len(next)
-                                    self._xLenDatabaseSame[rowLen + 1][nextbs][nextLate] = {i:next[i] for i in next}
+                                    self._finalPatterns[str(nextRow)] = len(next1)
+                                    self._xLenDatabaseSame[rowLen + 1][nextbs][nextLate] = {i:next1[i] for i in next1}
                                     self.makexLenDatabaseSame(rowLen + 1, nextbs, nextLate)
 
     def makeNextRow(self,bs, latestWord, latestWord2):

@@ -34,9 +34,9 @@ Copyright (C)  2021 Rage Uday Kiran
 
 import numpy as np
 import pandas as pd
-import time
-import sys, psutil, os, time, tqdm
-from matplotlib import pyplot as plt
+#import time
+import psutil, os, time, tqdm
+#from matplotlib import pyplot as plt
 import random
 class GeoReferentialTransactionalDatabaseByTriangle:
     """
@@ -62,7 +62,8 @@ class GeoReferentialTransactionalDatabaseByTriangle:
 
 
     """
-    def __tran_1(self, p):
+    @staticmethod
+    def __tran_1(p):
         """
         To set a harf point
         :param
@@ -115,7 +116,8 @@ class GeoReferentialTransactionalDatabaseByTriangle:
         y1 = 0.5 * y
         return x1, y1
 
-    def __get_index(self):
+    @staticmethod
+    def __get_index():
         """
         To get index
         :return: int
@@ -129,7 +131,7 @@ class GeoReferentialTransactionalDatabaseByTriangle:
             c += p
             sump.append(c)
         for item, sp in enumerate(sump):
-            if(r <= sp):
+            if r <= sp:
                 return item
         return len(prob) - 1
 
@@ -204,7 +206,8 @@ class GeoReferentialTransactionalDatabaseByTriangle:
         self._endTime = float()
         self._memoryUSS = float()
         self._memoryRSS = float()
-    def tuning(self, array, sumRes) -> list:
+    @staticmethod
+    def tuning(array, sumRes) -> list:
         """
         Tune the array so that the sum of the values is equal to sumRes
 
@@ -238,11 +241,11 @@ class GeoReferentialTransactionalDatabaseByTriangle:
 
         :param nums: number of values
 
-        :type nums: list
+        :type nums: int
 
         :param avg: average value
 
-        :type avg: float
+        :type avg: int
 
         :param maxItems: maximum value
 
@@ -286,7 +289,7 @@ class GeoReferentialTransactionalDatabaseByTriangle:
         :return: None
         """
         self._startTime = time.time()
-        db = set()
+        #db = set()
 
         values = self.generateArray(self.databaseSize, self.avgItemsPerTransaction, self.numItems)
 

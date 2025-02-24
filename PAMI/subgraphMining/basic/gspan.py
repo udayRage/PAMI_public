@@ -147,7 +147,7 @@ class GSpan(_ab._gSpan):
                         sb.append(f"e {ee.v1} {ee.v2} {edgeLabel}\n")
 
                 if self.outputGraphIds:
-                    sb.append("x " + " ".join(str(id) for id in subgraph.setOfGraphsIds))
+                    sb.append("x " + " ".join(str(iD) for iD in subgraph.setOfGraphsIds))
 
                 sb.append("\n\n")
                 bw.write("".join(sb))
@@ -240,8 +240,7 @@ class GSpan(_ab._gSpan):
 
         # Find all vertices in the graph that match the start label and initialize isomorphisms with them
         for vId in g.findAllWithLabel(startLabel):
-            hMap = {}
-            hMap[0] = vId
+            hMap = {0: vId}
             isoms.append(hMap)
 
         # For each edge in the DFS code, try to extend each partial isomorphism
@@ -360,8 +359,8 @@ class GSpan(_ab._gSpan):
         """
         extensions = {}
         if c.isEmpty():
-            for id in graphIds:
-                g = graphDb[id]
+            for iD in graphIds:
+                g = graphDb[iD]
                 # Skip graphs if pruning based on edge count is enabled and applicable
                 if GSpan.edge_count_pruning and c.size >= g.getEdgeCount():
                     self.pruneByEdgeCount += 1
@@ -378,13 +377,13 @@ class GSpan(_ab._gSpan):
 
                         # Add the new or existing extensions to the dictionary                       
                         setOfGraphIds = extensions.get(ee1, set())
-                        setOfGraphIds.add(id)
+                        setOfGraphIds.add(iD)
                         extensions[ee1] = setOfGraphIds
         else:
             # For non-empty DFS codes, extend based on the rightmost path of each graph
             rightMost = c.getRightMost()
-            for id in graphIds:
-                g = graphDb[id]
+            for iD in graphIds:
+                g = graphDb[iD]
                 if GSpan.edge_count_pruning and c.size >= g.getEdgeCount():
                     self.pruneByEdgeCount += 1
                     continue
@@ -448,11 +447,11 @@ class GSpan(_ab._gSpan):
         for extension, newGraphIds in extensions.items():
             sup = len(newGraphIds)
             
-            if (sup >= self.minSup):
+            if sup >= self.minSup:
                 newC = c.copy()
                 newC.add(extension)
                 
-                if (self.isCanonical(newC)):
+                if self.isCanonical(newC):
                     subgraph = _ab.FrequentSubgraph(newC, newGraphIds, sup)
                     self.frequentSubgraphs.append(subgraph)
 
@@ -580,6 +579,12 @@ class GSpan(_ab._gSpan):
         :param graphDb: The `graphDb` parameter  refers to a graph database that the algorithm is 
         operating on.
         """
+        alreadySeenPair = None
+        matrix = None
+        mapEdgeLabelToSupport = None
+        alreadySeenEdgeLabel = None
+
+
         if GSpan.eliminate_infrequent_edge_labels:
             matrix = _ab.SparseTriangularMatrix()
             alreadySeenPair = set() # To avoid double counting pairs in the same graph

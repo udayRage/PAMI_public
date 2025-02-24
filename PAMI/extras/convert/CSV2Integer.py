@@ -35,7 +35,7 @@ Copyright (C)  2021 Rage Uday Kiran
 import numpy as np
 import pandas as pd
 
-class csvToInteger():
+class csvToInteger:
     """
     :Description:   csvToInteger is a code used to convert the csv into  Integer
 

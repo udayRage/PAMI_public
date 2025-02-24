@@ -263,14 +263,14 @@ class parallelECLAT(_ab._frequentPatterns):
                 freqPatterns.update(self._genPatterns(data[i], (freqPattern, tid), data))
         return freqPatterns
 
-    def printResults(self):
-        """
-        This function is used to print the results
-        """
-        print("Total number of Frequent Patterns:", len(self.getPatterns()))
-        print("Total Memory in USS:", self.getMemoryUSS())
-        print("Total Memory in RSS", self.getMemoryRSS())
-        print("Total ExecutionTime in ms:", self.getRuntime())
+    # def printResults(self):
+    #     """
+    #     This function is used to print the results
+    #     """
+    #     print("Total number of Frequent Patterns:", len(self.getPatterns()))
+    #     print("Total Memory in USS:", self.getMemoryUSS())
+    #     print("Total Memory in RSS", self.getMemoryRSS())
+    #     print("Total ExecutionTime in ms:", self.getRuntime())
 
     def _convert(self, value):
         """

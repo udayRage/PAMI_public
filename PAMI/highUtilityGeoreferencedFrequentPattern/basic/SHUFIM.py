@@ -497,12 +497,15 @@ class SHUFIM(_ab._utilityPatterns):
     _maxPer = float()
     _finalPatterns = {}
     _iFile = " "
-    _oFile = " "
+    oFile = " "
     _nFile = " "
     _sep = "\t"
     _minUtil = 0
     _memoryUSS = float()
     _memoryRSS = float()
+    _patternCount = 0
+    _dataset = 0
+
     
     def __init__(self, iFile, nFile, minUtil, minSup, sep="\t"):
         super().__init__(iFile, nFile, minUtil, minSup, sep)
@@ -540,7 +543,6 @@ class SHUFIM(_ab._utilityPatterns):
         High Utility Frequent Pattern mining start here
         """
         self._startTime = _ab._time.time()
-        self._patternCount = 0
         self._finalPatterns = {}
         self._dataset = _Dataset(self._iFile, self._sep)
         self._singleItemSetsSupport = _ab._defaultdict(int)
@@ -908,9 +910,9 @@ class SHUFIM(_ab._utilityPatterns):
                 pmu = transaction.getUtilities()[idx]
                 if item in self._Neighbours:
                     neighbors = self._Neighbours[item]
-                    for idx, item in enumerate(transaction.getItems()):
-                        if item in neighbors:
-                            pmu += transaction.getUtilities()[idx]
+                    for idn, item1 in enumerate(transaction.getItems()):
+                        if item1 in neighbors:
+                            pmu += transaction.getUtilities()[idn]
                 if item in self._utilityBinArrayLU:
                     # self._utilityBinArrayLU[item] += transaction.getPmus()[idx]
                     self._utilityBinArrayLU[item] += pmu

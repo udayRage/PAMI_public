@@ -149,6 +149,10 @@ class ECLATDiffset(_ab._frequentPatterns):
     _diffSets = {}
     _trans_set = set()
 
+    def __init__(self, iFile, minSup, sep="\t"):
+        super().__init__(iFile, minSup, sep)
+        self._db = None
+
     def _creatingItemSets(self):
         """
         Storing the complete transactions of the database/input file in a database variable
@@ -246,6 +250,7 @@ class ECLATDiffset(_ab._frequentPatterns):
         self._finalPatterns = {}
         self._diffSets = {}
         self._trans_set = set()
+
         if self._iFile is None:
             raise Exception("Please enter the file path or file name:")
         if self._minSup is None:

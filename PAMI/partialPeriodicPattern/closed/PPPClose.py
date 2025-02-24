@@ -430,7 +430,7 @@ class PPPClose(_abstract._partialPeriodicPatterns):
                     itemSets.insert(j, None)
                     tidSets.insert(j, None)
                     itemSetX.append(itemJ)
-                elif len(tidSetX) < len(tidSetJ) and len(y) == len(tidSetX):
+                elif len(tidSetJ) > len(tidSetX) == len(y):
                     itemSetX.append(itemJ)
                 elif len(tidSetX) > len(tidSetJ) and len(y) == len(tidSetJ):
                     itemSets.insert(j, None)

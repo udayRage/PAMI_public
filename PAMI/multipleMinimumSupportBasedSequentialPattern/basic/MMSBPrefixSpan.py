@@ -171,9 +171,9 @@ class MMSBprefixSpan(_ab._sequentialPatterns):
                             temp = [x for x in temp if x ]
 
                             seq = []
-                            for i in temp:
-                                if len(i)>1:
-                                   for i in list(sorted(set(i.split(self._sep)))):
+                            for j in temp:
+                                if len(j)>1:
+                                   for i in list(sorted(set(j.split(self._sep)))):
                                        seq.append(i)
                                    seq.append(-1)
 
@@ -211,13 +211,15 @@ class MMSBprefixSpan(_ab._sequentialPatterns):
             what words and rows startrow have to add it
         :param startrow:
             the patterns get before
+        :param baseMIS:
+            base MIS
         """
         for head in sepDatabase.keys():
             newrow=[i for i in startrow]
 
             if len(sepDatabase[head])>=self._minSup:
                 newMIS=baseMIS
-                if newrow!=[]:
+                if newrow:
                     newrow.append(-1)
                 newrow.append(head)
                 newrow.append(-1)
@@ -226,8 +228,7 @@ class MMSBprefixSpan(_ab._sequentialPatterns):
                         newMIS=self._MIS[head]
                     if len(sepDatabase[head])>=newMIS:
                         self._finalPatterns[str(newrow)]=len(sepDatabase[head])
-                    give = []
-                    give.append(head)
+                    give = [head]
                     sepDatabase[head] = self.makeSupDatabase(sepDatabase[head], give)
                     newrow.pop()
                     seqDatabase, seqDatabaseSame = self.makeSeqDatabaseSame(sepDatabase[head], newrow)
@@ -240,8 +241,7 @@ class MMSBprefixSpan(_ab._sequentialPatterns):
                         newMIS = self._MIS[head]
                     if len(sepDatabase[head]) >= newMIS:
                         self._finalPatterns[str(newrow)] = len(sepDatabase[head])
-                    give = []
-                    give.append(head)
+                    give = [head]
                     sepDatabase[head] = self.makeSupDatabase(sepDatabase[head], give)
                     newrow.pop()
                     seqDatabase, seqDatabaseSame = self.makeSeqDatabaseSame(sepDatabase[head],newrow)
@@ -281,7 +281,7 @@ class MMSBprefixSpan(_ab._sequentialPatterns):
                 for i in line:
                     if supDatabase[i]>=self._minSup or i in head:
                         if len(newLine)>1:
-                            if (newLine[-1]!=-1 or i!=-1):
+                            if newLine[-1]!=-1 or i!=-1:
                                 newLine.append(i)
                         else:
                             newLine.append(i)
@@ -296,6 +296,7 @@ class MMSBprefixSpan(_ab._sequentialPatterns):
             what words and rows startrow have to add it
         :param startrow:
             the patterns get before
+        :param baseMIS: base MIS
         """
         
         for head in sepDatabase.keys():
@@ -419,8 +420,7 @@ class MMSBprefixSpan(_ab._sequentialPatterns):
             the word in latest sequence of startrow
         :return:
         """
-        sepDatabaseSame={}
-        sepDatabaseSame[startrow[-1]]=[]
+        sepDatabaseSame= {startrow[-1]: []}
         for line in database:
             addLine=0
             i=0

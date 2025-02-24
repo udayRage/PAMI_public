@@ -233,19 +233,14 @@ class generateTemporalDatabase:
         Generate a random array of length n whose values average to m
 
         :param nums: number of values
-
         :type nums: list
-
         :param avg: average value
-
         :type avg: float
-
         :param maxItems: maximum value
-
         :type maxItems: int
-
+        :param sumRes: Resultant sum
+        :type sumRes: float
         :return: random array
-
         :rtype: list
         """
 
@@ -302,14 +297,14 @@ class generateTemporalDatabase:
         print(self.df)
 
 if __name__ == '__main__':
-    numOfTransactions = 100
-    numItems = 20
-    avgTransactionLength = 6
+    numOfTransactions_ = 100
+    numItems_ = 20
+    avgTransactionLength_ = 6
     outFileName = 'temporal_out.txt'
-    sep = '\t'
+    sep_ = '\t'
     frameOrBase = "database"
 
-    temporalDB = generateTemporalDatabase(numOfTransactions, avgTransactionLength, numItems, outFileName,1,1,10,10)
+    temporalDB = generateTemporalDatabase(numOfTransactions_, avgTransactionLength_, numItems_, outFileName,1,1,10,10)
 
     temporalDB.createTemporalFile()
 

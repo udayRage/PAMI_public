@@ -100,9 +100,6 @@ class sparseDF2DB:
         Create transactional data base
         :param outputFile: str:
             Write transactional data base into outputFile
-       
-        :param inputDF: dataframe :
-            It is dense DataFrame
         :param condition: str :
             It is condition to judge the value in dataframe
         :param thresholdValue: int or float :
@@ -122,9 +119,6 @@ class sparseDF2DB:
         Create temporal data base
         :param outputFile: str:
             Write transactional data base into outputFile
-       
-        :param inputDF: dataframe :
-            It is dense DataFrame
         :param condition: str :
             It is condition to judge the value in dataframe
         :param thresholdValue: int or float :
@@ -144,14 +138,7 @@ class sparseDF2DB:
         """
         Create the utility database.
         :param outputFile: str:
-            Write transactional data base into outputFile
-       
-        :param inputDF: dataframe :
-            It is dense DataFrame
-        :param condition: str :
-            It is condition to judge the value in dataframe
-        :param thresholdValue: int or float :
-            User defined value.r
+            Write transactional database into outputFile
         :return: None
         """
         

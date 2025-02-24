@@ -37,6 +37,12 @@ class TKG(_ab._TKG):
     THREADED_DYNAMIC_SEARCH = True
 
     def __init__(self, iFile, k, maxNumberOfEdges=float('inf'), outputSingleVertices=True, outputGraphIds=False):
+        self._memoryRSS = None
+        self._memoryUSS = None
+        self.runtime = None
+        self.minSup = None
+        self.candidates = None
+        self.kSubgraphs = None
         self.iFile = iFile
         self.k = k
         self.outputGraphIds = outputGraphIds
@@ -181,7 +187,7 @@ class TKG(_ab._TKG):
 
                 # Include graph IDs if the feature is enabled
                 if self.outputGraphIds and subgraph.setOfGraphsIds:
-                    sb.append("x " + " ".join(str(id) for id in subgraph.setOfGraphsIds))
+                    sb.append("x " + " ".join(str(iD) for iD in subgraph.setOfGraphsIds))
 
                 sb.append("\n\n")
                 bw.write("".join(sb))
@@ -463,6 +469,12 @@ class TKG(_ab._TKG):
                     self.infrequentVerticesRemovedCount += 1
 
     def removeInfrequentVertexPairs(self, graphDB):
+
+        alreadySeenPair = None
+        matrix = None
+        mapEdgeLabelToSupport = None
+        alreadySeenEdgeLabel = None
+
         if TKG.ELIMINATE_INFREQUENT_EDGE_LABELS:
             matrix = _ab.SparseTriangularMatrix()
             alreadySeenPair = set()
@@ -556,7 +568,7 @@ class TKG(_ab._TKG):
 
             # Include graph IDs if the feature is enabled
             if self.outputGraphIds and subgraph.setOfGraphsIds:
-                subgraphDescription.append("x " + " ".join(str(id) for id in subgraph.setOfGraphsIds))
+                subgraphDescription.append("x " + " ".join(str(ID) for ID in subgraph.setOfGraphsIds))
             sb.append('\n'.join(subgraphDescription)) 
         return '\n\n'.join(sb)  
 

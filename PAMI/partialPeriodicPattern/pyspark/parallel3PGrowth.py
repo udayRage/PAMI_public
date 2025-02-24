@@ -108,8 +108,8 @@ class Node(object):
             for t in child._getTransactions():
                 t[0].append(child.item)
                 yield t
-        if (len(tids)>0):
-            yield ([],tids)
+        if len(tids)>0:
+            yield [],tids
 
     def addChild(self, node): 
         """
@@ -233,10 +233,10 @@ class Tree(object):
         for i in self.summaries[alpha]:
             set1=i.tids
             set2=[]
-            while(i.parent.item!=None):
+            while i.parent.item is not None:
                 set2.append(i.parent.item)
                 i=i.parent
-            if(len(set2)>0):
+            if len(set2)>0:
                 set2.reverse()
                 final_patterns.append(set2)
                 final_sets.append(set1)
@@ -310,16 +310,16 @@ class Tree(object):
         
         """
         for j in sorted(self.summaries,key= lambda x: (self.info.get(x),-x)):
-            if(isResponsible(j)):
+            if isResponsible(j):
                 rec_pattern=prefix.copy()
                 rec_pattern.append(glist[j])
-                yield (rec_pattern,self.info[j])
+                yield rec_pattern,self.info[j]
                 patterns,tids,info=self.get_condition_pattern(j)
                 conditional_tree=Tree()
                 conditional_tree.info=info
                 for pat in range(len(patterns)):
                     conditional_tree.add_transaction_summ(patterns[pat],tids[pat])
-                if(len(patterns)>=1):
+                if len(patterns)>=1:
                     for li_m in conditional_tree.generate_patterns(rec_pattern,glist):
                         yield li_m
             self.remove_node(j)
@@ -596,7 +596,7 @@ class parallel3PGrowth(_ab._partialPeriodicPatterns):
         for p in cond_pat:
             p1=[v for v in p if v in up_dict]
             trans=sorted(p1, key= lambda x: (up_dict.get(x),-x), reverse=True)
-            if(len(trans)>0):
+            if len(trans)>0:
                 pat.append(trans)
                 tids.append(cond_tids[count])
             count+=1
@@ -843,7 +843,7 @@ def cond_trans(cond_pat,cond_tids):
     for p in cond_pat:
         p1=[v for v in p if v in up_dict]
         trans=sorted(p1, key= lambda x: (up_dict.get(x),-x), reverse=True)
-        if(len(trans)>0):
+        if len(trans)>0:
             pat.append(trans)
             tids.append(cond_tids[count])
         count+=1

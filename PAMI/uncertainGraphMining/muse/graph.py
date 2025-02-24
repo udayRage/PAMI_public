@@ -3,8 +3,8 @@ from edge import Edge
 from dfsCode import DFSCode
 
 class UncertainGraph:
-    def __init__(self, id, vertexMap=None, dfsCode=None):
-        self.id = id
+    def __init__(self, iD, vertexMap=None, dfsCode=None):
+        self.id = iD
         self.vertexMap = {}
         self.implicatedGraphs = []
 

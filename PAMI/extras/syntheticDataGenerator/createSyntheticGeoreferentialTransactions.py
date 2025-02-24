@@ -1,5 +1,5 @@
 import random as _rd
-import sys as _sys
+#import sys as _sys
 
 
 class createSyntheticGeoreferentialTransaction:
@@ -54,7 +54,7 @@ class createSyntheticGeoreferentialTransaction:
         for i in range(self._totalTransactions):
             length = _rd.randint(1, self._avgTransactionLength + 20)
             st = str()
-            for i in range(length):
+            for _ in range(length):
                 rd = _rd.randint(0, len(items) - 1)
                 item = items[rd]
                 st = st + str(item) + '\t'

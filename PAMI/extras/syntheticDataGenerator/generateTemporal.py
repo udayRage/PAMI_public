@@ -36,12 +36,12 @@ Copyright (C)  2021 Rage Uday Kiran
      along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 
-from typing import Tuple, List, Union
+#from typing import Tuple, List, Union
 import pandas as pd
 import numpy as np
-import random
+#import random
 import sys
-import os
+#import os
 
 class generateTemporal:
     """
@@ -136,6 +136,7 @@ class generateTemporal:
         
         """
 
+        self.df = None
         self.numOfTransactions = numOfTransactions
         self.avgLenOfTransactions = avgLenOfTransactions
         self.numItems = numItems
@@ -163,7 +164,8 @@ class generateTemporal:
         """
         return self.df
     
-    def performCoinFlip(self, probability: float) -> bool:
+    @staticmethod
+    def performCoinFlip(probability: float) -> bool:
         """
         Perform a coin flip with the given probability.
         :param probability: probability to perform coin flip
@@ -175,7 +177,8 @@ class generateTemporal:
         return result == 1
 
 
-    def tuning(self, array, sumRes) -> np.ndarray:
+    @staticmethod
+    def tuning(array, sumRes) -> np.ndarray:
         """
         Tune the array so that the sum of the values is equal to sumRes
 
@@ -207,7 +210,7 @@ class generateTemporal:
         return array
         
 
-    def generateArray(self, nums, avg, maxItems, sumRes)->np.ndarray:
+    def generateArray(self, nums, maxItems, sumRes)->np.ndarray:
         """
         Generate a random array of length n whose values average to m
 
@@ -215,13 +218,13 @@ class generateTemporal:
 
         :type nums: int
 
-        :param avg: average value
-
-        :type avg: float
-
         :param maxItems: maximum value
 
         :type maxItems: int
+
+        :param sumRes: Resultant sum
+
+        :type sumRes: int
 
         :return: random array
 
@@ -262,13 +265,13 @@ class generateTemporal:
         """
 
         lines = [i for i in range(self.numOfTransactions) if self.performCoinFlip(self.percentage)]
-        values = self.generateArray(len(lines), self.avgLenOfTransactions, self.numItems, self.avgLenOfTransactions * self.numOfTransactions)
+        values = self.generateArray(len(lines), self.numItems, int(self.avgLenOfTransactions * self.numOfTransactions))
         # print(values, sum(values), self.avgLenOfTransactions * self.numOfTransactions, sum(values)/self.numOfTransactions)
         # print(lines)
 
         form = list(zip(lines, values))
 
-        database = [None for i in range(self.numOfTransactions)]
+        database = [None for _ in range(self.numOfTransactions)]
 
         for i in range(len(form)):
             database[form[i][0]] = np.random.choice(range(1, self.numItems + 1), form[i][1], replace=False)
@@ -280,6 +283,10 @@ class generateTemporal:
     def save(self, sep, filename) -> None:
         """
         Save the transactional database to a file
+
+        :param sep: Separator
+
+        :type sep: str
 
         :param filename: name of the file
 
@@ -298,21 +305,21 @@ class generateTemporal:
 
 
 if __name__ == '__main__':
-    numOfTransactions = 100
-    numItems = 20
+    numOfTransactions_ = 100
+    numItems_ = 20
     avgTransactionLength = 6
     outFileName = '3.txt'
-    sep = '\t'
+    sep_ = '\t'
     frameOrBase = "database"
 
-    temporalDB = generateTemporal(numOfTransactions, avgTransactionLength, numItems, outFileName)
+    temporalDB = generateTemporal(numOfTransactions_, avgTransactionLength, numItems_, outFileName)
 
     temporalDB.createTemporalFile()
-    temporalDB.save(sep, outFileName)
+    temporalDB.save(sep_, outFileName)
     print(temporalDB.getTransactions())
 
     obj = generateTemporal(int(sys.argv[1]), int(sys.argv[2]), int(sys.argv[3]),sys.argv[4])
-    obj.create()
+    obj.createTemporalFile()
     #obj.save("\t", sys.argv[4])
 
     # numOfTransactions = 100

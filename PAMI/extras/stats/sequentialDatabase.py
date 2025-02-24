@@ -43,7 +43,7 @@ import sys
 from typing import List, Dict, Tuple, Set, Union, Any, Generator
 
 
-class sequentialDatabase():
+class sequentialDatabase:
     """
     SequentialDatabase is to get stats of database like avarage, minimun, maximum  and so on.
 
@@ -198,7 +198,7 @@ class sequentialDatabase():
                             else:
                                 seq.append(i)
                                 subseq.append(len(i))
-                        if subseq!=[]:
+                        if subseq:
                             self.subSeqLengthList.append(subseq)
                         rowNum += 1
                         if seq:
@@ -352,10 +352,10 @@ class sequentialDatabase():
         rangeFrequencies = {}
         maximum = max([i for i in fre.values()])
         values = [int(i * maximum / 6) for i in range(1, 6)]
-        va = len({key: val for key, val in fre.items() if val > 0 and val < values[0]})
+        va = len({key: val for key, val in fre.items() if 0 < val < values[0]})
         rangeFrequencies[values[0]] = va
         for i in range(1, len(values)):
-            va = len({key: val for key, val in fre.items() if val < values[i] and val > values[i - 1]})
+            va = len({key: val for key, val in fre.items() if values[i] > val > values[i - 1]})
             rangeFrequencies[values[i]] = va
         return rangeFrequencies
 

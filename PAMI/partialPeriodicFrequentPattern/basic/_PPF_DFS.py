@@ -51,11 +51,12 @@ __copyright__ = """
 
 """
 
+from abc import ABC
 
 from PAMI.partialPeriodicFrequentPattern.basic.abstract import *
-import deprecated
+#import deprecated
 
-class PPF_DFS(partialPeriodicPatterns):
+class PPF_DFS(partialPeriodicPatterns, ABC):
     """
     :Description:   PPF_DFS is algorithm to mine the partial periodic frequent patterns.
 
@@ -203,16 +204,16 @@ class PPF_DFS(partialPeriodicPatterns):
             timeStamp, data = [], []
             if self._partialPeriodicPatterns__iFile.empty:
                 print("its empty..")
-            i = self._partialPeriodicPatterns__iFile.columns.values.tolist()
-            if 'ts' or 'TS' in i:
+            iList = self._partialPeriodicPatterns__iFile.columns.values.tolist()
+            if 'ts' or 'TS' in iList:
                 timeStamp = self._partialPeriodicPatterns__iFile['timeStamps'].tolist()
-            if 'Transactions' in i:
+            if 'Transactions' in iList:
                 data = self._partialPeriodicPatterns__iFile['Transactions'].tolist()
-            if 'Patterns' in i:
+            if 'Patterns' in iList:
                 data = self._partialPeriodicPatterns__iFile['Patterns'].tolist()
-            for i in range(len(data)):
-                tr = [timeStamp[i]]
-                tr.append(data[i])
+            for iList in range(len(data)):
+                tr = [timeStamp[iList]]
+                tr.append(data[iList])
                 self.__Database.append(tr)
             self.__lno = len(self.__Database)
 
@@ -222,7 +223,7 @@ class PPF_DFS(partialPeriodicPatterns):
                 for line in data:
                     self.__lno += 1
                     line = line.decode("utf-8")
-                    temp = [i.rstrip() for i in line.split(self._partialPeriodicPatterns__sep)]
+                    temp = [i_.rstrip() for i_ in line.split(self._partialPeriodicPatterns__sep)]
                     temp = [x for x in temp if x]
                     self.__Database.append(temp)
             else:
@@ -257,9 +258,9 @@ class PPF_DFS(partialPeriodicPatterns):
         if abs(0 - tids[0]) <= self._partialPeriodicPatterns__maxPer:
             sup += 1
         for j in range(len(tids) - 1):
-            i = j + 1
-            per = abs(tids[i] - tids[j])
-            if (per <= self._partialPeriodicPatterns__maxPer):
+            k = j + 1
+            per = abs(tids[k] - tids[j])
+            if per <= self._partialPeriodicPatterns__maxPer:
                 sup += 1
             cur = tids[j]
         if abs(self.__last - tids[len(tids) - 1]) <= self._partialPeriodicPatterns__maxPer:
@@ -289,7 +290,7 @@ class PPF_DFS(partialPeriodicPatterns):
         for j in range(len(tids) - 1):
             i = j + 1
             per = abs(tids[i] - tids[j])
-            if (per <= self._partialPeriodicPatterns__maxPer):
+            if per <= self._partialPeriodicPatterns__maxPer:
                 sup += 1
         if abs(tids[len(tids) - 1] - self.__last) <= self._partialPeriodicPatterns__maxPer:
             sup += 1
@@ -332,8 +333,8 @@ class PPF_DFS(partialPeriodicPatterns):
             s = line
             n = int(s[0])
             self.__last = max(self.__last, n)
-            for i in range(1, len(s)):
-                si = s[i]
+            for k_ in range(1, len(s)):
+                si = s[k_]
                 if abs(0 - n) <= self._partialPeriodicPatterns__maxPer:
                     if si not in self.__mapSupport:
                         self.__mapSupport[si] = [1, 1, n]
@@ -362,7 +363,7 @@ class PPF_DFS(partialPeriodicPatterns):
                 self.__mapSupport[x][0] += 1
         self.__mapSupport = {k: [v[1], v[0]] for k, v in self.__mapSupport.items() if
                              v[1] >= self._partialPeriodicPatterns__minSup and v[0] / (self._partialPeriodicPatterns__minSup + 1) >= self._partialPeriodicPatterns__minPR}
-        plist = [key for key, value in sorted(self.__mapSupport.items(), key=lambda x: (x[1][0], x[0]), reverse=True)]
+        plist = [key for key, value in sorted(self.__mapSupport.items(), key=lambda x_: (x_[1][0], x_[0]), reverse=True)]
         return plist
 
     def __save(self, prefix, suffix, tidsetx):
@@ -376,7 +377,7 @@ class PPF_DFS(partialPeriodicPatterns):
         :type tidsetx: list
         """
         tidsetx = list(set(tidsetx))
-        if (prefix == None):
+        if prefix is None:
             prefix = suffix
         else:
             prefix = prefix + suffix
@@ -396,20 +397,20 @@ class PPF_DFS(partialPeriodicPatterns):
         :param tidsets: time stamps of the items in the argument itemSets
         :type tidsets: list
         """
-        if (len(itemsets) == 1):
-            i = itemsets[0]
+        if len(itemsets) == 1:
+            item_ = itemsets[0]
             tidi = tidsets[0]
-            self.__save(prefix, [i], tidi)
+            self.__save(prefix, [item_], tidi)
             return
-        for i in range(len(itemsets)):
-            itemx = itemsets[i]
-            if (itemx == None):
+        for item_ in range(len(itemsets)):
+            itemx = itemsets[item_]
+            if itemx is None:
                 continue
-            tidsetx = tidsets[i]
+            tidsetx = tidsets[item_]
             classItemsets = []
             classtidsets = []
             itemsetx = [itemx]
-            for j in range(i + 1, len(itemsets)):
+            for j in range(item_ + 1, len(itemsets)):
                 itemj = itemsets[j]
                 tidsetj = tidsets[j]
                 y = list(set(tidsetx) & set(tidsetj))
@@ -434,13 +435,13 @@ class PPF_DFS(partialPeriodicPatterns):
         self.__creatingItemSets()
         plist = self.__oneItems(self.__path)
         self._partialPeriodicPatterns__finalPatterns = {}
-        for i in range(len(plist)):
-            itemx = plist[i]
+        for i__ in range(len(plist)):
+            itemx = plist[i__]
             tidsetx = self.__tidlist[itemx]
             itemsetx = [itemx]
             itemsets = []
             tidsets = []
-            for j in range(i + 1, len(plist)):
+            for j in range(i__ + 1, len(plist)):
                 itemj = plist[j]
                 tidsetj = self.__tidlist[itemj]
                 y1 = list(set(tidsetx) & set(tidsetj))

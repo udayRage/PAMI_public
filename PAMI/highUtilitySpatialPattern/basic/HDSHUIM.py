@@ -293,6 +293,7 @@ class HDSHUIM(_ab._utilityPatterns):
 
     def __init__(self, iFile: str, nFile: str, minUtil: int, sep: str="\t") -> None:
         super().__init__(iFile, nFile, minUtil, sep)
+        self.oFile = None
         self._startTime = 0
         self._endTime = 0
         self._huiCount = 0
@@ -343,11 +344,11 @@ class HDSHUIM(_ab._utilityPatterns):
             for line in file1:
                 line = line.split("\n")[0]
                 parts = line.split(self._sep)
-                parts = [i.strip() for i in parts]
+                parts = [i_.strip() for i_ in parts]
                 item = parts[0]
                 neigh1 = list()
-                for i in range(1, len(parts)):
-                    neigh1.append(parts[i])
+                for j in range(1, len(parts)):
+                    neigh1.append(parts[j])
                 self._neighbors[item] = set(neigh1)
         with open(self._iFile, 'r') as file:
             for line in file:
@@ -356,24 +357,24 @@ class HDSHUIM(_ab._utilityPatterns):
                 utilityString = (parts[2].split("\n")[0]).split(self._sep)
                 transUtility = int(parts[1])
                 trans1 = set()
-                for i in range(0, len(itemString)):
-                    trans1.add(itemString[i])
-                for i in range(0, len(itemString)):
-                    item = itemString[i]
+                for j in range(0, len(itemString)):
+                    trans1.add(itemString[j])
+                for j in range(0, len(itemString)):
+                    item = itemString[j]
                     twu = self._mapOfPMU.get(item)
                     if twu is None:
-                        twu = int(utilityString[i])
+                        twu = int(utilityString[j])
                     else:
-                        twu += int(utilityString[i])
+                        twu += int(utilityString[j])
                     self._mapOfPMU[item] = twu
                     if self._neighbors.get(item) is None:
                         continue
                     neighbours2 = trans1.intersection(self._neighbors.get(item))
                     for item2 in neighbours2:
                         if self._mapOfPMU.get(item2) is None:
-                            self._mapOfPMU[item2] = int(utilityString[i])
+                            self._mapOfPMU[item2] = int(utilityString[j])
                         else:
-                            self._mapOfPMU[item2] += int(utilityString[i])
+                            self._mapOfPMU[item2] += int(utilityString[j])
 
         listOfCUList = []
         hashTable = {}
@@ -394,10 +395,10 @@ class HDSHUIM(_ab._utilityPatterns):
                 newTwu = 0
                 txKey = []
                 revisedTrans = []
-                for i in range(0, len(items)):
+                for j in range(0, len(items)):
                     pair = _Pair()
-                    pair.item = items[i]
-                    pair.utility = int(utilities[i])
+                    pair.item = items[j]
+                    pair.utility = int(utilities[j])
                     if self._mapOfPMU.get(pair.item) >= minUtil:
                         revisedTrans.append(pair)
                         txKey.append(pair.item)
@@ -407,12 +408,12 @@ class HDSHUIM(_ab._utilityPatterns):
                 if len(revisedTrans) > 0:
                     if txKey1 not in hashTable.keys():
                         hashTable[txKey1] = len(mapItemsToCUList[revisedTrans[len(revisedTrans) - 1].item].elements)
-                        for i in range(len(revisedTrans) - 1, -1, -1):
-                            pair = revisedTrans[i]
+                        for j in range(len(revisedTrans) - 1, -1, -1):
+                            pair = revisedTrans[j]
                             cuListOfItems = mapItemsToCUList.get(pair.item)
                             element = _Element(ts, pair.utility, ru, 0, 0)
-                            if i > 0:
-                                element.prevPos = len(mapItemsToCUList[revisedTrans[i - 1].item].elements)
+                            if j > 0:
+                                element.prevPos = len(mapItemsToCUList[revisedTrans[j - 1].item].elements)
                             else:
                                 element.prevPos = -1
                             cuListOfItems.addElements(element)
@@ -420,22 +421,22 @@ class HDSHUIM(_ab._utilityPatterns):
                     else:
                         pos = hashTable[txKey1]
                         ru = 0
-                        for i in range(len(revisedTrans) - 1, -1, -1):
-                            cuListOfItems = mapItemsToCUList[revisedTrans[i].item]
-                            cuListOfItems.elements[pos].snu += revisedTrans[i].utility
+                        for j in range(len(revisedTrans) - 1, -1, -1):
+                            cuListOfItems = mapItemsToCUList[revisedTrans[j].item]
+                            cuListOfItems.elements[pos].snu += revisedTrans[j].utility
                             cuListOfItems.elements[pos].remainingUtility += ru
-                            cuListOfItems.sumSnu += revisedTrans[i].utility
+                            cuListOfItems.sumSnu += revisedTrans[j].utility
                             cuListOfItems.sumRemainingUtility += ru
-                            ru += revisedTrans[i].utility
+                            ru += revisedTrans[j].utility
                             pos = cuListOfItems.elements[pos].prevPos
                 # EUCS
-                for i in range(len(revisedTrans) - 1, -1, -1):
-                    pair = revisedTrans[i]
+                for j in range(len(revisedTrans) - 1, -1, -1):
+                    pair = revisedTrans[j]
                     mapFMAPItem = self._mapFMAP.get(pair.item)
                     if mapFMAPItem is None:
                         mapFMAPItem = {}
                         self._mapFMAP[pair.item] = mapFMAPItem
-                    for j in range(i + 1, len(revisedTrans)):
+                    for j in range(j + 1, len(revisedTrans)):
                         pairAfter = revisedTrans[j]
                         twuSUm = mapFMAPItem.get(pairAfter.item)
                         if twuSUm is None:
@@ -466,8 +467,8 @@ class HDSHUIM(_ab._utilityPatterns):
         :type minUtil:int
         :return: None
         """
-        for i in range(0, len(uList)):
-            x = uList[i]
+        for k in range(0, len(uList)):
+            x = uList[k]
             if x.item not in exNeighbours:
                 continue
             self._candidates += 1
@@ -478,7 +479,7 @@ class HDSHUIM(_ab._utilityPatterns):
                 self._saveItemSet(prefix, len(prefix), x.item, x.sumSnu + x.sumCu)
             if x.sumSnu + x.sumCu + x.sumRemainingUtility + x.sumCru >= minUtil:  # U-Prune # and (x.item in exNeighbours)):
                 ULIST = []
-                for j in range(i, len(uList)):
+                for j in range(k, len(uList)):
                     if (uList[j].item in exNeighbours) and (self._neighbors.get(x.item) is not None) and (
                             uList[j].item in self._neighbors.get(x.item)):
                         ULIST.append(uList[j])
@@ -511,8 +512,8 @@ class HDSHUIM(_ab._utilityPatterns):
         lau = []
         cUtil = []
         eyTs = []
-        for i in range(0, len(compactUList)):
-            uList = _CUList(compactUList[i].item)
+        for i__ in range(0, len(compactUList)):
+            uList = _CUList(compactUList[i__].item)
             exCul.append(uList)
             lau.append(0)
             cUtil.append(0)
@@ -523,7 +524,7 @@ class HDSHUIM(_ab._utilityPatterns):
             mapOfTWUF = self._mapFMAP[x.item]
             if mapOfTWUF is not None:
                 twuf = mapOfTWUF.get(compactUList[j].item)
-                if twuf != None and twuf < minUtil or (not (exCul[j].item in exNeighbours)):
+                if twuf is not None and twuf < minUtil or (not (exCul[j].item in exNeighbours)):
                     exCul[j] = None
                     exSZ = sz - 1
                 else:
@@ -557,12 +558,12 @@ class HDSHUIM(_ab._utilityPatterns):
                 newT1 = tuple(newT)
                 if newT1 not in hashTable.keys():
                     hashTable[newT1] = len(exCul[newT[len(newT) - 1]].elements)
-                    for i in range(len(newT) - 1, -1, -1):
-                        cuListOfItems = exCul[newT[i]]
-                        y = compactUList[newT[i]].elements[eyTs[newT[i]]]
+                    for i__ in range(len(newT) - 1, -1, -1):
+                        cuListOfItems = exCul[newT[i__]]
+                        y = compactUList[newT[i__]].elements[eyTs[newT[i__]]]
                         element = _Element(ex.ts, ex.snu + y.snu - ex.pu, ru, ex.snu, 0)
-                        if i > 0:
-                            element.prevPos = len(exCul[newT[i - 1]].elements)
+                        if i__ > 0:
+                            element.prevPos = len(exCul[newT[i__ - 1]].elements)
                         else:
                             element.prevPos = -1
                         cuListOfItems.addElements(element)
@@ -659,8 +660,8 @@ class HDSHUIM(_ab._utilityPatterns):
         """
         self._huiCount += 1
         res = str()
-        for i in range(0, prefixLen):
-            res += str(prefix[i]) + "\t"
+        for _ in range(0, prefixLen):
+            res += str(prefix[_]) + "\t"
         res += str(item)
         res1 = str(utility)
         self._finalPatterns[res] = res1

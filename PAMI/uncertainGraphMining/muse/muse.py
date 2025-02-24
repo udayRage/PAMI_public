@@ -3,6 +3,7 @@
 from PAMI.uncertainGraphMining.muse import abstract as _ab
 class Muse(_ab._MUSE):
     def __init__(self, file_path):
+        self.graphCount = None
         self.graphDatabase = self.readGraph(file_path)
         self.F = set()
 

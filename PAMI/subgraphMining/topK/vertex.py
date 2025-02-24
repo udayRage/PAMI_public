@@ -8,11 +8,11 @@ class Vertex:
         eList (list): A list of edges connected to the vertex.
 
     """
-    def __init__(self, id, vLabel):
+    def __init__(self, iD, vLabel):
         """
         Initializes the Vertex object.
         """
-        self.id = id
+        self.id = iD
         self.vLabel = vLabel
         self.eList = []  
 

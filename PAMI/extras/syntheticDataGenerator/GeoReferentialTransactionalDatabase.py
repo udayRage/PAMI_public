@@ -34,8 +34,8 @@ Copyright (C)  2021 Rage Uday Kiran
 
 import numpy as np
 import pandas as pd
-import time
-import sys, psutil, os, time, tqdm
+#import time
+import psutil, os, time, tqdm
 
 class GeoReferentialTransactionalDatabase:
     """
@@ -62,9 +62,10 @@ class GeoReferentialTransactionalDatabase:
 
     """
 
-    def getPoint(self, x1, y1, x2, y2):
+    @staticmethod
+    def getPoint(x1, y1, x2, y2):
 
-        return (np.random.randint(x1, x2), np.random.randint(y1, y2))
+        return np.random.randint(x1, x2), np.random.randint(y1, y2)
 
     def __init__(self, databaseSize, avgItemsPerTransaction, numItems, x1, y1, x2, y2, sep='\t') -> None:
         """
@@ -103,7 +104,8 @@ class GeoReferentialTransactionalDatabase:
         self._endTime = float()
         self._memoryUSS = float()
         self._memoryRSS = float()
-    def tuning(self, array, sumRes) -> np.ndarray:
+    @staticmethod
+    def tuning(array, sumRes) -> np.ndarray:
         """
         Tune the array so that the sum of the values is equal to sumRes
 
@@ -185,7 +187,7 @@ class GeoReferentialTransactionalDatabase:
         :return: None
         """
         self._startTime = time.time()
-        db = set()
+        #db = set()
 
         values = self.generateArray(self.databaseSize, self.avgItemsPerTransaction, self.numItems)
 

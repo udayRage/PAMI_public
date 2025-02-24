@@ -14,13 +14,13 @@ class syntheticUtilityDatabase:
                     Maximum utility range.
         avgTransactionLength : int
                     The length of average transaction.
-        memoryUSS : float
+        _memoryUSS : float
                     To store the total amount of USS memory consumed by the program
-        memoryRSS : float
+        _memoryRSS : float
                     To store the total amount of RSS memory consumed by the program
-        startTime : float
+        _startTime : float
                     To record the start time of the mining process
-        endTime : float
+        _endTime : float
                     To record the completion time of the mining process
 
     Methods:
@@ -97,7 +97,8 @@ class syntheticUtilityDatabase:
         self._memoryRSS = process.memory_info().rss
         self._endTime = time.time()
 
-    def createRandomNumbers(self, n: int, targetSum: int) -> list[float]:
+    @staticmethod
+    def createRandomNumbers(n: int, targetSum: int) -> list[float]:
         """
         Generate a list of random numbers with a specified target sum.
 

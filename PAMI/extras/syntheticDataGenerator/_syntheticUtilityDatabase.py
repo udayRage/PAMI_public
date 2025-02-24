@@ -71,7 +71,8 @@ class syntheticUtilityDatabase:
 
                 writer.write(f"{st}{st1}\n")
 
-    def createRandomNumbers(self, n: int, targetSum: int) -> list[float]:
+    @staticmethod
+    def createRandomNumbers(n: int, targetSum: int) -> list[float]:
         """
         Generate a list of random numbers with a specified target sum.
 

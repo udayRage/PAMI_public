@@ -179,6 +179,8 @@ class _Tree(object):
 
         :param alpha: To represent a Node in the tree
         :type alpha: Node
+        :param pattern: pattern
+        :type pattern: list
         :return: A tuple consisting of finalPatterns, conditional pattern base and information
         """
         finalPatterns = []
@@ -239,6 +241,7 @@ class _Tree(object):
         To calculate the periodicity and support
 
         :param timeStamps: Timestamps of an item set
+        :param pattern: pattern
         :return: support, periodicity
         """
 
@@ -273,6 +276,8 @@ class _Tree(object):
         :type conditionalPatterns: list
         :param conditionalTimeStamps: Represents the timestamps of a conditional patterns of a node
         :type conditionalTimeStamps: list
+        :param pattern: pattern
+        :type pattern: list
         :returns: Returns conditional transactions by removing non-periodic and non-frequent items
         """
         global _maxPer, _minSup

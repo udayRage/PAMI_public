@@ -58,7 +58,8 @@ Copyright (C)  2021 Rage Uday Kiran
 
 from PAMI.coveragePattern.basic import abstract as _ab
 from typing import List, Dict, Tuple, Set, Union, Any, Generator
-from deprecated import deprecated
+from deprecation import deprecated
+
 
 class CMine(_ab._coveragePatterns):
     """
@@ -177,7 +178,8 @@ class CMine(_ab._coveragePatterns):
     _lno = 0
 
 
-    def _convert(self, value) -> Union[int, float]:
+    @staticmethod
+    def _convert(value) -> Union[int, float]:
         """
         To convert the user specified minSup value
 
@@ -255,7 +257,7 @@ class CMine(_ab._coveragePatterns):
 
         :param item_set:
         :return: Dictionary
-        :rtype: dict
+        :rtype: dict[str,int]
         """
         bitset = {}
 
@@ -397,8 +399,8 @@ class CMine(_ab._coveragePatterns):
         """
         Function to send the set of coverage patterns after completion of the mining process
 
-        :return: returning coverage patterns
-        :rtype: dict
+        :return: Dictionary of patterns and their support counts.
+        :rtype: Dict[str, int]
         """
         return self._finalPatterns
 

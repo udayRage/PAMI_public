@@ -256,7 +256,8 @@ class CPPG(_ab._coveragePatterns):
             list2.append([i for i in dict1 if i in list1])
         return list2
 
-    def _buildProjectedDatabase(self, data: List[List[str]], info: List[str]) -> Dict[str, List[List[str]]]:
+    @staticmethod
+    def _buildProjectedDatabase(data: List[List[str]], info: List[str]) -> Dict[str, List[List[str]]]:
         """ To construct the projected database for each prefix
         :param data: list of transactions with support per prefix
         :type data: list
@@ -328,7 +329,8 @@ class CPPG(_ab._coveragePatterns):
             t1 = t1 + self._rankedUp[i] + "\t"
         return t1
 
-    def _convert(self, value: Union[int, float, str]) -> Union[int, float]:
+    @staticmethod
+    def _convert(value: Union[int, float, str]) -> Union[int, float]:
         """
         To convert the given user specified value
 

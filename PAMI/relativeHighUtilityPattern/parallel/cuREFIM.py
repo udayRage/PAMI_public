@@ -61,7 +61,7 @@ import psutil
 import cupy as cp
 import numpy as np
 
-from PAMI.relativeHighUtilitytPattern.basic import abstract as _ab
+from PAMI.relativeHighUtilityPattern.basic import abstract as _ab
 import pandas as pd
 from deprecated import deprecated
 
@@ -183,6 +183,16 @@ class GPUEFIM:
 
 
     def __init__(self, inputFile, minUtil, ratio, sep = '\t'):
+        self.runtime = None
+        self.start = None
+        self.memoryUSS = None
+        self.memoryRSS = None
+        self.numTransactions = None
+        self.secondaryLen = None
+        self.indexesEnd = None
+        self.indexesStart = None
+        self.utils = None
+        self.items = None
         self.inputFile = inputFile
         self.minUtil = minUtil
         self.sep = sep

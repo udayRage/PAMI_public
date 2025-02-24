@@ -3,7 +3,7 @@ import csv
 import time
 import psutil
 import numpy as np
-import deprecated
+from deprecated import deprecated
 import pycuda.driver as cuda
 from pycuda.compiler import SourceModule
 
@@ -180,79 +180,79 @@ class gPPMiner:
         """
         self.mine()
 
-    def __eclat(self, bitValues, keys, index2id):
-        """
-        Recursive Eclat
-
-        Args:
-        :param bitValues (list): bit array
-        :param keys (list): list of keys
-        :param index2id (list): list of index to id
-        """
-        print("Number of Keys: " + str(len(keys)))
-        locations = [0]
-        newKeys = []
-        for i in range(len(keys)):
-            for j in range(i+1, len(keys)):
-                if keys[i][:-1] == keys[j][:-1] and keys[i][-1] != keys[j][-1]:
-                    newCan = keys[i] + [keys[j][-1]]
-                    newKeys.append(newCan)
-                    locations.append(locations[-1]+len(newKeys[-1]))
-                else:
-                    break
-
-        if len(locations) > 1:
-            locations = np.array(locations, dtype=np.uint64)
-            newKeys = np.array(newKeys, dtype=np.uint64)
-            newKeys = newKeys.flatten()
-            period = np.zeros(len(newKeys), dtype=np.uint64)
-
-            totalMemory = period.nbytes + \
-                newKeys.nbytes + locations.nbytes + self.bvnb
-            if totalMemory > self.__GPU_MEM:
-                self.__GPU_MEM = totalMemory - self.__baseGPUMem
-
-            gpuPeriod = cuda.mem_alloc(period.nbytes)
-            gpuNewKeys = cuda.mem_alloc(newKeys.nbytes)
-            gpuLocations = cuda.mem_alloc(locations.nbytes)
-            cuda.memcpy_htod(gpuPeriod, period)
-            cuda.memcpy_htod(gpuNewKeys, newKeys)
-            cuda.memcpy_htod(gpuLocations, locations)
-
-            # print("GPU Launching")
-            self.supportAndPeriod(bitValues, gpuPeriod,
-                                  gpuNewKeys, gpuLocations, np.uint64(
-                                      len(locations)),
-                                  np.uint64(self.numberOfBits), np.uint64(
-                                      self.lengthOfArray),
-                                  np.uint64(self.period), np.uint64(
-                                      self.maxTimeStamp),
-                                  block=(32, 1, 1), grid=(len(locations)//32+1, 1, 1))
-
-            cuda.memcpy_dtoh(period, gpuPeriod)
-            # print("GPU Finished")
-
-            # free
-            gpuPeriod.free()
-            gpuNewKeys.free()
-            gpuLocations.free()
-
-            keys = newKeys
-            newKeys = []
-            for i in range(len(locations)-1):
-                # print(support[i], period[i])
-                # print("i: " + str(i), end="\r")
-                if period[i] > self.periodicSupport:
-                    key = keys[locations[i]:locations[i+1]]
-                    nkey = sorted([index2id[key[i]] for i in range(len(key))])
-                    if tuple(nkey) not in self.Patterns:
-                        self.Patterns[tuple(nkey)] = period[i]
-                        newKeys.append(list(key))
-            # print()
-
-            keys = newKeys
-            if len(keys) > 1:
-                self.__eclat(bitValues, keys, index2id)
+    # def __eclat(self, bitValues, keys, index2id):
+    #     """
+    #     Recursive Eclat
+    #
+    #     Args:
+    #     :param bitValues (list): bit array
+    #     :param keys (list): list of keys
+    #     :param index2id (list): list of index to id
+    #     """
+    #     print("Number of Keys: " + str(len(keys)))
+    #     locations = [0]
+    #     newKeys = []
+    #     for i in range(len(keys)):
+    #         for j in range(i+1, len(keys)):
+    #             if keys[i][:-1] == keys[j][:-1] and keys[i][-1] != keys[j][-1]:
+    #                 newCan = keys[i] + [keys[j][-1]]
+    #                 newKeys.append(newCan)
+    #                 locations.append(locations[-1]+len(newKeys[-1]))
+    #             else:
+    #                 break
+    #
+    #     if len(locations) > 1:
+    #         locations = np.array(locations, dtype=np.uint64)
+    #         newKeys = np.array(newKeys, dtype=np.uint64)
+    #         newKeys = newKeys.flatten()
+    #         period = np.zeros(len(newKeys), dtype=np.uint64)
+    #
+    #         totalMemory = period.nbytes + \
+    #             newKeys.nbytes + locations.nbytes + self.bvnb
+    #         if totalMemory > self.__GPU_MEM:
+    #             self.__GPU_MEM = totalMemory - self.__baseGPUMem
+    #
+    #         gpuPeriod = cuda.mem_alloc(period.nbytes)
+    #         gpuNewKeys = cuda.mem_alloc(newKeys.nbytes)
+    #         gpuLocations = cuda.mem_alloc(locations.nbytes)
+    #         cuda.memcpy_htod(gpuPeriod, period)
+    #         cuda.memcpy_htod(gpuNewKeys, newKeys)
+    #         cuda.memcpy_htod(gpuLocations, locations)
+    #
+    #         # print("GPU Launching")
+    #         self.supportAndPeriod(bitValues, gpuPeriod,
+    #                               gpuNewKeys, gpuLocations, np.uint64(
+    #                                   len(locations)),
+    #                               np.uint64(self.numberOfBits), np.uint64(
+    #                                   self.lengthOfArray),
+    #                               np.uint64(self.period), np.uint64(
+    #                                   self.maxTimeStamp),
+    #                               block=(32, 1, 1), grid=(len(locations)//32+1, 1, 1))
+    #
+    #         cuda.memcpy_dtoh(period, gpuPeriod)
+    #         # print("GPU Finished")
+    #
+    #         # free
+    #         gpuPeriod.free()
+    #         gpuNewKeys.free()
+    #         gpuLocations.free()
+    #
+    #         keys = newKeys
+    #         newKeys = []
+    #         for i in range(len(locations)-1):
+    #             # print(support[i], period[i])
+    #             # print("i: " + str(i), end="\r")
+    #             if period[i] > self.periodicSupport:
+    #                 key = keys[locations[i]:locations[i+1]]
+    #                 nkey = sorted([index2id[key[i]] for i in range(len(key))])
+    #                 if tuple(nkey) not in self.Patterns:
+    #                     self.Patterns[tuple(nkey)] = period[i]
+    #                     newKeys.append(list(key))
+    #         # print()
+    #
+    #         keys = newKeys
+    #         if len(keys) > 1:
+    #             self.__eclat(bitValues, keys, index2id)
 
     def mine(self):
         """

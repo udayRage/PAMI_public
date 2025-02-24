@@ -549,17 +549,17 @@ class FFIMiner(_ab._fuzzyFrequentPattenrs):
         :return: element  tid as given
         :rtype: element if exit or None
         """
-        List = uList.elements
+        List_ = uList.elements
         first = 0
-        last = len(List) - 1
+        last = len(List_) - 1
         while first <= last:
             mid = (first + last) >> 1
-            if List[mid].tid < tid:
+            if List_[mid].tid < tid:
                 first = mid + 1
-            elif List[mid].tid > tid:
+            elif List_[mid].tid > tid:
                 last = mid - 1
             else:
-                return List[mid]
+                return List_[mid]
         return None
 
     def _WriteOut(self, prefix: list, prefixLen: int, item: int, sumIUtil: float) -> None:

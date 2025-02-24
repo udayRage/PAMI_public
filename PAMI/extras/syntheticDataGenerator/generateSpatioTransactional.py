@@ -64,9 +64,10 @@ class generateSpatioTransactional:
 
     
     """
-    def getPoint(self, x1, y1, x2, y2):
+    @staticmethod
+    def getPoint(x1, y1, x2, y2):
 
-        return (np.random.randint(x1, x2), np.random.randint(y1, y2))
+        return np.random.randint(x1, x2), np.random.randint(y1, y2)
 
     def __init__(self, numLines, avgItemsPerLine, numItems, x1, y1, x2, y2) -> None:
         """
@@ -101,7 +102,8 @@ class generateSpatioTransactional:
                 point = self.getPoint(x1, y1, x2, y2)
             self.itemPoint[i] = point
     
-    def tuning(self, array, sumRes):
+    @staticmethod
+    def tuning(array, sumRes):
         """
         Tune the array so that the sum of the values is equal to sumRes
 
@@ -126,7 +128,7 @@ class generateSpatioTransactional:
                 array[randIndex] -= 1
             # if sum is too small, increase the smallest value
             else:
-                minIndex = np.argmin(array)
+                #minIndex = np.argmin(array)
                 array[randIndex] += 1
         return array
         
@@ -185,7 +187,7 @@ class generateSpatioTransactional:
         Generate the transactional database
         :return: None
         """
-        db = set()
+        #db = set()
 
         values = self.generateArray(self.numLines, self.avgItemsPerLine, self.numItems)
 

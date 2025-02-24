@@ -258,7 +258,7 @@ class PFECLAT(_ab._periodicFrequentPatterns):
         """
         self._startTime = _ab._time.time()
         self._finalPatterns = {}
-        frequentSets = self._creatingItemSets()
+        #frequentSets = self._creatingItemSets()
 
         items = {}
         maxTS = 0

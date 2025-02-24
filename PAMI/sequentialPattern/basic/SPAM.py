@@ -210,6 +210,7 @@ class SPAM(_ab._sequentialPatterns):
         Storing the complete sequences of the database/input file in a database variable
         """
         self._Database = []
+        temp2 = None
 
         if isinstance(self._iFile, _ab._pd.DataFrame):
             temp = []
@@ -220,15 +221,13 @@ class SPAM(_ab._sequentialPatterns):
                 temp = self._iFile['Transactions'].tolist()
             if "tid" in i:
                 temp2=self._iFile[''].tolist()
-            addList=[]
-            addList.append(temp[0])
+            addList= [temp[0]]
             for k in range(len(temp)-1):
                 if temp2[k]==temp[k+1]:
                     addList.append(temp[k+1])
                 else:
                     self._Database.append(addList)
-                    addList=[]
-                    addList.append(temp[k+1])
+                    addList= [temp[k + 1]]
             self._Database.append(addList)
         if isinstance(self._iFile, str):
             if _ab._validators.url(self._iFile):

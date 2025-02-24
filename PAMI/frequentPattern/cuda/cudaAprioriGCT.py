@@ -162,7 +162,8 @@ class cudaAprioriGCT(_ab._frequentPatterns):
     _minSup = 0
     _finalPatterns = {}
 
-    def __init__(self, filePath, minSup, sep):
+    def __init__(self, filePath, minSup, iFile, sep='\t'):
+        super().__init__(iFile, minSup, sep)
         self._iFile = filePath
         self._sep = sep
         self._minSup = minSup
@@ -396,11 +397,11 @@ class cudaAprioriGCT(_ab._frequentPatterns):
 
 if __name__ == "__main__":
     _ap = str()
-    if len(_ab._sys.argv) == 4 or len(_ab._sys.argv) == 5:
+    if len(_ab._sys.argv) == 5 or len(_ab._sys.argv) == 6:
+        if len(_ab._sys.argv) == 6:
+            _ap = cudaAprioriGCT(_ab._sys.argv[1], _ab._sys.argv[3], _ab._sys.argv[4],_ab._sys.argv[5])
         if len(_ab._sys.argv) == 5:
-            _ap = cudaAprioriGCT(_ab._sys.argv[1], _ab._sys.argv[3], _ab._sys.argv[4])
-        if len(_ab._sys.argv) == 4:
-            _ap = cudaAprioriGCT(_ab._sys.argv[1], _ab._sys.argv[3])
+            _ap = cudaAprioriGCT(_ab._sys.argv[1],_ab._sys.argv[3],_ab._sys.argv[4],"\t")
         _ap.mine()
         _ap.mine()
         print("Total number of Frequent Patterns:", len(_ap.getPatterns()))

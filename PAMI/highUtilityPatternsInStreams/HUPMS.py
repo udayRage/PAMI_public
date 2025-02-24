@@ -338,7 +338,7 @@ class _HUSTree:
             self.windowUtility -= currentNode.children[child].utility[0]
             self.removeBatchUtility(currentNode.children[child])
 
-            if(sum(currentNode.children[child].utility) == 0):
+            if sum(currentNode.children[child].utility) == 0:
                 del currentNode.children[child]
 
 
@@ -758,7 +758,7 @@ class HUPMS(_hus._highUtilityPatternStreamMining):
         """
         This function will start the mining process
         """
-        global _minUtil
+        #global _minUtil
         self.__startTime = _hus._time.time()
         if self._iFile is None:
             raise Exception("Please enter the file path or file name:")
@@ -804,7 +804,7 @@ class HUPMS(_hus._highUtilityPatternStreamMining):
                 for itemSet in filteredItemsets[itemSetLen]:
                     itemSetUtility = 0
                     for transId in range(startIndex, endIndex):
-                        if (self.contains(list(transactionwiseUtility[transId].keys()), itemSet)):
+                        if self.contains(list(transactionwiseUtility[transId].keys()), itemSet):
                             for item in itemSet:
                                 itemSetUtility += transactionwiseUtility[transId][item]
 
@@ -913,7 +913,7 @@ class HUPMS(_hus._highUtilityPatternStreamMining):
         print("Total ExecutionTime in ms:", self.getRuntime())
 
 
-    def save(self):
+    def save(self,):
         """
         Complete set of frequent patterns will be loaded in to an output file
         """

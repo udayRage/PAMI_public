@@ -52,9 +52,9 @@ __copyright__ = """
 
 
 
-from PAMI.partialPeriodicPattern.basic import abstract as _ab
+#from PAMI.partialPeriodicPattern.basic import abstract as _ab
 from typing import List, Dict, Tuple, Set, Union, Any, Generator
-import pandas as pd
+#import pandas as pd
 
 from PAMI.partialPeriodicPattern.basic import abstract as _ab
 import pandas as pd

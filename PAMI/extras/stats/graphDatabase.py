@@ -3,9 +3,12 @@ import matplotlib.pyplot as plt
 
 class graphDatabase:
 
+
     def __init__(self, iFile):
         self.graphs = []
         current_graph = {'vertices': [], 'edges': []}
+        self.edges_per_graph = None
+        self.nodes_per_graph = None
 
         with open(iFile, 'r') as file:
             for line in file:

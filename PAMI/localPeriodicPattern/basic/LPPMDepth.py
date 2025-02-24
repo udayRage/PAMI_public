@@ -252,6 +252,7 @@ class LPPMDepth(_ab._localPeriodicPatterns):
         Create tsList as bit vector from temporal data.
         """
         count = 1
+        bitVector = None
         for line in self.__Database:
             bitVector = 0b1 << count
             bitVector = bitVector | 0b1
@@ -555,17 +556,19 @@ class LPPMDepth(_ab._localPeriodicPatterns):
         print("Total ExecutionTime in ms:",  self.getRuntime())
 
 
+
 if __name__ == '__main__':
     _ap = str()
     if len(_ab._sys.argv) == 5 or len(_ab._sys.argv) == 6:
         if len(_ab._sys.argv) == 6:
             _ap = LPPMDepth(_ab._sys.argv[1], _ab._sys.argv[3], float(_ab._sys.argv[4]), _ab._sys.argv[5])
+            _ap.mine()
+            _ap.save(_ab._sys.argv[2])
         if len(_ab._sys.argv) == 5:
-            _ap = LPPMDepth(_ab._sys.argv[1], _ab._sys.argv[3], float(_ab._sys.argv[4]))
-        _ap.mine()
-        _ap.mine()
+            _ap = LPPMDepth(_ab._sys.argv[1], _ab._sys.argv[2], float(_ab._sys.argv[3]), _ab._sys.argv[4])
+            _ap.mine()
+
         print("Total number of Local Periodic Patterns:", len(_ap.getPatterns()))
-        _ap.save(_ab._sys.argv[2])
         print("Total Memory in USS:", _ap.getMemoryUSS())
         print("Total Memory in RSS", _ap.getMemoryRSS())
         print("Total ExecutionTime in seconds:", _ap.getRuntime())

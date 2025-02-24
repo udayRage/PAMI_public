@@ -1,4 +1,4 @@
-# GTCP is graph transactional coverage pattern mining algorithm which esentially computes the coverage patterns for graph transactional data with applications in Drug discovery 
+# GTCP is graph transactional coverage pattern mining algorithm which essentially computes the coverage patterns for graph transactional data with applications in Drug discovery
 # **Importing this algorithm into a python program**
 # --------------------------------------------------------
 
@@ -31,7 +31,7 @@
 from bitarray import bitarray
 from PAMI.subgraphMining.basic import gspan as gsp
 from PAMI.extras.stats import graphDatabase as gdb
-from PAMI.GraphTransactionalCoveragePattern.basic import abstract as _ab
+from PAMI.graphTransactionalCoveragePattern.basic import abstract as _ab
 
 class GTCP:
     def __init__(self,iFile,minsup,minGTC,minGTPC,maxOR=0.2):
@@ -45,7 +45,14 @@ class GTCP:
             Df: Flat transactional Dataset
         """
 
-        self.Df=[]
+        self.Nol = None
+        self.Nol_1 = None
+        self._endTime = None
+        self._memoryUSS = None
+        self._memoryRSS = None
+        self._startTime = None
+        self.Df=None
+        self.Nol_1_temp = []
         self.Sf=[]
         self.L={}
         self.iFile=iFile
@@ -109,7 +116,7 @@ class GTCP:
         
         intersection=lastcoverage & lastbutcoverage
         cs= (lastcoverage | lastbutcoverage).count()/len(self.Sf)
-        return intersection.count()/self.Df[lastitem].count(),cs
+        return intersection.count() / self.Df[lastitem].count(), cs
 
 
     def GetFIDBasedFlatTransactions(self):
@@ -185,7 +192,7 @@ class GTCP:
         self.Nol_1=self.getallFreq1()
         l=1
         self.L=[]
-        self.Nol_1_temp=[]
+
         for g in self.Nol_1:
             if self.Coverage(g[0])>=self.minGTPC:
                 self.L.append((g,self.Coverage(g[0])))

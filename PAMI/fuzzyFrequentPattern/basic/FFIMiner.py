@@ -166,6 +166,7 @@ class FFIMiner(_ab._fuzzyFrequentPattenrs):
 
     def __init__(self, iFile: str, minSup: float, sep: str="\t") -> None:
         super().__init__(iFile, minSup, sep)
+        self._Database = None
         self._startTime = 0
         self._endTime = 0
         self._dbLen = 0

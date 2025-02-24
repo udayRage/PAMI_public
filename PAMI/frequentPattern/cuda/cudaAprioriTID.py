@@ -196,7 +196,7 @@ class cudaAprioriTID:
     _minSup = 0
     Patterns = {}
 
-    def __init__(self, filePath, sep, minSup):
+    def __init__(self, filePath, minSup, sep='\t'):
         self.filePath = filePath
         self.sep = sep
         self.minSup = minSup

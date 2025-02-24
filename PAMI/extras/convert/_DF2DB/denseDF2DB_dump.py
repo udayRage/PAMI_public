@@ -40,7 +40,7 @@ __copyright__ = """
 
 import pandas as pd
 import sys
-class DenseFormatDF():
+class DenseFormatDF:
     """
     :Description: This class create Data Base from DataFrame.
 
@@ -316,6 +316,6 @@ class DenseFormatDF():
 if __name__ == '__main__':
 
 
-    obj = DenseFormatDF(sys.argv[1], sys.argv[2])
-    obj.getFileName(sys.argv[3])
+    obj = DenseFormatDF(sys.argv[1], sys.argv[2],float(sys.argv[3]))
+    obj.getFileName()
 

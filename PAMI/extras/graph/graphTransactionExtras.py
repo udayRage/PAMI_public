@@ -67,7 +67,7 @@ class GraphTransactionExtras:
     def getGraphById(self, graphId):
         """
         Retrieves a specific graph by its ID.
-        :param graph_id: The ID of the graph to retrieve.
+        :param graphId: The ID of the graph to retrieve.
         :return: The graph object with the specified ID or None if not found.
         """
         for graph in self.graphs:

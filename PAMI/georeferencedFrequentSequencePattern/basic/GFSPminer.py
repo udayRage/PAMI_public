@@ -243,6 +243,7 @@ class GFSPminer(_ab._GeorefarencedFequentialPatterns):
 
         if isinstance(self._iFile, _ab._pd.DataFrame):
             temp = []
+            temp2 = []
             if self._iFile.empty:
                 print("its empty..")
             i = self._iFile.columns.values.tolist()
@@ -250,15 +251,13 @@ class GFSPminer(_ab._GeorefarencedFequentialPatterns):
                 temp = self._iFile['Transactions'].tolist()
             if "tid" in i:
                 temp2 = self._iFile[''].tolist()
-            addList = []
-            addList.append(temp[0])
+            addList = [temp[0]]
             for k in range(len(temp) - 1):
                 if temp2[k] == temp[k + 1]:
                     addList.append(temp[k + 1])
                 else:
                     self._Database.append(addList)
-                    addList = []
-                    addList.append(temp[k + 1])
+                    addList = [temp[k + 1]]
             self._Database.append(addList)
         if isinstance(self._iFile, str):
             if _ab._validators.url(self._iFile):
@@ -545,24 +544,24 @@ class GFSPminer(_ab._GeorefarencedFequentialPatterns):
 
 
             else:
-                next = {}
+                _next = {}
                 for seq in self._xLenDatabase[rowLen][bs][latestWord2].keys():
                     if len(self._xLenDatabase[rowLen][bs][latestWord][seq]) >= 2:
-                        next[seq] = self._xLenDatabase[rowLen][bs][latestWord][seq][1:]
-                if len(next) >= self._minSup:
+                        _next[seq] = self._xLenDatabase[rowLen][bs][latestWord][seq][1:]
+                if len(_next) >= self._minSup:
                     nextRow, nextbs = self.makeNextRow(bs, latestWord, latestWord2)
                     if str(nextRow) not in self._finalPatterns.keys():
                         if nextbs not in self._xLenDatabase[rowLen + 1]:
                             self._xLenDatabase[rowLen + 1][nextbs] = {}
-                        self._finalPatterns[str(nextRow)] = len(next)
-                        self._xLenDatabase[rowLen + 1][nextbs][latestWord2] = {i: next[i] for i in next}
+                        self._finalPatterns[str(nextRow)] = len(_next)
+                        self._xLenDatabase[rowLen + 1][nextbs][latestWord2] = {i: _next[i] for i in _next}
                     else:
                         if nextbs not in self._xLenDatabase[rowLen + 1]:
                             self._xLenDatabase[rowLen + 1][nextbs] = {}
-                        self._xLenDatabase[rowLen + 1][nextbs][latestWord2] = {i: next[i] for i in next}
+                        self._xLenDatabase[rowLen + 1][nextbs][latestWord2] = {i: _next[i] for i in _next}
                 else:
                     nextRow, nextbs = self.makeNextRow(bs, latestWord, latestWord2)
-                    self._failPatterns[str(nextRow)] = len(next)
+                    self._failPatterns[str(nextRow)] = len(_next)
         if bs in self._xLenDatabaseSame[rowLen]:
             for latestWord2 in self._xLenDatabaseSame[rowLen][bs]:
                 if latestWord in self._NeighboursMap[latestWord2]:
@@ -653,7 +652,7 @@ class GFSPminer(_ab._GeorefarencedFequentialPatterns):
         """
         if len(self._xLenDatabase[rowLen][bs][latestWord].keys()) <= len(
                 self._xLenDatabase[rowLen][bs][latestWord2].keys()):
-            next = {}
+            _next = {}
 
             for seq in self._xLenDatabase[rowLen][bs][latestWord].keys():
                 if seq in self._xLenDatabase[rowLen][bs][latestWord2].keys():
@@ -662,24 +661,24 @@ class GFSPminer(_ab._GeorefarencedFequentialPatterns):
                         x = [i for i in self._xLenDatabase[rowLen][bs][latestWord2][seq] if
                              i > self._xLenDatabase[rowLen][bs][latestWord][seq][0]]
                         if len(x) != 0:
-                            next[seq] = x
-            if len(next) >= self._minSup:
+                            _next[seq] = x
+            if len(_next) >= self._minSup:
                 nextRow, nextbs = self.makeNextRow(bs, latestWord, latestWord2)
                 if str(nextRow) not in self._finalPatterns.keys():
-                    self._finalPatterns[str(nextRow)] = len(next)
+                    self._finalPatterns[str(nextRow)] = len(_next)
                     if nextbs not in self._xLenDatabase[rowLen + 1]:
                         self._xLenDatabase[rowLen + 1][nextbs] = {}
-                    self._xLenDatabase[rowLen + 1][nextbs][latestWord2] = {i: next[i] for i in next}
+                    self._xLenDatabase[rowLen + 1][nextbs][latestWord2] = {i: _next[i] for i in _next}
                 else:
                     if nextbs not in self._xLenDatabase[rowLen + 1]:
                         self._xLenDatabase[rowLen + 1][nextbs] = {}
-                    self._xLenDatabase[rowLen + 1][nextbs][latestWord2] = {i: next[i] for i in next}
+                    self._xLenDatabase[rowLen + 1][nextbs][latestWord2] = {i: _next[i] for i in _next}
             else:
                 nextRow, nextbs = self.makeNextRow(bs, latestWord, latestWord2)
-                self._failPatterns[str(nextRow)] = len(next)
+                self._failPatterns[str(nextRow)] = len(_next)
 
         else:
-            next = {}
+            _next = {}
 
             for seq in self._xLenDatabase[rowLen][bs][latestWord2].keys():
                 if seq in self._xLenDatabase[rowLen][bs][latestWord].keys():
@@ -688,21 +687,21 @@ class GFSPminer(_ab._GeorefarencedFequentialPatterns):
                         x = [i for i in self._xLenDatabase[rowLen][bs][latestWord2][seq] if
                              i > self._xLenDatabase[rowLen][bs][latestWord][seq][0]]
                         if len(x) != 0:
-                            next[seq] = x
-            if len(next) >= self._minSup:
+                            _next[seq] = x
+            if len(_next) >= self._minSup:
                 nextRow, nextbs = self.makeNextRow(bs, latestWord, latestWord2)
                 if str(nextRow) not in self._finalPatterns.keys():
                     if nextbs not in self._xLenDatabase[rowLen + 1]:
                         self._xLenDatabase[rowLen + 1][nextbs] = {}
-                    self._finalPatterns[str(nextRow)] = len(next)
-                    self._xLenDatabase[rowLen + 1][nextbs][latestWord2] = {i: next[i] for i in next}
+                    self._finalPatterns[str(nextRow)] = len(_next)
+                    self._xLenDatabase[rowLen + 1][nextbs][latestWord2] = {i: _next[i] for i in _next}
                 else:
                     if nextbs not in self._xLenDatabase[rowLen + 1]:
                         self._xLenDatabase[rowLen + 1][nextbs] = {}
-                    self._xLenDatabase[rowLen + 1][nextbs][latestWord2] = {i: next[i] for i in next}
+                    self._xLenDatabase[rowLen + 1][nextbs][latestWord2] = {i: _next[i] for i in _next}
             else:
                 nextRow, nextbs = self.makeNextRow(bs, latestWord, latestWord2)
-                self._failPatterns[str(nextRow)] = len(next)
+                self._failPatterns[str(nextRow)] = len(_next)
 
     def makeLater(self, rowLen, bs, latestWord, latestWord2):
         """
@@ -788,55 +787,55 @@ class GFSPminer(_ab._GeorefarencedFequentialPatterns):
         """
         if len(self._xLenDatabase[rowLen][bs][latestWord].keys()) <= len(
                 self._xLenDatabaseSame[rowLen][bs][latestWord2].keys()):
-            next = {}
+            _next = {}
 
             for seq in self._xLenDatabase[rowLen][bs][latestWord].keys():
                 if seq in self._xLenDatabaseSame[rowLen][bs][latestWord2].keys():
-                    if self._xLenDatabaseSame[rowLen][bs][latestWord2][seq] != []:
+                    if self._xLenDatabaseSame[rowLen][bs][latestWord2][seq]:
                         x = [i for i in self._xLenDatabase[rowLen][bs][latestWord][seq] if
                              i > self._xLenDatabaseSame[rowLen][bs][latestWord2][seq][0]]
                         if len(x) != 0:
-                            next[seq] = x
-            if len(next) >= self._minSup:
+                            _next[seq] = x
+            if len(_next) >= self._minSup:
 
                 nextRow, nextbs = self.makeNextRowSame(bs, latestWord2, latestWord)
                 if str(nextRow) not in self._finalPatterns.keys():
                     if nextbs not in self._xLenDatabase[rowLen + 1]:
                         self._xLenDatabase[rowLen + 1][nextbs] = {}
-                    self._finalPatterns[str(nextRow)] = len(next)
-                    self._xLenDatabase[rowLen + 1][nextbs][latestWord] = {i: next[i] for i in next}
+                    self._finalPatterns[str(nextRow)] = len(_next)
+                    self._xLenDatabase[rowLen + 1][nextbs][latestWord] = {i: _next[i] for i in _next}
                 else:
                     if nextbs not in self._xLenDatabase[rowLen + 1]:
                         self._xLenDatabase[rowLen + 1][nextbs] = {}
-                    self._xLenDatabase[rowLen + 1][nextbs][latestWord] = {i: next[i] for i in next}
+                    self._xLenDatabase[rowLen + 1][nextbs][latestWord] = {i: _next[i] for i in _next}
             else:
                 nextRow, nextbs = self.makeNextRowSame(bs, latestWord2, latestWord)
-                self._failPatterns[str(nextRow)] = len(next)
+                self._failPatterns[str(nextRow)] = len(_next)
 
         else:
-            next = {}
+            _next = {}
             for seq in self._xLenDatabaseSame[rowLen][bs][latestWord2].keys():
                 if seq in self._xLenDatabase[rowLen][bs][latestWord].keys():
-                    if self._xLenDatabaseSame[rowLen][bs][latestWord2][seq] != []:
+                    if self._xLenDatabaseSame[rowLen][bs][latestWord2][seq]:
                         x = [i for i in self._xLenDatabase[rowLen][bs][latestWord][seq] if
                              i > self._xLenDatabaseSame[rowLen][bs][latestWord2][seq][0]]
                         if len(x) != 0:
-                            next[seq] = x
-            if len(next) >= self._minSup:
+                            _next[seq] = x
+            if len(_next) >= self._minSup:
                 nextRow, nextbs = self.makeNextRowSame(bs, latestWord2, latestWord)
                 if str(nextRow) not in self._finalPatterns.keys():
                     if nextbs not in self._xLenDatabase[rowLen + 1]:
                         self._xLenDatabase[rowLen + 1][nextbs] = {}
-                    self._finalPatterns[str(nextRow)] = len(next)
-                    self._xLenDatabase[rowLen + 1][nextbs][latestWord] = {i: next[i] for i in next}
+                    self._finalPatterns[str(nextRow)] = len(_next)
+                    self._xLenDatabase[rowLen + 1][nextbs][latestWord] = {i: _next[i] for i in _next}
 
                 else:
                     if nextbs not in self._xLenDatabase[rowLen + 1]:
                         self._xLenDatabase[rowLen + 1][nextbs] = {}
-                    self._xLenDatabase[rowLen + 1][nextbs][latestWord] = {i: next[i] for i in next}
+                    self._xLenDatabase[rowLen + 1][nextbs][latestWord] = {i: _next[i] for i in _next}
             else:
                 nextRow, nextbs = self.makeNextRowSame(bs, latestWord2, latestWord)
-                self._failPatterns[str(nextRow)] = len(next)
+                self._failPatterns[str(nextRow)] = len(_next)
 
     def makeSame3(self, rowLen, bs, latestWord, latestWord2):
         """
@@ -854,55 +853,55 @@ class GFSPminer(_ab._GeorefarencedFequentialPatterns):
         """
         if len(self._xLenDatabaseSame[rowLen][bs][latestWord].keys()) <= len(
                 self._xLenDatabaseSame[rowLen][bs][latestWord2].keys()):
-            next = {}
+            _next = {}
 
             for seq in self._xLenDatabaseSame[rowLen][bs][latestWord].keys():
                 if seq in self._xLenDatabaseSame[rowLen][bs][latestWord2].keys():
                     x = list(sorted(set(self._xLenDatabaseSame[rowLen][bs][latestWord][seq]) & set(
                         self._xLenDatabaseSame[rowLen][bs][latestWord2][seq])))
                     if len(x) != 0:
-                        next[seq] = x
-            if len(next) >= self._minSup:
+                        _next[seq] = x
+            if len(_next) >= self._minSup:
 
                 nextRow, nextbs, nextLate = self.makeNextRowSame2(bs, latestWord, latestWord2)
                 if str(nextRow) not in self._finalPatterns.keys():
                     if nextbs not in self._xLenDatabaseSame[rowLen + 1]:
                         self._xLenDatabaseSame[rowLen + 1][nextbs] = {}
 
-                    self._finalPatterns[str(nextRow)] = len(next)
-                    self._xLenDatabaseSame[rowLen + 1][nextbs][nextLate] = {i: next[i] for i in next}
+                    self._finalPatterns[str(nextRow)] = len(_next)
+                    self._xLenDatabaseSame[rowLen + 1][nextbs][nextLate] = {i: _next[i] for i in _next}
                 else:
                     if nextbs not in self._xLenDatabaseSame[rowLen + 1]:
                         self._xLenDatabaseSame[rowLen + 1][nextbs] = {}
-                    self._xLenDatabaseSame[rowLen + 1][nextbs][nextLate] = {i: next[i] for i in next}
+                    self._xLenDatabaseSame[rowLen + 1][nextbs][nextLate] = {i: _next[i] for i in _next}
             else:
                 nextRow, nextbs, nextLate = self.makeNextRowSame2(bs, latestWord, latestWord2)
-                self._failPatterns[str(nextRow)] = len(next)
+                self._failPatterns[str(nextRow)] = len(_next)
         else:
-            next = {}
+            _next = {}
 
             for seq in self._xLenDatabaseSame[rowLen][bs][latestWord2].keys():
                 if seq in self._xLenDatabaseSame[rowLen][bs][latestWord].keys():
                     x = list(sorted(set(self._xLenDatabaseSame[rowLen][bs][latestWord][seq]) & set(
                         self._xLenDatabaseSame[rowLen][bs][latestWord2][seq])))
                     if len(x) != 0:
-                        next[seq] = x
-            if len(next) >= self._minSup:
+                        _next[seq] = x
+            if len(_next) >= self._minSup:
 
                 nextRow, nextbs, nextLate = self.makeNextRowSame2(bs, latestWord, latestWord2)
                 if str(nextRow) not in self._finalPatterns.keys():
                     if nextbs not in self._xLenDatabaseSame[rowLen + 1]:
                         self._xLenDatabaseSame[rowLen + 1][nextbs] = {}
 
-                    self._finalPatterns[str(nextRow)] = len(next)
-                    self._xLenDatabaseSame[rowLen + 1][nextbs][nextLate] = {i: next[i] for i in next}
+                    self._finalPatterns[str(nextRow)] = len(_next)
+                    self._xLenDatabaseSame[rowLen + 1][nextbs][nextLate] = {i: _next[i] for i in _next}
                 else:
                     if nextbs not in self._xLenDatabaseSame[rowLen + 1]:
                         self._xLenDatabaseSame[rowLen + 1][nextbs] = {}
-                    self._xLenDatabaseSame[rowLen + 1][nextbs][nextLate] = {i: next[i] for i in next}
+                    self._xLenDatabaseSame[rowLen + 1][nextbs][nextLate] = {i: _next[i] for i in _next}
             else:
                 nextRow, nextbs, nextLate = self.makeNextRowSame2(bs, latestWord, latestWord2)
-                self._failPatterns[str(nextRow)] = len(next)
+                self._failPatterns[str(nextRow)] = len(_next)
 
     def makexLenDatabaseSame(self, rowLen, bs, latestWord):
         """

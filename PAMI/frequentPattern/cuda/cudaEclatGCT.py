@@ -54,7 +54,7 @@ Copyright (C)  2021 Rage Uday Kiran
 from deprecated import deprecated
 from PAMI.frequentPattern.basic import abstract as _ab
 
-minSup = str()
+#minSup = str()
 _ab._sys.setrecursionlimit(20000)
 
 import os
@@ -163,7 +163,7 @@ class cudaEclatGCT:
     _minSup = 0
     _finalPatterns = {}
 
-    def __init__(self, filePath, minSup, sep):
+    def __init__(self, filePath, minSup, sep='\t'):
         self._iFile = filePath
         self._sep = sep
         self._minSup = minSup
@@ -363,7 +363,7 @@ class cudaEclatGCT:
 
         self.__creatingItemSets()
         self._minSup = self.__convert(self._minSup)
-        minSup = self._minSup
+        #minSup = self._minSup
         vb_data, idx2item = self.compute_vertical_bitvector_data()
 
         for i in range(len(vb_data)):

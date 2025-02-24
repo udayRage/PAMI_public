@@ -80,7 +80,8 @@ class generateTransactional:
         self.numItems = numItems
         self.db = []
     
-    def tuning(self, array, sumRes) -> np.ndarray:
+    @staticmethod
+    def tuning(array, sumRes) -> np.ndarray:
         """
         Tune the array so that the sum of the values is equal to sumRes
 
@@ -105,7 +106,7 @@ class generateTransactional:
                 array[randIndex] -= 1
             # if sum is too small, increase the smallest value
             else:
-                minIndex = np.argmin(array)
+                #minIndex = np.argmin(array)
                 array[randIndex] += 1
         return array
         

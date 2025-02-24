@@ -298,7 +298,7 @@ class _Tree(object):
         :return: A list containing the support and period of the item.
         :rtype: List[float]
         """
-        global _lno, _maxPer
+        #_lno, _maxPer
         timeStamps.sort()
         cur = 0
         per = 0
@@ -357,6 +357,8 @@ class _Tree(object):
 
         :param prefix : forms the combination of items
         :type prefix : list
+        :param periodic: periodic patterns
+        :type periodic: dictionary
         :return: None
         """
 
@@ -553,7 +555,7 @@ class UPFPGrowth(_ab._periodicFrequentPatterns):
     _maxPer = float()
     _finalPatterns = {}
     _iFile = " "
-    _oFile = " "
+    oFile = " "
     _sep = " "
     _memoryUSS = float()
     _memoryRSS = float()

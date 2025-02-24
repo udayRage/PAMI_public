@@ -1,6 +1,6 @@
 class Vertex:
-    def __init__(self, id, vLabel):
-        self.id = id
+    def __init__(self, iD, vLabel):
+        self.id = iD
         self.vLabel = vLabel
         self.eList = []
 

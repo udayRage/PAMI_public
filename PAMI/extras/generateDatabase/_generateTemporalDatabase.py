@@ -254,28 +254,28 @@ class generateTemporalDatabase:
 
 
 if __name__ == '__main__':
-    numOfTransactions = 100
-    numItems = 20
-    avgTransactionLength = 6
-    outFileName = 'temporal_out.txt'
-    sep = '\t'
-    frameOrBase = "database"
+    numOfTransactions_ = 100
+    numItems_ = 20
+    avgTransactionLength_ = 6
+    outFileName_ = 'temporal_out.txt'
+    sep_ = '\t'
+    #frameOrBase = "database"
 
-    temporalDB = generateTemporalDatabase(numOfTransactions, avgTransactionLength, numItems, outFileName)
+    temporalDB = generateTemporalDatabase(numOfTransactions_, avgTransactionLength_, numItems_, outFileName_)
 
     temporalDB.createTemporalFile()
 
-    numOfTransactions = 100
-    numItems = 15
-    avgTransactionLength = 6
-    outFileName = 'temporal_ot.txt'
-    sep = '\t'
+    numOfTransactions1 = 100
+    numItems1 = 15
+    avgTransactionLength1 = 6
+    outFileName1 = 'temporal_ot.txt'
+    #sep = '\t'
     percent = 75
     frameOrBase = "dataframe"
 
-    temporalDB = generateTemporalDatabase(numOfTransactions, avgTransactionLength, numItems, outFileName, percent, sep, frameOrBase )
+    temporalDB = generateTemporalDatabase(numOfTransactions1, avgTransactionLength1, numItems1, outFileName1, percent, sep_, frameOrBase )
     temporalDB.createTemporalFile()
     print(temporalDB.getDatabaseAsDataFrame())
 
     obj = generateTemporalDatabase(sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4])
-    obj.createTemporalFile(sys.argv[5])
+    obj.createTemporalFile()

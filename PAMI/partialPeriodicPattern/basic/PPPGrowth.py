@@ -269,6 +269,7 @@ class PPPGrowth(_abstract._partialPeriodicPatterns):
     _rank = {}
     _rankdup = {}
     _lno = 0
+    _maxTS = None
 
     def _creatingItemSets(self) -> None:
         """
@@ -437,11 +438,11 @@ class PPPGrowth(_abstract._partialPeriodicPatterns):
                 else:
                     transactions[tuple(transaction)] = locs
 
-                for item in transaction:
-                    if item in itemLocs:
-                        itemLocs[item] += locs
+                for item1 in transaction:
+                    if item1 in itemLocs:
+                        itemLocs[item1] += locs
                     else:
-                        itemLocs[item] = list(locs)
+                        itemLocs[item1] = list(locs)
 
             # Precompute getMaxPer results for itemLocs
             # maxPerResults = {item: self._getMaxPer(itemLocs[item], maxTS) for item in itemLocs if len(itemLocs[item]) >= minSup}
@@ -451,8 +452,8 @@ class PPPGrowth(_abstract._partialPeriodicPatterns):
             itemLocs = {k: len(v) for k, v in itemLocs.items() if maxPerResults[k] >= self._minPS}
 
             # Iterate over filtered itemLocs
-            for item in itemLocs:
-                self._finalPatterns[tuple(newRoot.item + [item])] = maxPerResults[item]
+            for item3 in itemLocs:
+                self._finalPatterns[tuple(newRoot.item3 + [item3])] = maxPerResults[item3]
             
             if not itemLocs:
                 continue
@@ -464,12 +465,12 @@ class PPPGrowth(_abstract._partialPeriodicPatterns):
                 if len(transaction) < 1:
                     continue
                 currNode = newRoot
-                for item in transaction:
-                    currNode = currNode.addChild(item, locs)
-                    if item in newItemNodes:
-                        newItemNodes[item].add(currNode)
+                for item2 in transaction:
+                    currNode = currNode.addChild(item2, locs)
+                    if item2 in newItemNodes:
+                        newItemNodes[item2].add(currNode)
                     else:
-                        newItemNodes[item] = set([currNode])
+                        newItemNodes[item2] = set([currNode])
 
             self._recursive(newRoot, newItemNodes)
 
@@ -489,7 +490,6 @@ class PPPGrowth(_abstract._partialPeriodicPatterns):
         self._creatingItemSets()
         
 
-        self._maxTS = 0
         items = {}
         for line in self._Database:
             index = int(line[0])

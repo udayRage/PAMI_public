@@ -33,7 +33,7 @@ Copyright (C)  2024 Rage Uday Kiran
 
      You should have received a copy of the GNU General Public License
 """     
-class TransactionDB2denseDF():
+class TransactionDB2denseDF:
     """
     :Description:  DB2DF in this code transactional databases is converting dense dataframe.
 
@@ -129,13 +129,13 @@ class TransactionDB2denseDF():
                 self._df.loc[index,str(item)]=1
             index+=1
                 
-    def save(self,df,oFile):
+    def save(self,oFile):
         """
         save database in csv file
         :input 
             oFile:str    output file name
         """
-        df.to_csv(oFile,index=False)
+        self._df.to_csv(oFile,index=False)
     def createDB(self):
         
         self._creatingItemSets()

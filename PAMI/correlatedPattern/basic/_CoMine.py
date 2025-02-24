@@ -195,7 +195,7 @@ class _Tree:
         for x, y in mapSupport.items():
             if y >= minSup:
                 t1.append(x)
-        itemSetBuffer = [k for k, v in sorted(mapSupport.items(), key=lambda x: x[1], reverse=True)]
+        itemSetBuffer = [k for k, v in sorted(mapSupport.items(), key=lambda _x: _x[1], reverse=True)]
         self.headerList = [i for i in t1 if i in itemSetBuffer]
 
     def addPrefixPath(self, prefix: List['_Node'], mapSupportBeta, minSup) -> None:
@@ -438,7 +438,7 @@ class CoMine(_ab._correlatedPatterns):
         self._itemSetCount += 1
         self._finalPatterns[tuple(l)] = [support, all_conf]
     
-    def _convert(self, value: Union[int, float, str]) -> None:
+    def _convert(self, value: Union[int, float, str]) -> float | int | str:
         """
         To convert the type of user specified minSup value
 
@@ -530,8 +530,7 @@ class CoMine(_ab._correlatedPatterns):
                     mapSupportBeta = {}
                     while path is not None:
                         if path.parent.itemId != -1:
-                            prefixPath = []
-                            prefixPath.append(path)
+                            prefixPath = [path]
                             pathCount = path.counter
                             parent1 = path.parent
                             while parent1.itemId != -1:

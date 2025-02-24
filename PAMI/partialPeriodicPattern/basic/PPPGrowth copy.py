@@ -540,8 +540,7 @@ class PPPGrowth(_abstract._partialPeriodicPatterns):
         rootNode = _Tree()
         rootNode.info = info.copy()
         for i in range(len(data)):
-            set1 = []
-            set1.append(data[i][0])
+            set1 = [data[i][0]]
             rootNode._addTransaction(data[i][1:], set1)
         return rootNode
 

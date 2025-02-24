@@ -32,16 +32,16 @@
 
 
 import pandas as pd
-import numpy as np
-import math
-from PAMI.contiguousFrequentPattern import abstract as _ab
+#import numpy as np
+#import math
+from PAMI.contiguousFrequentPattern.basic import abstract as _ab
 from deprecated import deprecated
 
 
 class Node:
     def __init__(self,symbol,leaf=False):
         self._val=symbol
-        self.children=[None for i in range(26)]
+        self.children=[None for _ in range(26)]
         self.leaf=leaf
         self.freq={}
         self.count=1
@@ -125,7 +125,7 @@ class PositionMining:
 
         temp={}
         for i in self.symbol_freq:
-            if(len(self.symbol_freq[i])>=self.min_sup):
+            if len(self.symbol_freq[i])>=self.min_sup:
                 temp.update({i:self.symbol_freq[i]})
         self.symbol_freq=temp
 
@@ -151,8 +151,8 @@ class PositionMining:
         :rtype: pd.DataFrame
         """
 
-        dataFrame = {}
-        data = []
+        #dataFrame = {}
+        #data = []
         seqs=[]
         sup=[]
         for i in self.frequentPatterns:
@@ -245,22 +245,22 @@ class PositionMining:
         """
         for seq1 in db:
             for seq2 in db:
-                if(seq1!=seq2):
-                    if(length==1):
+                if seq1!=seq2:
+                    if length==1:
                         word=seq1+seq2
                         # print(seq1,seq2,db[seq1],db[seq2])
                         minus_1={i-1 for i in db[seq2]}
                         positions=db[seq1].intersection(minus_1)
-                        if(len(positions)>=self.min_sup):
+                        if len(positions)>=self.min_sup:
                             self.table[length+1].update({word:positions})
 
 
                     else:
-                        if(seq1[1:]== seq2[:-1]):
+                        if seq1[1:]== seq2[:-1]:
                             word=seq1+seq2[-1]
                             minus_1={i-1 for i in db[seq2]}
                             positions=db[seq1].intersection(minus_1)
-                            if(len(positions)>=self.min_sup):
+                            if len(positions)>=self.min_sup:
                                 self.table[length+1].update({word:positions})
         
 

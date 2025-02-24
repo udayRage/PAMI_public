@@ -55,10 +55,10 @@ from PAMI.weightedUncertainFrequentPattern.basic import abstract as _ab
 import pandas as pd
 from deprecated import deprecated
 
-_expSup = str()
-_expWSup = str()
-_weights = {}
-_finalPatterns = {}
+#_expSup = str()
+#_expWSup = str()
+#_weights = {}
+#_finalPatterns = {}
 _ab._sys.setrecursionlimit(20000)
 class _Item:
     """
@@ -264,11 +264,11 @@ class _Tree(object):
 
         :param condPatterns : conditionalPatterns generated from conditionalPattern method for respective node
         :type condPatterns : list
-        :support : the support of conditional pattern in tree
-        :support : int
+        :param support : the support of conditional pattern in tree
+        :type support : int
         :return: tuple
         """
-        global _expSup, _expWSup
+        #global _expSup, _expWSup
         pat = []
         sup = []
         count = {}
@@ -480,14 +480,15 @@ class WUFIM(_ab._weightedFrequentPatterns):
     _finalPatterns = {}
     _iFile = " "
     _wFile = " "
-    _oFile = " "
+    oFile = " "
     _sep = " "
     _memoryUSS = float()
-    _memoryRSS = float()
+    memoryRSS = float()
     _Database = []
     _rank = {}
     _expSup = float()
     _expWSup = float()
+    Database1 = None
 
     def __init__(self, iFile, wFile, expSup, expWSup, sep='\t') -> None:
         super().__init__(iFile, wFile, expSup, expWSup, sep)
@@ -560,7 +561,6 @@ class WUFIM(_ab._weightedFrequentPatterns):
 
         :return: None
         """
-        self._weights = {}
         if isinstance(self._wFile, _ab._pd.DataFrame):
             weights, data = [], []
             if self._wFile.empty:
@@ -742,7 +742,6 @@ class WUFIM(_ab._weightedFrequentPatterns):
         """
         global _expSup, _expWSup, _weights, _finalPatterns
         self._startTime = _ab._time.time()
-        self._Database, self._weights = [], {}
         self._creatingItemSets()
         self._scanningWeights()
         _weights = self._weights

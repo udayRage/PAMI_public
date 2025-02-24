@@ -75,7 +75,7 @@ class Confidence:
         :type suffix: str
         """
         if len(suffix) == 1:
-            conf = self._generaeWithConfidence(prefix, suffix[0])
+            self._generaeWithConfidence(prefix, suffix[0])
         for i in range(len(suffix)):
             suffix1 = suffix[:i] + suffix[i+1:]
             prefix1 = prefix + ' ' + suffix[i]
@@ -223,7 +223,7 @@ class Leverage:
         :type suffix: str
         """
         if len(suffix) == 1:
-            conf = self._generateWithLeverage(prefix, suffix[0])
+            self._generateWithLeverage(prefix, suffix[0])
         for i in range(len(suffix)):
             suffix1 = suffix[:i] + suffix[i+1:]
             prefix1 = prefix + ' ' + suffix[i]
@@ -263,7 +263,7 @@ class Leverage:
             suffix = self._singleItems[:i] + self._singleItems[i+1:]
             prefix = self._singleItems[i]
             for j in range(i+1, len(self._singleItems)):
-                conf = self._generateWithLeverage(self._singleItems[i], self._singleItems[j])
+                self._generateWithLeverage(self._singleItems[i], self._singleItems[j])
             self._generation(prefix, suffix)
 
 class RuleMiner:
@@ -547,7 +547,7 @@ if __name__ == "__main__":
         if len(_ab._sys.argv) == 6:
             _ap = RuleMiner(_ab._sys.argv[1], _ab._sys.argv[3], float(_ab._sys.argv[4]), _ab._sys.argv[5])
         if len(_ab._sys.argv) == 5:
-            _ap = RuleMiner(_ab._sys.argv[1], _ab._sys.argv[3], _ab._sys.argv[4],sep='\t')
+            _ap = RuleMiner(_ab._sys.argv[1], _ab._sys.argv[3], float(_ab._sys.argv[4]),sep='\t')
         _ap.mine()
         _ap.mine()
         print("Total number of Association Rules:", len(_ap.getPatterns()))

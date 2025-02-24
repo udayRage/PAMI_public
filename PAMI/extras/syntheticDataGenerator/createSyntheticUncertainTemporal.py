@@ -1,5 +1,5 @@
 import random as _rd
-import sys as _sys
+#import sys as _sys
 
 
 class createSyntheticUncertainTemporal:
@@ -47,7 +47,7 @@ class createSyntheticUncertainTemporal:
             length = _rd.randint(1, self._avgTransactionLength + 20)
             st = str(count) + '\t'
             st1 = str()
-            for i in range(length):
+            for _ in range(length):
                 item = _rd.randint(1, self._noOfItems)
                 probability = _rd.uniform(0, 1)
                 st = st + str(item) + '\t'

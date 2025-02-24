@@ -64,7 +64,8 @@ class utilityToFuzzy(_ab._convert):
     _fuzFile: str = ' '
     _oFile: str = ' '
 
-    def __init__(self, iFile: str, fuzFile: str, oFile: str, sep: str='\t'):
+    def __init__(self, iFile: str, fuzFile: str, oFile: str, sep: str = '\t'):
+        super().__init__(iFile, fuzFile, oFile, sep)
         self._iFile = iFile
         self._fuzFile = fuzFile
         self._oFile = oFile
@@ -184,8 +185,8 @@ class utilityToFuzzy(_ab._convert):
             for i in range(0, len(item_list)):
                 item = item_list[i]
                 fuzzy_ref = fuzzyValues_list[i]
-                regionsList = self._Regions(int(fuzzy_ref))
-                self._fuzzyRegionReferenceMap[fuzzy_ref] = regionsList
+                self._Regions(int(fuzzy_ref))
+                #self._fuzzyRegionReferenceMap[fuzzy_ref] = regionsList
                 s1 = [self._list.index(i) for i in self._list if i!=0]
                 for k in s1:
                     s = s + item + '.' + self._LabelKeyOne[k] + '\t'

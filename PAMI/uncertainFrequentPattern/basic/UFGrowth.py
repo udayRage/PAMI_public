@@ -50,7 +50,7 @@ __copyright__ = """
 """
 
 from PAMI.uncertainFrequentPattern.basic import abstract as _ab
-import deprecated
+from deprecated import deprecated
 
 _minSup = str()
 _ab._sys.setrecursionlimit(20000)
@@ -409,10 +409,10 @@ class UFGrowth(_ab._frequentPatterns):
     _minSup = str()
     _finalPatterns = {}
     _iFile = " "
-    _oFile = " "
+    oFile = " "
     _sep = " "
     _memoryUSS = float()
-    _memoryRSS = float()
+    memoryRSS = float()
     _Database = []
     _rank = {}
     _mapSupport = {}
@@ -540,14 +540,13 @@ class UFGrowth(_ab._frequentPatterns):
                     mapSupportBeta = {}
                     while path is not None:
                         if path.parent.itemid != -1:
-                            prefixPath = []
-                            prefixPath.append(path)
+                            prefixPath = [path]
                             pathCount = path.counter
                             parent1 = path.parent
                             while parent1.itemid != -1:
                                 prefixPath.append(parent1)
                                 s = (pathCount * path.expSup) * parent1.probability
-                                if mapSupportBeta.get(parent1.itemid) == None:
+                                if mapSupportBeta.get(parent1.itemid) is None:
                                     mapSupportBeta[parent1.itemid] = s
                                 else:
                                     mapSupportBeta[parent1.itemid] = mapSupportBeta[parent1.itemid] + s
@@ -555,8 +554,8 @@ class UFGrowth(_ab._frequentPatterns):
                             prefixPaths.append(prefixPath)
                         path = path.nodeLink
                     treeBeta = _Tree()
-                    for i in prefixPaths:
-                        q = treeBeta.addPrefixPath(i, mapSupportBeta, self._minSup)
+                    for j in prefixPaths:
+                        q = treeBeta.addPrefixPath(j, mapSupportBeta, self._minSup)
                         self._conditionalnodes += q
                     if len(treeBeta.root.child) > 0:
                         treeBeta.createHeaderList(mapSupportBeta, self._minSup)
@@ -616,11 +615,11 @@ class UFGrowth(_ab._frequentPatterns):
         """
         Main method where the patterns are mined by constructing tree and remove the false patterns by counting the original support of a patterns
         """
-        global minSup
+        #global minSup
         self._startTime = _ab._time.time()
         self._creatingItemSets()
         self._minSup = self._convert(self._minSup)
-        minSup = self._minSup
+        #minSup = self._minSup
         self._finalPatterns = {}
         _mapSupport, plist = self._frequentOneItem()
         for i in self._Database:

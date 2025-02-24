@@ -13,12 +13,12 @@ class Graph:
     EMPTY_VERTEX_LIST = []
     EMPTY_INTEGER_ARRAY = []
 
-    def __init__(self, id, vMap=None, dfsCode=None):
+    def __init__(self, iD, vMap=None, dfsCode=None):
         """
         Initializes the Graph object with optional parameters.
         """
         self.vMap = {}
-        self.id = id
+        self.id = iD
         if vMap is not None:
             self.vMap = vMap
         elif dfsCode is not None:

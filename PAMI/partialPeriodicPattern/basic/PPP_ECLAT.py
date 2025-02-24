@@ -206,6 +206,8 @@ class PPP_ECLAT(_ab._partialPeriodicPatterns):
     _tidList = {}
     _lno = 0
     _Database = []
+    _dbSize = None
+
 
     def _convert(self, value) -> Union[int, float]:
         """
@@ -242,16 +244,16 @@ class PPP_ECLAT(_ab._partialPeriodicPatterns):
                 per += 1
         return per
     
-    def _getPerSup(self, arr):
-        arr = list(arr)
-        arr.append(self._maxTS)
-        arr.append(0)
-        arr = np.sort(arr)
-        arr = np.diff(arr)
-
-        locs = len(np.where(arr <= self._period)[0])
-
-        return locs
+    # def _getPerSup(self, arr):
+    #     arr = list(arr)
+    #     arr.append(self._maxTS)
+    #     arr.append(0)
+    #     arr = np.sort(arr)
+    #     arr = np.diff(arr)
+    #
+    #     locs = len(np.where(arr <= self._period)[0])
+    #
+    #     return locs
 
     def _creatingItemSets(self) -> None:
         """

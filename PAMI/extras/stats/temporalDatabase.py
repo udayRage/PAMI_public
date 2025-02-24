@@ -140,8 +140,8 @@ class temporalDatabase:
 
         if isinstance(self.inputFile, str):
             if validators.url(self.inputFile):
-                data = urlopen(self.inputFile)
-                for line in data:
+                data_ = urlopen(self.inputFile)
+                for line in data_:
                     numberOfTransaction += 1
                     line.strip()
                     line = line.decode("utf-8")
@@ -247,8 +247,8 @@ class temporalDatabase:
                         itemsets[item] = [1]
                     else:
                         itemsets[item] = [0]
-        data = list(itemsets.values())
-        an_array = np.array(data)
+        _data = list(itemsets.values())
+        an_array = np.array(_data)
         return an_array
 
     def getSparsity(self) -> float:
@@ -259,7 +259,7 @@ class temporalDatabase:
         """
         big_array = self.convertDataIntoMatrix()
         n_zeros = np.count_nonzero(big_array == 0)
-        return (n_zeros / big_array.size)
+        return n_zeros / big_array.size
 
     def getDensity(self) -> float:
         """
@@ -269,7 +269,7 @@ class temporalDatabase:
         """
         big_array = self.convertDataIntoMatrix()
         n_zeros = np.count_nonzero(big_array == 1)
-        return (1.0 - n_zeros / big_array.size)
+        return 1.0 - n_zeros / big_array.size
 
     def getTotalNumberOfItems(self) -> int:
         """
@@ -298,10 +298,10 @@ class temporalDatabase:
         maximum = max([i for i in fre.values()])
         values = [int(i * maximum / 6) for i in range(1, 6)]
         # print(maximum)
-        va = len({key: val for key, val in fre.items() if val > 0 and val < values[0]})
+        va = len({key: val for key, val in fre.items() if 0 < val < values[0]})
         rangeFrequencies[va] = values[0]
         for i in range(1, len(values)):
-            va = len({key: val for key, val in fre.items() if val < values[i] and val > values[i - 1]})
+            va = len({key: val for key, val in fre.items() if values[i] > val > values[i - 1]})
             rangeFrequencies[va] = values[i]
         return rangeFrequencies
 
@@ -311,10 +311,10 @@ class temporalDatabase:
         maximum = max([i for i in fre.values()])
         values = [int(i * maximum / 6) for i in range(1, 6)]
         # print(maximum)
-        va = len({key: val for key, val in fre.items() if val > 0 and val < values[0]})
+        va = len({key: val for key, val in fre.items() if 0 < val < values[0]})
         rangePeriods[va] = values[0]
         for i in range(1, len(values)):
-            va = len({key: val for key, val in fre.items() if val < values[i] and val > values[i - 1]})
+            va = len({key: val for key, val in fre.items() if values[i] > val > values[i - 1]})
             rangePeriods[va] = values[i]
         return rangePeriods
 
@@ -330,17 +330,17 @@ class temporalDatabase:
             transactionLength[length] += 1
         return {k: v for k, v in sorted(transactionLength.items(), key=lambda x: x[0])}
 
-    def save(self, data: dict, outputFile: str) -> None:
+    def save(self, data_: dict, outputFile: str) -> None:
         """
         store data into outputFile
-        :param data: input data
-        :type data: dict
+        :param data_: input data
+        :type data_: dict
         :param outputFile: output file name or path to store
         :type outputFile: str
         :return: None
         """
         with open(outputFile, 'w') as f:
-            for key, value in data.items():
+            for key, value in data_.items():
                 f.write(f'{key}\t{value}\n')
 
     def getMinimumInterArrivalPeriod(self) -> int:

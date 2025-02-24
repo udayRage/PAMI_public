@@ -310,13 +310,13 @@ class cuEclatBit(_ab._frequentPatterns):
                         union = iList + [jList[-1]]
                         union = tuple(union)
                         unionData = _ab._cp.bitwise_and(ArraysAndItems[keys[i]], ArraysAndItems[keys[j]])
-                        sum = _ab._cp.zeros(1, dtype=_ab._np.uint32)
-                        self._sumKernel((len(unionData) // 32 + 1,), (32,), (unionData, sum, _ab._cp.uint32(len(unionData))))
-                        sum = sum[0]
-                        if sum >= self._minSup and union not in self._finalPatterns:
+                        _sum = _ab._cp.zeros(1, dtype=_ab._np.uint32)
+                        self._sumKernel((len(unionData) // 32 + 1,), (32,), (unionData, _sum, _ab._cp.uint32(len(unionData))))
+                        _sum = _sum[0]
+                        if _sum >= self._minSup and union not in self._finalPatterns:
                             newArraysAndItems[union] = unionData
                             string = "\t".join(union)
-                            self._finalPatterns[string] = sum
+                            self._finalPatterns[string] = _sum
             ArraysAndItems = newArraysAndItems
             # print()
 

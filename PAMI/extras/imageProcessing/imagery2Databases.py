@@ -165,4 +165,4 @@ class createDatabase:
 
 if __name__ == '__main__':
     obj = createDatabase(sys.argv[1], sys.argv[2])
-    obj.saveAsUncertainTemporalDB(sys.argv[3])
+    obj.saveAsUncertainTemporalDB(sys.argv[4],sys.argv[3])

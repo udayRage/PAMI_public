@@ -281,7 +281,7 @@ class VBFTMine(_ab._faultTolerantFrequentPatterns):
         :type tidsetx: list
         :return: None
         """
-        if (prefix == None):
+        if prefix is None:
             prefix = suffix
         else:
             prefix = prefix + suffix
@@ -303,14 +303,14 @@ class VBFTMine(_ab._faultTolerantFrequentPatterns):
         :type tidsets: list
         :return: None
         """
-        if (len(itemsets) == 1):
+        if len(itemsets) == 1:
             i = itemsets[0]
             tidi = tidsets[0]
             self._save(prefix, [i], tidi)
             return
         for i in range(len(itemsets)):
             itemx = itemsets[i]
-            if (itemx == None):
+            if itemx is None:
                 continue
             tidsetx = tidsets[i]
             classItemsets = []
@@ -324,7 +324,7 @@ class VBFTMine(_ab._faultTolerantFrequentPatterns):
                 if total >= self._minSup:
                     classItemsets.append(itemj)
                     classtidsets.append(y)
-            if (len(classItemsets) > 0):
+            if len(classItemsets) > 0:
                 newprefix = list(set(itemsetx)) + prefix
                 self._processEquivalenceClass(newprefix, classItemsets, classtidsets)
             self._save(prefix, list(set(itemsetx)), tidsetx)
@@ -384,7 +384,7 @@ class VBFTMine(_ab._faultTolerantFrequentPatterns):
                 if total >= self._minSup:
                     itemsets.append(itemj)
                     tidsets.append(y1)
-            if (len(itemsets) > 0):
+            if len(itemsets) > 0:
                 self._processEquivalenceClass(itemsetx, itemsets, tidsets)
             self._save(None, itemsetx, tidsetx)
         self._endTime = _ab._time.time()

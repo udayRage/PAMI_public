@@ -191,7 +191,7 @@ class _Tree:
         :param conditionalFreq: frequency of each item in the path
         :return: conditional patterns and frequency of each item in transactions
         """
-        global _minSup
+        #global _minSup
         pat = []
         freq = []
         data1 = {}

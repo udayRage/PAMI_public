@@ -207,6 +207,8 @@ class _Tree(object):
         To generate the maximal periodic frequent patterns
 
         :param prefix: an empty list of itemSet to form the combinations
+        :param patterns: dictionary of patterns
+        :param maximalTree: maximal Tree
         :return: maximal periodic frequent patterns
         """
         #global maximalTree

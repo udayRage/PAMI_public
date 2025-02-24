@@ -38,7 +38,7 @@ from typing import List, Dict, Tuple, Set, Union, Any, Generator
 import pandas
 import sys
 
-class spatioTemporalDatabaseGenerator():
+class spatioTemporalDatabaseGenerator:
     """
 
     :Description:   generateSpatioTemporalDatabase is a code used to convert the database into SpatioTemporal database.
@@ -113,7 +113,7 @@ class spatioTemporalDatabaseGenerator():
                         itemSet.append(coordinate)
                         coordinate=tuple(coordinate)
                         self.alreadyAdded.add(coordinate)
-            if itemSet != []:
+            if itemSet:
                 self.timeStampList.append(
                     timeStamp)
                 self.itemList.append(
@@ -145,15 +145,15 @@ class spatioTemporalDatabaseGenerator():
 
 
 if __name__ == "__main__":
-    xmin=0
-    xmax=100
-    ymin=0
-    ymax=100
-    maxTimeStamp = 10
-    numberOfItems = 10
-    itemChanceLow = 0.5
-    itemChanceHigh = 0.9
-    timeStampChanceLow = 0.5
-    timeStampChanceHigh = 0.9
-    obj = spatioTemporalDatabaseGenerator(sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4])
-    obj.saveAsFile(sys.argv[5])
+    xmin_=0
+    xmax_=100
+    ymin_=0
+    ymax_=100
+    maxTimeStamp_ = 10
+    numberOfItems_ = 10
+    itemChanceLow_ = 0.5
+    itemChanceHigh_ = 0.9
+    timeStampChanceLow_ = 0.5
+    timeStampChanceHigh_ = 0.9
+    obj = spatioTemporalDatabaseGenerator(int(sys.argv[1]), int(sys.argv[2]), int(sys.argv[3]), int(sys.argv[4]),int(sys.argv[5]),int(sys.argv[6]),float(sys.argv[7]),float(sys.argv[8]),float(sys.argv[9]),float(sys.argv[10]))
+    obj.saveAsFile(sys.argv[11])

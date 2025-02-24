@@ -164,7 +164,7 @@ class generateTransactionalDatabase:
         Generate the transactional database
         :return: None
         """
-        db = set()
+        #db = set()
 
         values = self.generate_array(self.numLines, self.avgItemsPerLine, self.numItems)
 
@@ -172,12 +172,13 @@ class generateTransactionalDatabase:
             line = np.random.choice(range(1, self.numItems + 1), value, replace=False)
             self.db.append(line)
 
-    def save(self, sep, filename) -> None:
+    def save(self,sep,filename) -> None:
         """
         Save the transactional database to a file
 
+        :param sep: separator
+        :type sep: str
         :param filename: name of the file
-
         :type filename: str
 
         :return: None
@@ -203,11 +204,11 @@ if __name__ == "__main__":
     # test the class
     db = generateTransactionalDatabase(10, 5, 10)
     db.create()
-    db.save('db.txt')
-    print(db.getTransactions())
+    db.save('\t', 'db1.txt')
+    #print(db.getTransactions())
 
-    obj = generateTransactionalDatabase(sys.argv[1], sys.argv[2], sys.argv[3])
+    obj = generateTransactionalDatabase(int(sys.argv[1]), int(sys.argv[2]), int(sys.argv[3]))
     obj.create()
-    obj.save(sys.argv[4])
+    obj.save(sys.argv[5], sys.argv[4])
     # print(obj.getTransactions())
     

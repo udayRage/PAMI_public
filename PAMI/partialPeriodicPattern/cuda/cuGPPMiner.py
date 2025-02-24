@@ -19,7 +19,7 @@ __copyright__ = """
 """
 
 import abstract as _ab
-import deprecated
+from deprecated import deprecated
 
 class cuGPPMiner(_ab._partialPeriodicPatterns):
     """

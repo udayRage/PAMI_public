@@ -32,11 +32,11 @@ Copyright (C)  2024 Rage Uday Kiran
      along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 
-import math
+#import math
 
 import numpy as np
 import pandas as pd
-import sys
+#import sys
 
 
 class GeoReferentialSequentialDatabase:
@@ -107,7 +107,13 @@ class GeoReferentialSequentialDatabase:
                 point = self.getPoint(x1, y1, x2, y2)
             self.itemPoint[i] = point
 
-    def tuning(self, array, sumRes) -> list:
+    @staticmethod
+    def getPoint(x1, y1, x2, y2):
+
+        return np.random.randint(x1, x2), np.random.randint(y1, y2)
+
+    @staticmethod
+    def tuning(array, sumRes) -> list:
         """
         Tune the array so that the sum of the values is equal to sumRes
 
@@ -132,7 +138,7 @@ class GeoReferentialSequentialDatabase:
                 array[randIndex] -= 1
             # if sum is too small, increase the smallest value
             else:
-                minIndex = np.argmin(array)
+                #minIndex = np.argmin(array)
                 array[randIndex] += 1
         return array
 
@@ -142,11 +148,11 @@ class GeoReferentialSequentialDatabase:
 
         :param nums: number of values
 
-        :type nums: list
+        :type nums: int
 
         :param avg: average value
 
-        :type avg: float
+        :type avg: int
 
         :param maxItems: maximum value
 
@@ -193,7 +199,7 @@ class GeoReferentialSequentialDatabase:
         if item == "":
             item=self.itemPoint
 
-        db = set()
+        #db = set()
         sequences = self.generateArray(self.numSeq, self.avgItemsetPerSeq - 1, self.maxItemset)
 
         for numItemset in sequences:
@@ -211,6 +217,10 @@ class GeoReferentialSequentialDatabase:
     def save(self, filename, sep="\t") -> None:
         """
         Save the transactional database to a file
+
+        :param sep: Separator
+
+        :type sep: str
 
         :param filename: name of the file
 
@@ -240,4 +250,4 @@ if __name__ == "__main__":
     db = GeoReferentialSequentialDatabase(10, 5, 5, 10)
     db.create()
     db.save('db.txt')
-    print(db.getTransactions())
+    print(db.getSequence())

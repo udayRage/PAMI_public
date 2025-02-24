@@ -105,6 +105,7 @@ class _Transaction:
         self.transactionUtility = transactionUtility
         self.support = 1
 
+
     def projectTransaction(self, offsetE: int) -> '_Transaction':
         """
         A method to create new Transaction from existing transaction starting from offsetE until the end
@@ -229,6 +230,7 @@ class _Dataset:
         self.cnt = 1
         self.sep = sep
         self.createItemSets(datasetPath)
+        self.Database = []
 
     def createItemSets(self, datasetPath: List[str]) -> None:
         """
@@ -239,7 +241,7 @@ class _Dataset:
         :return: None
 
         """
-        self.Database = []
+
         self.transactions = []
         if isinstance(datasetPath, _ab._pd.DataFrame):
             utilities, data, utilitySum = [], [], []
@@ -512,6 +514,7 @@ class HUFIM(_ab._utilityPatterns):
 
     def __init__(self, iFile: str, minUtil: Union[int, float], minSup: Union[int, float], sep: str="\t") -> None:
         super().__init__(iFile, minUtil, minSup, sep)
+        self._dataset = None
 
     def _convert(self, value) -> Union[int, float]:
         """
@@ -551,7 +554,7 @@ class HUFIM(_ab._utilityPatterns):
         """
         self._startTime = _ab._time.time()
         self._finalPatterns = {}
-        self._dataset = []
+
         self._dataset = _Dataset(self._iFile, self._sep)
         self._singleItemSetsSupport = _ab._defaultdict(int)
         self._singleItemSetsUtility = _ab._defaultdict(int)

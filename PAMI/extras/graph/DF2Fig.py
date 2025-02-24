@@ -39,7 +39,7 @@ import sys
 import plotly.express as _px
 import pandas as _pd
 
-class DF2Fig():
+class DF2Fig:
     """
 
     :Description:   DataFrameInToFigures is used to convert the given dataframe into figures.

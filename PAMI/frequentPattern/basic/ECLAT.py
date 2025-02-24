@@ -276,7 +276,7 @@ class ECLAT(_ab._frequentPatterns):
             index += 1
         
         items = {tuple([k]): set(v) for k, v in items.items() if len(v) >= self._minSup}
-        items = {k: v for k, v in sorted(items.items(), key=lambda item: len(item[1]), reverse=False)}
+        items = {k: v for k, v in sorted(items.items(), key=lambda item_: len(item_[1]), reverse=False)}
         for k, v in items.items():
             self._finalPatterns[k] = len(v)
 

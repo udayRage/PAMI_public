@@ -37,7 +37,7 @@ import sys
 import pandas as pd
 import plotly.express as px
 
-class convertMultipleTSIntoFuzzy():
+class convertMultipleTSIntoFuzzy:
     """
     :Description: Converting multiple time series into fuzzy
 
@@ -70,6 +70,7 @@ class convertMultipleTSIntoFuzzy():
         self._LabelKey = {}
         self._LabelKeyOne = {}
         self._fuzzyRegionReferenceMap = {}
+        self._finalPatterns = {}
 
     def _fuzzyMembershipFunc(self) -> None:
     
@@ -177,7 +178,7 @@ class convertMultipleTSIntoFuzzy():
         
         self._creatingItemSets()
         self._fuzzyMembershipFunc()
-        self._finalPatterns = {}
+
 
     def mine(self) -> None:
         """

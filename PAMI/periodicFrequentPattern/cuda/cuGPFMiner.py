@@ -57,7 +57,7 @@ from PAMI.periodicFrequentPattern.basic import abstract as _ab
 import pandas as pd
 from deprecated import deprecated
 
-import abstract as _ab
+# import abstract as _ab
 
 class cuGPFMiner(_ab._periodicFrequentPatterns):
     """

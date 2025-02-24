@@ -121,6 +121,7 @@ class _Tree:
         generates the conditional patterns for a node
 
         :param alpha: node to generate conditional patterns
+        :param support: support value
         :return: returns conditional patterns, frequency of each item in conditional patterns
 
         """
@@ -146,6 +147,7 @@ class _Tree:
 
         :param ConditionalPatterns: paths of a node
         :param conditionalFreq: frequency of each item in the path
+        :param support: support value
         :return: conditional patterns and frequency of each item in transactions
         """
         #global _minSup
@@ -380,16 +382,16 @@ class CFPGrowthPlus(_fp._frequentPatterns):
         """
         self._MISValues = {}
         if isinstance(self._MIS, _fp._pd.DataFrame):
-            items, MIS = [], []
+            items, MIS_ = [], []
             if self._MIS.empty:
                 print("its empty..")
             i = self._MIS.columns.values.tolist()
             if 'items' in i:
                 items = self._MIS['items'].tolist()
             if 'MIS' in i:
-                MIS = self._MIS['MIS'].tolist()
+                MIS_ = self._MIS['MIS'].tolist()
             for i in range(len(items)):
-                self._MISValues[items[i]] = MIS[i]
+                self._MISValues[items[i]] = MIS_[i]
 
         if isinstance(self._MIS, str):
             if _fp._validators.url(self._MIS):

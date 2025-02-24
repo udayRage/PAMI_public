@@ -270,6 +270,7 @@ class FGPFPMiner(_ab._fuzzySpatialFrequentPatterns):
 
     def __init__(self, iFile, nFile, minSup, maxPer, sep):
         super().__init__(iFile, nFile, minSup, maxPer, sep)
+        self.oFile = None
         self._mapItemNeighbours = {}
         self._startTime = 0
         self._endTime = 0
@@ -497,8 +498,8 @@ class FGPFPMiner(_ab._fuzzySpatialFrequentPatterns):
                 remainUtil = 0
                 temp = list(set(self._mapItemNeighbours[pair.item[0]]).intersection(set(qaunt.keys())))
                 # print(temp, self._mapItemNeighbours[pair.item[0]], qaunt)
-                for j in temp:
-                    remainUtil += float(qaunt[j])
+                for k in temp:
+                    remainUtil += float(qaunt[k])
                 del temp
                 remainingUtility = remainUtil
                 FFListObject = mapItemsToFFLIST[pair.item]
@@ -728,8 +729,7 @@ if __name__ == "__main__":
     _ap = str()
     if len(_ab._sys.argv) == 5 or len(_ab._sys.argv) == 6:
         if len(_ab._sys.argv) == 6:
-            _ap = FGPFPMiner(_ab._sys.argv[1], _ab._sys.argv[2], _ab._sys.argv[3], _ab._sys.argv[4], _ab._sys.argv[5],
-                             _ab._sys.argv[6])
+            _ap = FGPFPMiner(_ab._sys.argv[1], _ab._sys.argv[2], _ab._sys.argv[3], _ab._sys.argv[4], _ab._sys.argv[5])
         if len(_ab._sys.argv) == 5:
             _ap = FGPFPMiner(_ab._sys.argv[1], _ab._sys.argv[2], _ab._sys.argv[3], _ab._sys.argv[4], _ab._sys.argv[5])
         _ap.mine()

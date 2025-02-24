@@ -149,4 +149,4 @@ class SparseFormatDFPlus:
 
 if __name__ == '__main__':
     obj = SparseFormatDFPlus(sys.argv[1], sys.argv[2])
-    obj.getFileName(sys.argv[3])
+    obj.getFileName()

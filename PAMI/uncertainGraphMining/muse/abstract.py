@@ -32,7 +32,7 @@ class _MUSE(ABC):
         def save(self, oFile):
             """
             Write the result of the muse algorithm to a file.
-            :param outputPath: Path to the output file.
+            :param oFile: Path to the output file.
             """
             pass
 

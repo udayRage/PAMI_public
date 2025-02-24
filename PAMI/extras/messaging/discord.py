@@ -8,7 +8,7 @@
 from discord import SyncWebhook
 
 
-class discord():
+class discord:
 
     def __init__(self, url: str) -> None:
         self.url = url

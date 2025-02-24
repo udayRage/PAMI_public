@@ -52,7 +52,7 @@ class NucleotideSequenceGenerator:
         self._startTime = time.time()
         
         # Define nucleotide choices based on DNA or RNA
-        nucleotides = "GCAU" if self.is_rna else "GCAT"
+        #nucleotides = "GCAU" if self.is_rna else "GCAT"
 
         # Calculate number of G/C and A/T (or A/U) bases
         gc_count = int(self.sequenceLength * self.gcContent)

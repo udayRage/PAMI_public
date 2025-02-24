@@ -212,8 +212,8 @@ class spatialPrefixSpan(_ab._sequentialSpatialPatterns):
                             seq = []
                             for i in temp:
                                 if len(i)>1:
-                                   for i in list(sorted(set(i.split()))):
-                                       seq.append(i)
+                                   for j in list(sorted(set(i.split()))):
+                                       seq.append(j)
                                    seq.append(-1)
 
                                 else:
@@ -258,21 +258,19 @@ class spatialPrefixSpan(_ab._sequentialSpatialPatterns):
             checkrow={i for i in startrow if i!=-1}
 
             if len(sepDatabase[head])>=self._minSup  and checkrow.issubset(self._NeighboursMap[head]):
-                if newrow!=[]:
+                if newrow:
                     newrow.append(-1)
                 newrow.append(head)
                 newrow.append(-1)
                 if str(newrow) not in self._finalPatterns:
                     self._finalPatterns[str(newrow)]=len(sepDatabase[head])
-                    give = []
-                    give.append(head)
+                    give = [head]
                     sepDatabase[head] = self.makeSupDatabase(sepDatabase[head], give)
                     newrow.pop()
                     self.makeSeqDatabaseSame(sepDatabase[head], newrow)
                 elif len(sepDatabase[head]) > self._finalPatterns[str(newrow)]:
                     self._finalPatterns[str(newrow)] = len(sepDatabase[head])
-                    give = []
-                    give.append(head)
+                    give = [head]
                     sepDatabase[head] = self.makeSupDatabase(sepDatabase[head], give)
                     newrow.pop()
                     self.makeSeqDatabaseSame(sepDatabase[head], newrow)
@@ -309,7 +307,7 @@ class spatialPrefixSpan(_ab._sequentialSpatialPatterns):
                 for i in line:
                     if supDatabase[i]>=self._minSup or i in head:
                         if len(newLine)>1:
-                            if (newLine[-1]!=-1 or i!=-1):
+                            if newLine[-1]!=-1 or i!=-1:
                                 newLine.append(i)
                         else:
                             newLine.append(i)
@@ -397,8 +395,7 @@ class spatialPrefixSpan(_ab._sequentialSpatialPatterns):
             the word in latest sequence of startrow
         :return:
         """
-        sepDatabaseSame={}
-        sepDatabaseSame[startrow[-1]]=[]
+        sepDatabaseSame= {startrow[-1]: []}
         for line in database:
             addLine=0
             i=0
@@ -592,7 +589,7 @@ class spatialPrefixSpan(_ab._sequentialSpatialPatterns):
 
 if __name__ == "__main__":
     _ap = str()
-    if len(_ab._sys.argv) >= 5 and len(_ab._sys.argv) <= 8:
+    if 5 <= len(_ab._sys.argv) <= 8:
         if len(_ab._sys.argv) == 8:
             _ap = spatialPrefixSpan(_ab._sys.argv[1], _ab._sys.argv[3], _ab._sys.argv[4],_ab._sys.argv[5],_ab._sys.argv[7],_ab._sys.argv[8])
         if len(_ab._sys.argv) == 7:

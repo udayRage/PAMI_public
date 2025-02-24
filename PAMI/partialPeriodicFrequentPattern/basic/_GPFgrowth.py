@@ -50,6 +50,8 @@ __copyright__ = """
 
 """
 
+from abc import ABC
+
 import deprecated
 from PAMI.partialPeriodicFrequentPattern.basic.abstract import *
 
@@ -270,8 +272,8 @@ class calculateIP:
             return ip
         if self.timeStamp[0] - 0 <= self.maxPer:
             ip += 1
-        for i in range(len(self.timeStamp)-1):
-            if (self.timeStamp[i+1] - self.timeStamp[i]) <= self.maxPer:
+        for i_ in range(len(self.timeStamp) - 1):
+            if (self.timeStamp[i_ + 1] - self.timeStamp[i_]) <= self.maxPer:
                 ip += 1
         if abs(self.timeStamp[(len(self.timeStamp)-1)] - self.timeStampFinal) <= self.maxPer:
             ip += 1
@@ -309,7 +311,8 @@ class generatePFListver2:
         :return: timestamps and last timestamp
         """
         global orderOfItem
-        tidList = {}
+        #tidList = {}
+        last = None
         tid = 1
         for transaction in self.Database:
             timestamp = int(transaction[0])
@@ -348,9 +351,9 @@ class generatePFListver2:
         :return: return separator
         """
         separator = ['\t', ',', '*', '&', ' ', '%', '$', '#', '@', '!', '    ', '*', '(', ')']
-        for i in separator:
-            if i in line:
-                return i
+        for i__ in separator:
+            if i__ in line:
+                return i__
         return None
 
 class generatePFTreever2:
@@ -402,9 +405,9 @@ class generatePFTreever2:
         :return: return separator
         """
         separator = ['\t', ',', '*', '&', ' ', '%', '$', '#', '@', '!', '    ', '*', '(', ')']
-        for i in separator:
-            if i in line:
-                return i
+        for j in separator:
+            if j in line:
+                return j
         return None
 
 class PFgrowth:
@@ -499,7 +502,7 @@ class PFgrowth:
                 result = {**result, **result1}
         return result
 
-class GPFgrowth(partialPeriodicPatterns):
+class GPFgrowth(partialPeriodicPatterns, ABC):
     """
     :Description:   GPFgrowth is algorithm to mine the partial periodic frequent pattern in temporal database.
     
@@ -612,6 +615,9 @@ class GPFgrowth(partialPeriodicPatterns):
     _partialPeriodicPatterns__memoryUSS = float()
     _partialPeriodicPatterns__memoryRSS = float()
     __Database = []
+    __inputFile = None
+    __runTime = None
+    oFile = None
 
     def __convert(self, value):
         """
@@ -637,10 +643,10 @@ class GPFgrowth(partialPeriodicPatterns):
         if isinstance(self.__inputFile, pd.DataFrame):
             if self.__inputFile.empty:
                 print("its empty..")
-            i = self.__inputFile.columns.values.tolist()
-            if 'Transactions' in i:
+            j_ = self.__inputFile.columns.values.tolist()
+            if 'Transactions' in j_:
                 self.__Database = self.__inputFile['Transactions'].tolist()
-            if 'Patterns' in i:
+            if 'Patterns' in j_:
                 self.__Database = self.__inputFile['Patterns'].tolist()
         if isinstance(self.__inputFile, str):
             if validators.url(self.__inputFile):
@@ -648,7 +654,7 @@ class GPFgrowth(partialPeriodicPatterns):
                 for line in data:
                     line.strip()
                     line = line.decode("utf-8")
-                    temp = [i.rstrip() for i in line.split(self._partialPeriodicPatterns__sep)]
+                    temp = [k.rstrip() for k in line.split(self._partialPeriodicPatterns__sep)]
                     temp = [x for x in temp if x]
                     self.__Database.append(temp)
             else:
@@ -656,7 +662,7 @@ class GPFgrowth(partialPeriodicPatterns):
                     with open(self.__inputFile, 'r', encoding='utf-8') as f:
                         for line in f:
                             line.strip()
-                            temp = [i.rstrip() for i in line.split(self._partialPeriodicPatterns__sep)]
+                            temp = [k_.rstrip() for k_ in line.split(self._partialPeriodicPatterns__sep)]
                             temp = [x for x in temp if x]
                             self.__Database.append(temp)
                 except IOError:

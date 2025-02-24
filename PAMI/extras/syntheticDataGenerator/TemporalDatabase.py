@@ -14,6 +14,13 @@ class TemporalDatabase:
                  occurrenceProbabilityOfSameTimestamp: float = 0.1,
                  occurrenceProbabilityToSkipSubsequentTimestamp: float = 0.1) -> None:
 
+        self.df = None
+        self.outputFile = None
+        self._memoryRSS = None
+        self._memoryUSS = None
+        self._runTime = None
+        self.current_timestamp = None
+        self.db = None
         self.databaseSize = databaseSize
         self.avgItemsPerTransaction = avgItemsPerTransaction
         self.numItems = numItems
@@ -21,7 +28,8 @@ class TemporalDatabase:
         self.occurrenceProbabilityOfSameTimestamp = occurrenceProbabilityOfSameTimestamp
         self.occurrenceProbabilityToSkipSubsequentTimestamp = occurrenceProbabilityToSkipSubsequentTimestamp
 
-    def performCoinFlip(self, probability: float) -> bool:
+    @staticmethod
+    def performCoinFlip(probability: float) -> bool:
         """
         Perform a coin flip with the given probability.
 
@@ -166,7 +174,6 @@ if __name__ == '__main__':
             databaseSize=int(sys.argv[1]),
             avgItemsPerTransaction=int(sys.argv[2]),
             numItems=int(sys.argv[3]),
-            outputFile=str(sys.argv[4]),
             occurrenceProbabilityOfSameTimestamp=float(sys.argv[5]),
             occurrenceProbabilityToSkipSubsequentTimestamp=float(sys.argv[6]),
             sep=sys.argv[7]

@@ -116,8 +116,8 @@ class _Transaction:
         utilityE = self.utilities[offsetE]
         new_transaction.prefixUtility = self.prefixUtility + utilityE
         new_transaction.transactionUtility = self.transactionUtility - utilityE
-        for i in range(self.offset, offsetE):
-            new_transaction.transactionUtility -= self.utilities[i]
+        for i_ in range(self.offset, offsetE):
+            new_transaction.transactionUtility -= self.utilities[i_]
         new_transaction.offset = offsetE + 1
         return new_transaction
 
@@ -179,10 +179,10 @@ class _Transaction:
         A method to sort items in order
         :return: None
         """
-        for i in range(1, len(self.items)):
-            key = self.items[i]
-            utilityJ = self.utilities[i]
-            j = i - 1
+        for j in range(1, len(self.items)):
+            key = self.items[j]
+            utilityJ = self.utilities[j]
+            j = j - 1
             while j >= 0 and key < self.items[j]:
                 self.items[j + 1] = self.items[j]
                 self.utilities[j + 1] = self.utilities[j]
@@ -245,7 +245,7 @@ class _Dataset:
         utilities = []
         pmus = []
         for idx, item in enumerate(itemsString):
-            if (self.strToInt).get(item) is None:
+            if self.strToInt.get(item) is None:
                 self.strToInt[item] = self.cnt
                 self.intToStr[self.cnt] = item
                 self.cnt += 1
@@ -458,6 +458,8 @@ class SHUIM(_ab._utilityPatterns):
     _minUtil = 0
     _memoryUSS = float()
     _memoryRSS = float()
+    _dataset = None
+    _patternCount = None
     
     def __init__(self, iFile: str, nFile: str, minUtil: int, sep: str="\t") -> None:
         super().__init__(iFile, nFile, minUtil, sep)
@@ -482,11 +484,11 @@ class SHUIM(_ab._utilityPatterns):
             for line in lines:
                 line = line.split("\n")[0]
                 line_split = line.split(self._sep)
-                line_split = [i.strip() for i in line_split]
+                line_split = [i__.strip() for i__ in line_split]
                 item = self._dataset.strToInt.get(line_split[0])
                 lst = []
-                for i in range(1, len(line_split)):
-                    lst.append(self._dataset.strToInt.get(line_split[i]))
+                for k in range(1, len(line_split)):
+                    lst.append(self._dataset.strToInt.get(line_split[k]))
                 self._Neighbours[item] = lst
         o.close()
         #print(len(self._Neighbours))
@@ -517,8 +519,8 @@ class SHUIM(_ab._utilityPatterns):
             if self._utilityBinArraySU[item] >= self._minUtil:
                 itemsToExplore.append(item)
         commonitems = []
-        for i in range(self._dataset.maxItem):
-            commonitems.append(i)
+        for k in range(self._dataset.maxItem):
+            commonitems.append(k)
         self._backtrackingEFIM(self._dataset.getTransactions(), itemsToKeep, itemsToExplore, 0)
         finalMemory = _ab._psutil.virtual_memory()[3]
         memory = (finalMemory - InitialMemory) / 10000
@@ -631,28 +633,28 @@ class SHUIM(_ab._utilityPatterns):
         :type itemsToKeep: list
         :return: None
         """
-        for i in range(j + 1, len(itemsToKeep)):
-            item = itemsToKeep[i]
+        for j_ in range(j + 1, len(itemsToKeep)):
+            item = itemsToKeep[j_]
             self._utilityBinArrayLU[item] = 0
             self._utilityBinArraySU[item] = 0
         for transaction in transactionsPe:
             length = len(transaction.getItems())
-            i = length - 1
-            while i >= transaction.offset:
-                item = transaction.getItems()[i]
+            j_ = length - 1
+            while j_ >= transaction.offset:
+                item = transaction.getItems()[j_]
                 if item in itemsToKeep:
                     remainingUtility = 0
                     if self._newNamesToOldNames[item] in self._Neighbours:
                         item_neighbours = self._Neighbours[self._newNamesToOldNames[item]]
-                        for k in range(i, length):
+                        for k in range(j_, length):
                             transaction_item = transaction.getItems()[k]
                             if self._newNamesToOldNames[transaction_item] in item_neighbours and transaction_item in neighbourhoodList:
                                 remainingUtility += transaction.getUtilities()[k]
 
-                    remainingUtility += transaction.getUtilities()[i]
+                    remainingUtility += transaction.getUtilities()[j_]
                     self._utilityBinArraySU[item] += remainingUtility + transaction.prefixUtility
                     self._utilityBinArrayLU[item] += transaction.transactionUtility + transaction.prefixUtility
-                i -= 1
+                j_ -= 1
 
     def _calculateNeighbourIntersection(self, prefixLength: int) -> List[int]:
         """
@@ -667,8 +669,8 @@ class SHUIM(_ab._utilityPatterns):
         :rtype: list
         """
         intersectionList = self._Neighbours.get(self._temp[0])
-        for i in range(1, prefixLength+1):
-            intersectionList = self._intersection(self._Neighbours[self._temp[i]], intersectionList)
+        for k_ in range(1, prefixLength + 1):
+            intersectionList = self._intersection(self._Neighbours[self._temp[k_]], intersectionList)
         finalIntersectionList = []
         if intersectionList is None:
             return finalIntersectionList
@@ -689,9 +691,9 @@ class SHUIM(_ab._utilityPatterns):
         """
         self._patternCount += 1
         s1 = str()
-        for i in range(0, tempPosition+1):
-            s1 += self._dataset.intToStr.get((self._temp[i]))
-            if i != tempPosition:
+        for v in range(0, tempPosition + 1):
+            s1 += self._dataset.intToStr.get((self._temp[v]))
+            if v != tempPosition:
                 s1 += "\t"
         self._finalPatterns[s1] = str(utility)
 
@@ -754,12 +756,12 @@ class SHUIM(_ab._utilityPatterns):
                 if self._newNamesToOldNames[item] not in self._Neighbours:
                     self._utilityBinArraySU[item] += utilities[idx]
                     continue
-                i = idx + 1
+                v_ = idx + 1
                 sumSu = utilities[idx]
-                while i < len(items):
-                    if self._newNamesToOldNames[items[i]] in self._Neighbours[self._newNamesToOldNames[item]]:
-                        sumSu += utilities[i]
-                    i += 1
+                while v_ < len(items):
+                    if self._newNamesToOldNames[items[v_]] in self._Neighbours[self._newNamesToOldNames[item]]:
+                        sumSu += utilities[v_]
+                    v_ += 1
                 self._utilityBinArraySU[item] += sumSu
 
     def _sortDatabase(self, transactions: List[_Transaction]) -> None:

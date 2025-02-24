@@ -32,11 +32,11 @@ Copyright (C)  2024 Rage Uday Kiran
      along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 
-import math
+#import math
 
 import numpy as np
 import pandas as pd
-import sys
+#import sys
 
 
 class SequentialDatabase:
@@ -94,7 +94,8 @@ class SequentialDatabase:
         self.seqSep = seqSep
         self.db = []
 
-    def tuning(self, array, sumRes) -> np.ndarray:
+    @staticmethod
+    def tuning(array, sumRes) -> np.ndarray:
         """
         Tune the array so that the sum of the values is equal to sumRes
 
@@ -119,7 +120,7 @@ class SequentialDatabase:
                 array[randIndex] -= 1
             # if sum is too small, increase the smallest value
             else:
-                minIndex = np.argmin(array)
+                #minIndex = np.argmin(array)
                 array[randIndex] += 1
         return array
 
@@ -179,7 +180,7 @@ class SequentialDatabase:
         """
         if item == "":
             item = range(1, self.numItems + 1)
-        db = set()
+        #db = set()
         sequences = self.generateArray(self.numSeq, self.avgItemsetPerSeq - 1, self.maxItemset)
 
         for numItemset in sequences:
@@ -197,6 +198,10 @@ class SequentialDatabase:
     def save(self, filename, sep="\t") -> None:
         """
         Save the transactional database to a file
+
+        :param sep: Separator
+
+        :type sep: str
 
         :param filename: name of the file
 
@@ -226,4 +231,4 @@ if __name__ == "__main__":
     db = SequentialDatabase(10, 5, 5, 10)
     db.create()
     db.save('db.txt')
-    print(db.getTransactions())
+    print(db.getSequence())

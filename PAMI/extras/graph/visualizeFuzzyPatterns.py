@@ -40,7 +40,7 @@ import pandas as pd
 import sys
 
 
-class visualizeFuzzyPatterns():
+class visualizeFuzzyPatterns:
     """
 
    :Description:   visualizeFuzzyPatterns is used to visualize points produced by pattern miner .
@@ -139,6 +139,6 @@ class visualizeFuzzyPatterns():
 
 
 if __name__ == "__main__":
-    _ap = str()
+    #_ap = str()
     _ap = visualizeFuzzyPatterns('soramame_frequentPatterns.txt', 10)
     _ap.visualize()

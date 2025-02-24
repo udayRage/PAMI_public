@@ -29,28 +29,6 @@
 #             print("Total ExecutionTime in seconds:", run)
 #
 
-
-
-
-__copyright__ = """
-Copyright (C)  2021 Rage Uday Kiran
-
-     This program is free software: you can redistribute it and/or modify
-     it under the terms of the GNU General Public License as published by
-     the Free Software Foundation, either version 3 of the License, or
-     (at your option) any later version.
-
-     This program is distributed in the hope that it will be useful,
-     but WITHOUT ANY WARRANTY; without even the implied warranty of
-     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-     GNU General Public License for more details.
-
-     You should have received a copy of the GNU General Public License
-     along with this program.  If not, see <https://www.gnu.org/licenses/>.
-     Copyright (C)  2021 Rage Uday Kiran
-
-"""
-
 import os
 import mmap
 import time
@@ -196,6 +174,11 @@ class efimParallel(_ab._utilityPatterns):
 
     def __init__(self, iFile, minUtil, sep="\t", threads=1):
         super().__init__(iFile, minUtil, sep)
+        self.memoryUSS = None
+        self.runtime = None
+        self.oFile = None
+        self.memoryRSS = None
+        self.start = None
         self.inputFile = iFile
         self.minUtil = minUtil
         self.sep = sep
@@ -242,7 +225,7 @@ class efimParallel(_ab._utilityPatterns):
         twu = {k: v for k, v in twu.items() if v >= self.minUtil}
 
         # Sort TWU items by utility
-        twu = {k: v for k, v in sorted(twu.items(), key=lambda item: item[1], reverse=True)}
+        twu = {k: v for k, v in sorted(twu.items(), key=lambda item_: item_[1], reverse=True)}
 
         strToInt = {}
         t = len(twu)

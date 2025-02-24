@@ -160,6 +160,7 @@ class _Tree:
         generates the conditional patterns for a node
 
         :param alpha: node to generate conditional patterns
+        :param support: support value
         :return: returns conditional patterns, frequency of each item in conditional patterns
 
         """
@@ -185,6 +186,7 @@ class _Tree:
 
         :param ConditionalPatterns: paths of a node
         :param conditionalFreq: frequency of each item in the path
+        :param support: support value
         :return: conditional patterns and frequency of each item in transactions
         """
         #global _minSup

@@ -173,7 +173,7 @@ class _Regions:
                     mapOfRegions[t1] = 1
                 else:
                     temp = mapOfRegions[t1]
-                    mapOfRegions = temp + 1
+                    mapOfRegions[t1] = temp + 1
 
 
 class _Pair:
@@ -393,17 +393,17 @@ class FCPGrowth(_ab._corelatedFuzzyFrequentPatterns):
         :return: element eith tid as given
         :rtype: element if exists or None
         """
-        List = uList.elements
+        List_ = uList.elements
         first = 0
-        last = len(List) - 1
+        last = len(List_) - 1
         while first <= last:
             mid = (first + last) >> 1
-            if List[mid].tid < tid:
+            if List_[mid].tid < tid:
                 first = mid + 1
-            elif List[mid].tid > tid:
+            elif List_[mid].tid > tid:
                 last = mid - 1
             else:
-                return List[mid]
+                return List_[mid]
         return None
 
     def _convert(self, value: Union[int, float, str]) -> float:
@@ -672,7 +672,7 @@ class FCPGrowth(_ab._corelatedFuzzyFrequentPatterns):
         :rtype: float
         """
         res = 1.0
-        n = prefixLen
+        #n = prefixLen
         for i in prefix:
             if self._mapItemRegionSum.get((i.item, i.region)) is not None and res < self._mapItemRegionSum[(i.item, i.region)]:
                 res = self._mapItemRegionSum[(i.item, i.region)]
@@ -764,7 +764,7 @@ if __name__ == "__main__":
     _ap = str()
     if len(_ab._sys.argv) == 5 or len(_ab._sys.argv) == 6:
         if len(_ab._sys.argv) == 6:
-            _ap = FCPGrowth(_ab._sys.argv[1], _ab._sys.argv[3], float(_ab._sys.argv[4]), _ab._sys.argv[5])
+            _ap = FCPGrowth(_ab._sys.argv[1], int(_ab._sys.argv[3]), float(_ab._sys.argv[4]), _ab._sys.argv[5])
         if len(_ab._sys.argv) == 5:
             _ap = FCPGrowth(_ab._sys.argv[1], _ab._sys.argv[3], float(_ab._sys.argv[4]))
         _ap.mine()

@@ -40,7 +40,7 @@ __copyright__ = """
 
 import pandas as pd
 import sys
-class denseDF2DB():
+class denseDF2DB:
     """
     :Description: This class create Data Base from DataFrame.
 
@@ -315,7 +315,6 @@ class denseDF2DB():
 
 if __name__ == '__main__':
 
-
-    obj = denseDF2DB(sys.argv[1], sys.argv[2],sys.argv[3])
-    obj.getFileName(sys.argv[4])
+    obj = denseDF2DB(sys.argv[1], sys.argv[2],float(sys.argv[3]))
+    obj.getFileName()
 

@@ -277,6 +277,7 @@ class HMiner(_ab._utilityPatterns):
 
     def __init__(self, iFile1, minUtil, sep="\t"):
         super().__init__(iFile1, minUtil, sep)
+        self.oFile = None
         self._huiCount = 0
         self._candidates = 0
         self._mapOfTWU = {}

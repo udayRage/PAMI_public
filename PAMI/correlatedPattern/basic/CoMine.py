@@ -268,7 +268,7 @@ class CoMine(_ab._correlatedPatterns):
                     quit()
 
     
-    def _convert(self, value: Union[int, float, str]) -> None:
+    def _convert(self, value: Union[int, float, str]):
         """
         To convert the type of user specified minSup value
 
@@ -357,7 +357,7 @@ class CoMine(_ab._correlatedPatterns):
         itemNodes = {}
         for transaction, count in transactions:
             transaction = [i for i in transaction if i in itemCounts]
-            transaction = sorted(transaction, key=lambda item: itemCounts[item], reverse=True)
+            transaction = sorted(transaction, key=lambda _item: itemCounts[_item], reverse=True)
             node = newRoot
             for item in transaction:
                 node = node.addChild(item, count)

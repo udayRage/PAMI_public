@@ -1,5 +1,5 @@
-import random as _rd
-import sys as _sys
+#import random as _rd
+#import sys as _sys
 import time
 import os
 import psutil
@@ -44,6 +44,7 @@ class GeoReferentialTemporalDatabaseByTriangle:
             occurrenceProbabilityOfSameTimestamp: float = 0,
             occurrenceProbabilityToSkipSubsequentTimestamp: float = 0,
     ) -> None:
+        self.db = None
         self.databaseSize = databaseSize
         self.avgItemsPerTransaction = avgItemsPerTransaction
         self.numItems = numItems
@@ -64,7 +65,8 @@ class GeoReferentialTemporalDatabaseByTriangle:
 
         self.itemPoint = self.draw(numPoints)
 
-    def performCoinFlip(self, probability: float) -> bool:
+    @staticmethod
+    def performCoinFlip(probability: float) -> bool:
         """
         Perform a coin flip with the given probability.
 
@@ -74,7 +76,8 @@ class GeoReferentialTemporalDatabaseByTriangle:
         result = np.random.choice([0, 1], p=[1 - probability, probability])
         return result
 
-    def tuning(self, array, sumRes) -> list:
+    @staticmethod
+    def tuning(array, sumRes) -> list:
         """
         Tune the array so that the sum of the values is equal to sumRes
 
@@ -108,11 +111,11 @@ class GeoReferentialTemporalDatabaseByTriangle:
 
         :param nums: number of values
 
-        :type nums: list
+        :type nums: int
 
         :param avg: average value
 
-        :type avg: float
+        :type avg: int
 
         :param maxItems: maximum value
 
@@ -156,7 +159,7 @@ class GeoReferentialTemporalDatabaseByTriangle:
         :return: None
         """
         self._startTime = time.time()
-        db = set()
+        #db = set()
 
         values = self.generateArray(self.databaseSize, self.avgItemsPerTransaction, self.numItems)
         

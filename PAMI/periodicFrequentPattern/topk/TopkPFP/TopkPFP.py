@@ -291,7 +291,7 @@ class TopkPFPGrowth(_ab._periodicFrequentPatterns):
         :return: support, periodicity
         """
 
-        global lno
+        #global lno
         timeStamps.sort()
         cur = 0
         per = list()

@@ -263,7 +263,7 @@ class _Tree(object):
         :param support : the support of conditional pattern in tree
         :type support : int
         """
-        global minSup
+        #global minSup
         pat = []
         sup = []
         count = {}
@@ -293,7 +293,7 @@ class _Tree(object):
         :type prefix : list
         """
 
-        global _finalPatterns, minSup
+        global _finalPatterns#, minSup
         for i in sorted(self.summaries, key=lambda x: (self.info.get(x))):
             pattern = prefix[:]
             pattern.append(i)
@@ -457,18 +457,18 @@ class PUFGrowth(_ab._frequentPatterns):
 
              The complete program was written by  P.Likhitha  under the supervision of Professor Rage Uday Kiran.
     """
-
     _startTime = float()
     _endTime = float()
     _minSup = str()
     _finalPatterns = {}
     _iFile = " "
-    _oFile = " "
+    oFile = " "
     _sep = " "
     _memoryUSS = float()
-    _memoryRSS = float()
+    memoryRSS = float()
     _Database = []
     _rank = {}
+    Database1 = None
 
     def __init__(self, iFile, minSup, sep='\t') -> None:
         super().__init__(iFile, minSup, sep)
@@ -478,6 +478,7 @@ class PUFGrowth(_ab._frequentPatterns):
         Scans the uncertain transactional dataset
         """
         self._Database = []
+        temp = None
         if isinstance(self._iFile, _ab._pd.DataFrame):
             uncertain, data = [], []
             if self._iFile.empty:
@@ -501,7 +502,7 @@ class PUFGrowth(_ab._frequentPatterns):
                 for line in data:
                     line = line.strip()
                     line = line.decode("utf-8")
-                    temp1 = line.split(':')
+                    #temp1 = line.split(':')
                     temp = [i.rstrip() for i in temp[0].split(self._sep)]
                     uncertain = [float(i.rstrip()) for i in temp[1].split(self._sep)]
                     temp = [x for x in temp if x]
@@ -669,11 +670,11 @@ class PUFGrowth(_ab._frequentPatterns):
         """
         Main method where the patterns are mined by constructing tree and remove the false patterns by counting the original support of a patterns
         """
-        global minSup
+        #global minSup
         self._startTime = _ab._time.time()
         self._creatingItemSets()
         self._minSup = self._convert(self._minSup)
-        minSup = self._minSup
+        #minSup = self._minSup
         self._finalPatterns = {}
         mapSupport, plist = self._frequentOneItem()
         self.Database1 = self._updateTransactions(mapSupport)

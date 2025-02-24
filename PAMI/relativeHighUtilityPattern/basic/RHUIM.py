@@ -457,7 +457,7 @@ class RHUIM(_ab._utilityPatterns):
     _endTime = float()
     _finalPatterns = {}
     _iFile = " "
-    _oFile = " "
+    oFile = " "
     _nFile = " "
     _lno = 0
     _sep = "\t"
@@ -465,6 +465,7 @@ class RHUIM(_ab._utilityPatterns):
     _minUR = 0
     _memoryUSS = float()
     _memoryRSS = float()
+    _dataset = None
 
     def __init__(self, iFile: str, minUtil: int, minUR: float, sep: str = "\t") -> None:
         super().__init__(iFile, minUtil, minUR, sep)

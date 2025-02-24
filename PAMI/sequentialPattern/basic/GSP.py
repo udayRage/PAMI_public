@@ -207,6 +207,7 @@ class GSP(_ab._sequentialPatterns):
         Storing the complete transactions of the database/input file in a database variable
         """
         self._Database = []
+        temp2 = None
 
         if isinstance(self._iFile, _ab._pd.DataFrame):
             temp = []
@@ -217,15 +218,13 @@ class GSP(_ab._sequentialPatterns):
                 temp = self._iFile['Transactions'].tolist()
             if "tid" in i:
                 temp2=self._iFile[''].tolist()
-            addList=[]
-            addList.append(temp[0])
+            addList= [temp[0]]
             for k in range(len(temp)-1):
                 if temp2[k]==temp[k+1]:
                     addList.append(temp[k+1])
                 else:
                     self._Database.append(addList)
-                    addList=[]
-                    addList.append(temp[k+1])
+                    addList= [temp[k + 1]]
             self._Database.append(addList)
         if isinstance(self._iFile, str):
             if _ab._validators.url(self._iFile):
@@ -340,7 +339,7 @@ class GSP(_ab._sequentialPatterns):
     def getSup(self,pattern):
         """
         count up the support of the pattern
-        :param pattren:list the candidate pattern 
+        :param pattern:list the candidate pattern
         :return:  sup:int  the support of the pattern
         """
         sup=0
@@ -389,7 +388,7 @@ class GSP(_ab._sequentialPatterns):
     def makeCandidateDatabase(self,patterns):
         """
         make the database to find new candidate
-        :param pattrens:list the patterns fond before
+        :param patterns:list the patterns fond before
         :return:  bothBefore:dict   the patterns have same item without last one item
                   bothAfter:dict   the patterns have same item without first one item
         """
@@ -424,7 +423,7 @@ class GSP(_ab._sequentialPatterns):
     def makeCandidate(self,patterns):
         """
         make the candidate patterns
-        :param pattrens:list the patterns found before
+        :param patterns:list the patterns found before
         :return:  newPatterns:list  the candidate pattern
         """
         before,after=self.makeCandidateDatabase(patterns)
@@ -443,9 +442,7 @@ class GSP(_ab._sequentialPatterns):
         """
         To make 3 or more length frequent patterns from pattern which the latest word is in different seq  by depth-first search technique  and update xlenDatabase to sequential database
 
-        :param rowLen: row length of previous patterns.
-        :param bs : previous patterns without the latest one
-        :param latestWord : latest word of previous patterns
+        :param patterns: patterns
         
         """
         patterns=self.makeCandidate(patterns)
@@ -470,7 +467,7 @@ class GSP(_ab._sequentialPatterns):
         self._minSup = self._convert(self._minSup)
         self.make1LenDatabase()
         nextPatterns=self.make2LenDatabase()
-        while(len(nextPatterns)>0):
+        while len(nextPatterns)>0:
             nextPatterns= self.makexLenDatabase(nextPatterns)
         self._endTime = _ab._time.time()
         process = _ab._psutil.Process(_ab._os.getpid())

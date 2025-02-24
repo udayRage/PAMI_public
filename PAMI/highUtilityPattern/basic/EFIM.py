@@ -206,6 +206,7 @@ class _Dataset:
         self.cnt = 1
         self.sep = sep
         self.createItemsets(datasetPath)
+        self.Database = []
 
     def createItemsets(self, datasetPath: Union[str, _ab._pd.DataFrame]) -> None:
         """
@@ -214,7 +215,7 @@ class _Dataset:
         :type datasetPath: str
         :return: None
         """
-        self.Database = []
+
         if isinstance(datasetPath, _ab._pd.DataFrame):
             utilities, data, transactionUtility = [], [], []
             if datasetPath.empty:
@@ -457,7 +458,7 @@ class EFIM(_ab._utilityPatterns):
     _temp = [0] * 5000
     _patternCount = int()
     _maxMemory = 0
-    _startTime = float()
+    #_startTime = float()
     _endTime = float()
     _finalPatterns = {}
     _iFile = " "
@@ -471,6 +472,8 @@ class EFIM(_ab._utilityPatterns):
 
     def __init__(self, iFile, minUtil, sep="\t") -> None:
         super().__init__(iFile, minUtil, sep)
+        self.oFile = None
+        self._dataset = None
         self._sep = sep
         self._highUtilityitemSets = []
         self._candidateCount = 0

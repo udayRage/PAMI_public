@@ -235,7 +235,7 @@ class _Tree(object):
         :return: support, periodicity
         """
 
-        global _maxPer, _lno,_period,_periodicSupport
+        #global _maxPer, _lno,_period,_periodicSupport
         timeStamps.sort()
         cur = 0
         per = list()
@@ -244,7 +244,7 @@ class _Tree(object):
             timedif=timeStamps[j] - cur
             per.append(timedif)
             cur = timeStamps[j]
-            if(_period>=timedif):
+            if _period>=timedif:
                 sup += 1
         per.append(_lno - cur)
         if len(per) == 0:
@@ -628,7 +628,7 @@ class PPGrowth(_ab._partialPeriodicPatterns):
         Mining process will start from this function
         """
 
-        global _minSup, _maxPer, _lno,_period,_periodicSupport
+        #global _minSup, _maxPer, _lno,_period,_periodicSupport
         self._startTime = _ab._time.time()
         if self._iFile is None:
             raise Exception("Please enter the file path or file name:")
@@ -664,7 +664,7 @@ class PPGrowth(_ab._partialPeriodicPatterns):
         Mining process will start from this function
         """
 
-        global _minSup, _maxPer, _lno,_period,_periodicSupport
+        #global _minSup, _maxPer, _lno,_period,_periodicSupport
         self._startTime = _ab._time.time()
         if self._iFile is None:
             raise Exception("Please enter the file path or file name:")

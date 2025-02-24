@@ -1,5 +1,5 @@
 import random
-import pandas as pd
+#import pandas as pd
 
 
 class generateUtilityTransactional:
@@ -39,7 +39,7 @@ class generateUtilityTransactional:
     def __generateInternalUtility(self) -> None:
         items = [i+1 for i in range(self.__numOfItems)]
         utilityValues = [random.randint(
-            self.__minUtilityValue, self.__maxUtilityValue) for i in range(self.__numOfItems)]
+            self.__minUtilityValue, self.__maxUtilityValue) for _ in range(self.__numOfItems)]
         self.__internalUtility = {
             "items": items, "utilityValues": utilityValues}
 
@@ -47,8 +47,8 @@ class generateUtilityTransactional:
         self.__externalUtility = [[random.randint(self.__minNumOfTimesAnItem, self.__maxNumOfTimesAnItem) for _ in range(
             len(transaction))] for transaction in self.__transactions]
 
-    def save(self, outputFile: str, sep="\t", type="utility") -> None:
-        if (type == "utility"):
+    def save(self, outputFile: str, sep="\t", utilityType="utility") -> None:
+        if utilityType == "utility":
             with open(outputFile, 'w') as f:
                 for transaction, exUtils in zip(self.__transactions, self.__externalUtility):
                     f.write(f"{sep.join(map(str, transaction))}:")
@@ -57,12 +57,12 @@ class generateUtilityTransactional:
                     f.write(
                         f"{sum(utilityValues)}:{sep.join(map(str, utilityValues))}\n")
 
-        elif (type == "internal"):
+        elif utilityType == "internal":
             with open(outputFile, "w") as f:
                 for item, utility in zip(self.__internalUtility["items"], self.__internalUtility["utilityValues"]):
                     f.write(f"{item}{sep}{utility}\n")
 
-        elif (type == "external"):
+        elif utilityType == "external":
             with open(outputFile, "w") as f:
                 for transaction, exUtils in zip(self.__transactions, self.__externalUtility):
                     utils = list()
@@ -79,4 +79,4 @@ class generateUtilityTransactional:
 if __name__ == "__main__":
     obj = generateUtilityTransactional(10, 10, 5, 10, 100, 1, 10)
     obj.generate()
-    obj.save("transactionalUtility_test.csv", type="external")
+    obj.save("transactionalUtility_test.csv", utilityType="external")

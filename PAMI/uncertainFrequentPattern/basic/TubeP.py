@@ -238,6 +238,11 @@ class TUFP(_ab._frequentPatterns):
     _cupList = {}
     _topk = {}
     _minimum = 9999
+    oFile = None
+
+    def __init__(self, iFile, minSup, sep='\t'):
+        super().__init__(iFile, minSup, sep)
+
 
     def _creatingItemSets(self) -> None:
         """

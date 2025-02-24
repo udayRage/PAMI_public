@@ -274,14 +274,14 @@ class generateTemporalDatabase:
         print(self.df)
 
 if __name__ == '__main__':
-    numOfTransactions = 100
-    numItems = 20
+    numOfTransactions_ = 100
+    numItems_ = 20
     avgTransactionLength = 6
     outFileName = 'temporal_out.txt'
-    sep = '\t'
+    sep_ = '\t'
     frameOrBase = "database"
 
-    temporalDB = generateTemporalDatabase(numOfTransactions, avgTransactionLength, numItems, outFileName)
+    temporalDB = generateTemporalDatabase(numOfTransactions_, avgTransactionLength, numItems_, outFileName)
 
     temporalDB.createTemporalFile()
 

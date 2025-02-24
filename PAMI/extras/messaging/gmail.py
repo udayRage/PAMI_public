@@ -21,7 +21,7 @@ import smtplib, ssl
 
 from email.message import EmailMessage
 
-class gmail():
+class gmail:
 
     def __init__(self, userName: str, password: str) -> None:
         self.userName = userName

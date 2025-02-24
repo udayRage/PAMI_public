@@ -123,5 +123,5 @@ class plotPointOnMap:
 
 if __name__ == '__main__':
     obj = plotPointOnMap('/Users/nakamura0803/medicalDataAnalytics/test/disease/pattern_8842163_0.8.txt')
-    mmap = obj.plotPointInMap()
-    mmap.save('map.html')
+    mmap_ = obj.plotPointInMap()
+    mmap_.save('map.html')

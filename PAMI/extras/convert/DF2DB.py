@@ -87,7 +87,7 @@ class DF2DB:
             obj.convert2Temporal("outputFileName",condition,threshold) # To create temporal database
 
             obj.convert2Utility("outputFileName",condition,threshold) # To create utility database
-    """,
+    """
 
 
     def __init__(self, inputDF, DFtype='dense') -> None:
@@ -113,8 +113,10 @@ class DF2DB:
         create transactional database and return oFileName
         :param oFile: file name or path to store database
         :type oFile: str
-        :return: oFile name
-        :rtype: str
+        :param condition: It is condition to judge the value
+        :type condition: str
+        :param thresholdValue: user defined threshold value
+        :type thresholdValue: int or float
         """
         self._startTime = time.time()
         with open(oFile, 'w') as f:
@@ -143,8 +145,10 @@ class DF2DB:
         create temporal database and return oFile name
         :param oFile: file name or path to store database
         :type oFile: str
-        :return: oFile name
-        :rtype: str
+        :param condition: It is condition to judge the value
+        :type condition: str
+        :param thresholdValue: user defined threshold value
+        :type thresholdValue: int or float
         """
         self._startTime = time.time()
         with open(oFile, 'w') as f:
@@ -174,8 +178,6 @@ class DF2DB:
         create utility database and return oFile name
         :param oFile:  file name or path to store database
         :type oFile: str
-        :return: outputFile name
-        :rtype: str
         """
         self._startTime = time.time()
         with open(oFile, 'w') as f:
@@ -200,7 +202,10 @@ class DF2DB:
         create transactional database and return oFileName
         :param oFile: file name or path to store database
         :type oFile: str
-        :return: oFile name
+        :param condition: It is condition to judge the value
+        :type condition: str
+        :param thresholdValue: user defined threshold value
+        :type thresholdValue: int or float
         :rtype: str
         """
         self._startTime = time.time()
@@ -231,7 +236,10 @@ class DF2DB:
         create temporal database and return oFile name
         :param oFile: file name or path to store database
         :type oFile: str
-        :return: oFile name
+        :param condition: It is condition to judge the value
+        :type condition: str
+        :param thresholdValue: user defined threshold value
+        :type thresholdValue: int or float
         :rtype: str
         """
         self._startTime = time.time()
@@ -264,18 +272,12 @@ class DF2DB:
         """
         :Description: Create the multiple time series database.
 
-        :param outputFile:  Write multiple time series database into outputFile.
-
-        :type outputFile:  str
-
+        :param oFile:  Write multiple time series database into outputFile.
+        :type oFile:  str
         :param interval: Breaks the given timeseries into intervals.
-
         :type interval: int
-
         :param condition: It is condition to judge the value in dataframe
-
         :param thresholdValue: User defined value.
-
         :type thresholdValue: int or float
         """
         self._startTime = time.time()
@@ -368,7 +370,6 @@ class DF2DB:
     def getRuntime(self) -> float:
         """
         Calculating the total amount of runtime taken by the mining process
-
 
         :return: returning total amount of runtime taken by the mining process
         :rtype: float

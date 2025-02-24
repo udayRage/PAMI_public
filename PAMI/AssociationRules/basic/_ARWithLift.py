@@ -394,7 +394,7 @@ if __name__ == "__main__":
         if len(_ab._sys.argv) == 5:
             _ap = ARWithLift(_ab._sys.argv[1], float(_ab._sys.argv[3]), _ab._sys.argv[4])
         if len(_ab._sys.argv) == 4:
-            _ap = ARWithLift(_ab._sys.argv[1], _ab._sys.argv[3],sep='\t')
+            _ap = ARWithLift(_ab._sys.argv[1], float(_ab._sys.argv[3]),sep='\t')
         _ap.mine()
         _ap.mine()
         print("Total number of Association Rules:", len(_ap.getPatterns()))

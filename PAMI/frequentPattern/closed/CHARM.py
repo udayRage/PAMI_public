@@ -359,7 +359,7 @@ class CHARM(_ab._frequentPatterns):
                     itemSets.insert(j, None)
                     tidSets.insert(j, None)
                     itemSetx.append(itemY)
-                elif len(tidSetX) < len(tidSetY) and len(y) == len(tidSetX):
+                elif len(tidSetY) > len(tidSetX) == len(y):
                     itemSetx.append(itemY)
                 elif len(tidSetX) > len(tidSetY) and len(y) == len(tidSetY):
                     itemSets.insert(j, None)
@@ -410,7 +410,7 @@ class CHARM(_ab._frequentPatterns):
                 if len(tidSetx) == len(tidSetY) and len(y1) == len(tidSetx):
                     _plist.insert(j, None)
                     itemSetx.append(itemY)
-                elif len(tidSetx) < len(tidSetY) and len(y1) == len(tidSetx):
+                elif len(tidSetY) > len(tidSetx) == len(y1):
                     itemSetx.append(itemY)
                 elif len(tidSetx) > len(tidSetY) and len(y1) == len(tidSetY):
                     _plist.insert(j, None)

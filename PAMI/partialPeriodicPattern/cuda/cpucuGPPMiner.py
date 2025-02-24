@@ -18,10 +18,10 @@ __copyright__ = """
 
 """
 
-import abstract as _ab
+#import abstract as _ab
 import cupy as cp
 import cudf
-import pandas as pd
+#import pandas as pd
 import numpy as np
 
 from PAMI.partialPeriodicPattern.basic import abstract as _ab

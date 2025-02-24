@@ -224,7 +224,8 @@ class SPPEclat(_ab._stablePeriodicFrequentPatterns):
     _memoryRSS = float()
     _Database = []
 
-    def __init__(self, inputFile, minSup, maxPer, maxLa, sep='\t'):
+    def __init__(self, inputFile, minSup, maxPer, maxLa, iFile, maxLA, sep='\t'):
+        super().__init__(iFile, minSup, maxPer, maxLA, sep)
         self._iFile = inputFile
         self._minSup = minSup
         self._maxPer = maxPer

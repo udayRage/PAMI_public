@@ -45,8 +45,8 @@ __copyright__ = """
      along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 class Vertex:
-    def __init__(self, id, vLabel):
-        self.id = id
+    def __init__(self, iD, vLabel):
+        self.id = iD
         self.vLabel = vLabel
         self.eList = []  
         

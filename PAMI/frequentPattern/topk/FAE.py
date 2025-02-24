@@ -236,7 +236,7 @@ class FAE(_ab._frequentPatterns):
                 self._finalPatterns = {k: v for k, v in sorted(self._finalPatterns.items(), key=lambda item: item[1], reverse=True)}
                 self._minimum = min([i for i in self._finalPatterns.values()])
         else:
-            for x, y in sorted(self._finalPatterns.items(), key=lambda x: x[1]):
+            for x, y in sorted(self._finalPatterns.items(), key=lambda x_: x_[1]):
                 if val > y:
                     del self._finalPatterns[x]
                     self._finalPatterns[sample] = val
